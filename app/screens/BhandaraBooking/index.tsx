@@ -11,16 +11,20 @@ import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 const BhandaraBooking = () => {
   const [userInfo, setUserInfo] = useState({
     name: "",
     phoneNumber: "",
     place: "",
+    otp: "",
     nameErrMsg: "",
     phoneErrMsg: "",
     placeErrMsg: "",
+    otpErrMsg: "",
   });
   const route = useRoute();
+  const navigation: any = useNavigation();
   const { time, date }: any = route.params;
 
   const SendOTP = () => {
@@ -65,7 +69,6 @@ const BhandaraBooking = () => {
         };
       });
     }
-
     // placeValidation
     if (userInfo.place.length === 0) {
       setUserInfo((prevState) => {
@@ -75,12 +78,36 @@ const BhandaraBooking = () => {
         };
       });
     }
+    // otp Validation
+    if (userInfo.otp.length === 0) {
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          otpErrMsg: "*Please Fill The Missing Field*",
+        };
+      });
+    } else if (userInfo.otp.length === 6) {
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          otpErrMsg: "",
+        };
+      });
+    } else {
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          otpErrMsg: "*Invalid OTP*",
+        };
+      });
+    }
+    navigation.navigate("BhandaraBookingPayment");
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* headerBar */}
       <View>
-        <HeaderBar headingText="भंडारा बुकिंग" />
+        <HeaderBar hasBackButton={true} headingText="भंडारा बुकिंग" />
       </View>
 
       {/* Date Field */}
@@ -179,6 +206,39 @@ const BhandaraBooking = () => {
       {userInfo.placeErrMsg ? (
         <View style={styles.errorContainer}>
           <Text style={{ color: "red" }}>{userInfo.placeErrMsg}</Text>
+        </View>
+      ) : (
+        <Text></Text>
+      )}
+
+      <View>
+        <Labels labelName="OTP" />
+      </View>
+
+      <View>
+        <TextInputs
+          onChangeText={(val: string) =>
+            setUserInfo((prevState) => {
+              return {
+                ...prevState,
+                otp: val,
+              };
+            })
+          }
+          onFocus={() =>
+            setUserInfo((prevState) => {
+              return {
+                ...prevState,
+                otpErrMsg: "",
+              };
+            })
+          }
+        />
+      </View>
+
+      {userInfo.otpErrMsg ? (
+        <View style={styles.errorContainer}>
+          <Text style={{ color: "red" }}>{userInfo.otpErrMsg}</Text>
         </View>
       ) : (
         <Text></Text>

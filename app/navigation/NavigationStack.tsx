@@ -6,6 +6,7 @@ import Home from "../screens/Home";
 import BhandaraBooking from "../screens/BhandaraBooking";
 import YatraInfo from "../screens/YatraInfo";
 import YatraBooking from "../screens/YatraBooking";
+import BhandaraBookingPayment from "../screens/BhandaraBookingPayment";
 const Stack = createNativeStackNavigator();
 
 const NavigationStack = () => {
@@ -16,6 +17,10 @@ const NavigationStack = () => {
         <Stack.Screen name="BhandaraBooking" component={BhandaraBooking} />
         <Stack.Screen name="YatraInfo" component={YatraInfo} />
         <Stack.Screen name="YatraBooking" component={YatraBooking} />
+        <Stack.Screen
+          name="BhandaraBookingPayment"
+          component={BhandaraBookingPayment}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
