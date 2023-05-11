@@ -11,8 +11,17 @@ import React, { useState } from "react";
 import { Calendar } from "react-native-calendars";
 import moment from "moment";
 import styles from "./styles";
+import HeaderBar from "../ReusableComponents/HeaderBar";
+import { useNavigation } from "@react-navigation/native";
 const TabView1 = () => {
   const [selectedDate, setSelectedDate] = useState("");
+  const navigation: any = useNavigation();
+  const handleNavigation = (val: string) => {
+    navigation.navigate("BhandaraBooking", {
+      time: val,
+      date: moment(selectedDate).format("dddd, DD MMMM"),
+    });
+  };
   return (
     <View style={styles.calendarView}>
       <Calendar
@@ -74,10 +83,16 @@ const TabView1 = () => {
         <View style={styles.timeSlotWrapper}>
           <Text>{moment(selectedDate).format("dddd, MMMM DD")}</Text>
           <View style={styles.selectedDateView}>
-            <TouchableOpacity style={styles.timeSlotView}>
+            <TouchableOpacity
+              style={styles.timeSlotView}
+              onPress={() => handleNavigation("11:00 AM")}
+            >
               <Text style={styles.timeText}>11:00 AM</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.timeSlotView}>
+            <TouchableOpacity
+              style={styles.timeSlotView}
+              onPress={() => handleNavigation("02:00 PM")}
+            >
               <Text style={styles.timeText}>02:00 PM</Text>
             </TouchableOpacity>
           </View>
@@ -92,6 +107,11 @@ const Home = () => {
   return (
     <>
       <SafeAreaView style={styles.homeUpperContainer}>
+        <HeaderBar
+          headingLeftText="भंडारा बुकिंग"
+          HeadingRightText="दान सेवा"
+          twoHeadings={true}
+        />
         <View style={styles.mainImage}>
           <Image
             style={styles.imageStyle}

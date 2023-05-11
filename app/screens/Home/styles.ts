@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-
+import { getHeight, getWidth } from "../../utils/pixelConversion";
 const styles = StyleSheet.create({
   mainContainer: { flex: 1, alignItems: "center", justifyContent: "center" },
   mainImage: { alignItems: "center" },
-  imageStyle: { height: 80, width: 65 },
+  imageStyle: { height: getHeight(80), width: getWidth(65) },
   headingText: { fontSize: 22, fontWeight: "400", color: "#1E1E1E" },
   homeUpperContainer: {
     flex: 1,
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   btnStyle: {
-    padding: 10,
+    padding: getWidth(10),
     width: "50%",
     borderWidth: 1,
     borderColor: "#EB6611",
@@ -28,15 +28,15 @@ const styles = StyleSheet.create({
   calendarView: { backgroundColor: "white", flex: 1 },
   arrowView: {
     backgroundColor: "#FFF7E7",
-    height: 35,
-    width: 35,
+    height: getHeight(35),
+    width: getWidth(35),
     borderRadius: 35 / 2,
     justifyContent: "center",
     alignItems: "center",
   },
   dateView: {
-    height: 37,
-    width: 37,
+    height: getHeight(37),
+    width: getWidth(37),
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 37 / 2,
@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: 10,
   },
-  timeSlotWrapper: { marginTop: 27, marginLeft: 10 },
+  timeSlotWrapper: { marginTop: getHeight(27), marginLeft: getWidth(10) },
   timeSlotView: {
-    paddingVertical: 13,
-    paddingHorizontal: 43,
+    paddingVertical: getHeight(13),
+    paddingHorizontal: getWidth(43),
     borderWidth: 1,
     borderColor: "#EB6611",
     borderRadius: 5,
