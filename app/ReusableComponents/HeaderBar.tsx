@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 interface IHeaderBarText {
   headingText?: string;
   headingLeftText?: string;
   HeadingRightText?: string;
   twoHeadings?: boolean;
+  hasBackButton?: any;
 }
 
 const HeaderBar = ({
@@ -12,7 +14,10 @@ const HeaderBar = ({
   twoHeadings,
   headingLeftText,
   HeadingRightText,
+  hasBackButton,
 }: IHeaderBarText) => {
+  const navigation: any = useNavigation();
+
   return (
     <View>
       {twoHeadings ? (
@@ -31,7 +36,17 @@ const HeaderBar = ({
         </View>
       ) : (
         <View style={[styles.headerBarContainer]}>
+          {hasBackButton && (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image source={require("../assets/images/LeftIcon.png")} />
+            </TouchableOpacity>
+          )}
           <Text style={styles.headerBarText}>{headingText}</Text>
+          <Text></Text>
         </View>
       )}
     </View>
@@ -43,10 +58,13 @@ export default HeaderBar;
 const styles = StyleSheet.create({
   headerBarContainer: {
     padding: 12,
+    paddingHorizontal: 20,
     backgroundColor: "#FFF7E7",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   headerBarText: {
-    textAlign: "center",
     fontSize: 17,
     fontWeight: "600",
     lineHeight: 22,

@@ -11,7 +11,8 @@ import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 import { useRoute } from "@react-navigation/native";
-const BhandaraBooking = () => {
+import CustomModal from "../../ReusableComponents/Modal";
+const YatraBooking = () => {
   const [userInfo, setUserInfo] = useState({
     name: "",
     phoneNumber: "",
@@ -20,9 +21,7 @@ const BhandaraBooking = () => {
     phoneErrMsg: "",
     placeErrMsg: "",
   });
-  const route = useRoute();
-  const { time, date }: any = route.params;
-
+  const [showThanksModal, setShowThanksModal] = useState(false);
   const SendOTP = () => {
     // Name Validation
     if (userInfo.name.length === 0) {
@@ -80,16 +79,11 @@ const BhandaraBooking = () => {
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* headerBar */}
       <View>
-        <HeaderBar headingText="भंडारा बुकिंग" />
-      </View>
-
-      {/* Date Field */}
-      <View style={styles.bookingDateContainer}>
-        <Text style={styles.bookingDateText}>{`${date} ${time}`}</Text>
+        <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />
       </View>
 
       {/* formFields */}
-      <View>
+      <View style={{ marginTop: 20 }}>
         <Labels labelName="नाम" />
       </View>
 
@@ -153,7 +147,7 @@ const BhandaraBooking = () => {
         <Text></Text>
       )}
       <View>
-        <Labels labelName="स्थान" />
+        <Labels labelName="OTP" />
       </View>
 
       <View>
@@ -187,15 +181,24 @@ const BhandaraBooking = () => {
       {/* confirmButton */}
       <TouchableOpacity
         style={styles.btnStyle}
-        onPress={() => [SendOTP(), Keyboard.dismiss()]}
+        onPress={() => [
+          SendOTP(),
+          Keyboard.dismiss(),
+          setShowThanksModal(true),
+        ]}
       >
         <Text style={styles.btnTextStyle}>Send OTP</Text>
       </TouchableOpacity>
+      <CustomModal
+        setIsVisible={setShowThanksModal}
+        isVisible={showThanksModal}
+        message={"आपकी यात्रा मंगलमय रहे"}
+      />
     </View>
   );
 };
 
-export default BhandaraBooking;
+export default YatraBooking;
 
 const styles = StyleSheet.create({
   btnTextStyle: {
