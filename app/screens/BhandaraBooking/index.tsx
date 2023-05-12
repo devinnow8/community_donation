@@ -92,6 +92,7 @@ const BhandaraBooking = () => {
     if (!error) {
       sendOTP();
     }
+
     // otp Validation
     // if (userInfo.otp.length === 0) {
     //   setUserInfo((prevState) => {
@@ -122,7 +123,6 @@ const BhandaraBooking = () => {
     );
     if (confirmation) {
       setShowOtpField(true);
-      console.log("Confirmation", confirmation);
       setConfirm(confirmation);
     }
   };

@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 
 const TabView1 = () => {
-  const [selectedDate, setSelectedDate] = useState<any>({});
+  const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const navigation: any = useNavigation();
   const handleNavigation = (val: string) => {
     navigation.navigate("BhandaraBooking", {

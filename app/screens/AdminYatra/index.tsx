@@ -4,8 +4,12 @@ import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
-
+import { useNavigation } from "@react-navigation/native";
 const AdminYatra = () => {
+  const navigation: any = useNavigation();
+  const BookingDetail = () => {
+    navigation.navigate("AdminBookingDetail");
+  };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFF" }}>
       <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />
@@ -50,7 +54,7 @@ const AdminYatra = () => {
           alignItems: "center",
           borderRadius: 5,
         }}
-        onPress={() => {}}
+        onPress={() => BookingDetail()}
       >
         <Text
           style={{

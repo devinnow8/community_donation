@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
@@ -6,11 +13,20 @@ import HeaderBar from "../../ReusableComponents/HeaderBar";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 import firestore from "@react-native-firebase/firestore";
 import { useRoute } from "@react-navigation/native";
-
+import CustomModal from "../../ReusableComponents/Modal";
 const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
+  const [moneyErr, setMoneyErr] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const PayMoney = () => {
+    if (Number(selectedAmount) < 11000) {
+      setMoneyErr("* Amount should be above 11000rs *");
+    } else {
+      setShowModal(true);
+    }
+  };
   const { params } = useRoute();
-  const { name, phoneNumber, place, selectedDate, selectedTime } = params;
+  const { name, phoneNumber, place, selectedDate, selectedTime }: any = params;
   const saveData = async (mode: String) => {
     const currentData = {
       name,
@@ -63,13 +79,19 @@ const BhandaraBookingPayment = () => {
       </View>
 
       <View>
-        <TextInputs placeholder="11000" placeholderTextColor="#949494" />
+        <TextInputs
+          placeholder={selectedAmount}
+          placeholderTextColor="#949494"
+          value={selectedAmount}
+          onChangeText={(text: any) => setSelectedAmount(text)}
+          onFocus={() => setMoneyErr("")}
+        />
       </View>
 
       {/* moneyButtons */}
       <View style={styles.moneyButtonsContainer}>
         <TouchableOpacity
-          onPress={() => setSelectedAmount("21000")}
+          onPress={() => [setSelectedAmount("21000"), setMoneyErr("")]}
           style={[
             styles.btnStyle,
             {
@@ -93,7 +115,7 @@ const BhandaraBookingPayment = () => {
               backgroundColor: selectedAmount === "31000" ? "#EB6611" : "#FFF",
             },
           ]}
-          onPress={() => setSelectedAmount("31000")}
+          onPress={() => [setSelectedAmount("31000"), setMoneyErr("")]}
         >
           <Text
             style={[
@@ -105,7 +127,7 @@ const BhandaraBookingPayment = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setSelectedAmount("51000")}
+          onPress={() => [setSelectedAmount("51000"), setMoneyErr("")]}
           style={[
             styles.btnStyle,
             {
@@ -124,11 +146,22 @@ const BhandaraBookingPayment = () => {
         </TouchableOpacity>
       </View>
 
+      {/* error Msg */}
+
+      {moneyErr ? (
+        <View style={styles.errorContainer}>
+          <Text style={{ color: "red" }}>{moneyErr}</Text>
+        </View>
+      ) : (
+        <Text></Text>
+      )}
+
       {/* paying Options */}
 
-      <View style={styles.moneyButtonsContainer}>
+      <View style={styles.PayingButtonsContainer}>
         <TouchableOpacity
           style={[styles.payBtnStyle, { backgroundColor: "#EB6611" }]}
+          onPress={() => [PayMoney(), Keyboard.dismiss()]}
         >
           <Text style={[styles.btnTextStyle, { color: "#FFFFFF" }]}>
             Pay Online
@@ -137,12 +170,21 @@ const BhandaraBookingPayment = () => {
         <TouchableOpacity
           onPress={() => saveData("CASH")}
           style={[styles.payBtnStyle, { backgroundColor: "#EB6611" }]}
+          onPress={() => [PayMoney(), Keyboard.dismiss()]}
         >
           <Text style={[styles.btnTextStyle, { color: "#FFFFFF" }]}>
             Pay Cash
           </Text>
         </TouchableOpacity>
       </View>
+
+      {/* Modal  */}
+
+      <CustomModal
+        isVisible={showModal}
+        setIsVisible={() => setShowModal(false)}
+        message="भगवान् आपकी मनोकामना पूरी करे"
+      />
     </View>
   );
 };
@@ -163,7 +205,7 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     marginHorizontal: getWidth(110),
-    marginVertical: getHeight(40),
+
     height: getHeight(45),
     width: getWidth(93),
     justifyContent: "center",
@@ -176,6 +218,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginHorizontal: getWidth(30),
+
+    marginTop: getHeight(40),
   },
   payBtnStyle: {
     marginHorizontal: getWidth(110),
@@ -187,5 +231,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: "#EB6611",
     borderWidth: 1,
+  },
+  errorContainer: {
+    marginHorizontal: getWidth(34),
+  },
+  PayingButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginHorizontal: getWidth(30),
   },
 });

@@ -11,6 +11,7 @@ import InfoScreen from "../screens/InfoScreen";
 import AdminLogin from "../screens/AdminLogin";
 import AdminBhandara from "../screens/AdminBhandara";
 import AdminYatra from "../screens/AdminYatra";
+import AdminBookingDetail from "../screens/AdminBookingDetail";
 const Stack = createNativeStackNavigator();
 
 const NavigationStack = () => {
@@ -29,6 +30,10 @@ const NavigationStack = () => {
         <Stack.Screen name="AdminLogin" component={AdminLogin} />
         <Stack.Screen name="AdminBhandara" component={AdminBhandara} />
         <Stack.Screen name="AdminYatra" component={AdminYatra} />
+        <Stack.Screen
+          name="AdminBookingDetail"
+          component={AdminBookingDetail}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
