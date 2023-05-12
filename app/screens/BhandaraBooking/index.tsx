@@ -12,7 +12,12 @@ import TextInputs from "../../ReusableComponents/TextInputs";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+import auth from "@react-native-firebase/auth";
+import moment from "moment";
+
 const BhandaraBooking = () => {
+  const [confirm, setConfirm] = useState<any>(null);
+  const [showOtpField, setShowOtpField] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: "",
     phoneNumber: "",
@@ -26,9 +31,9 @@ const BhandaraBooking = () => {
   const route = useRoute();
   const navigation: any = useNavigation();
   const { time, date }: any = route.params;
-
   const SendOTP = () => {
     // Name Validation
+    let error = false;
     if (userInfo.name.length === 0) {
       setUserInfo((prevState) => {
         return {
@@ -36,6 +41,7 @@ const BhandaraBooking = () => {
           nameErrMsg: "*Please Fill The Missing Field*",
         };
       });
+      error = true;
     }
     // Phone number Validation
     const phoneReg = /[0-9]/;
@@ -47,6 +53,7 @@ const BhandaraBooking = () => {
           phoneErrMsg: "*Please Fill The Missing Field*",
         };
       });
+      error = true;
     } else if (userInfo.phoneNumber.length === 10 && validatePhoneNumber) {
       setUserInfo((prevState) => {
         return {
@@ -54,6 +61,7 @@ const BhandaraBooking = () => {
           phoneErrMsg: "",
         };
       });
+      // error = false;
     } else if (!validatePhoneNumber) {
       setUserInfo((prevState) => {
         return {
@@ -61,6 +69,7 @@ const BhandaraBooking = () => {
           phoneErrMsg: "*Phone number should be number digits*",
         };
       });
+      error = true;
     } else {
       setUserInfo((prevState) => {
         return {
@@ -68,6 +77,7 @@ const BhandaraBooking = () => {
           phoneErrMsg: "*Phone number should be 10 digits*",
         };
       });
+      error = true;
     }
     // placeValidation
     if (userInfo.place.length === 0) {
@@ -77,31 +87,61 @@ const BhandaraBooking = () => {
           placeErrMsg: "*Please Fill The Missing Field*",
         };
       });
+      error = true;
+    }
+    if (!error) {
+      sendOTP();
     }
     // otp Validation
-    if (userInfo.otp.length === 0) {
-      setUserInfo((prevState) => {
-        return {
-          ...prevState,
-          otpErrMsg: "*Please Fill The Missing Field*",
-        };
-      });
-    } else if (userInfo.otp.length === 6) {
-      setUserInfo((prevState) => {
-        return {
-          ...prevState,
-          otpErrMsg: "",
-        };
-      });
-    } else {
-      setUserInfo((prevState) => {
-        return {
-          ...prevState,
-          otpErrMsg: "*Invalid OTP*",
-        };
-      });
+    // if (userInfo.otp.length === 0) {
+    //   setUserInfo((prevState) => {
+    //     return {
+    //       ...prevState,
+    //       otpErrMsg: "*Please Fill The Missing Field*",
+    //     };
+    //   });
+    // } else if (userInfo.otp.length === 6) {
+    //   setUserInfo((prevState) => {
+    //     return {
+    //       ...prevState,
+    //       otpErrMsg: "",
+    //     };
+    //   });
+    // } else {
+    //   setUserInfo((prevState) => {
+    //     return {
+    //       ...prevState,
+    //       otpErrMsg: "*Invalid OTP*",
+    //     };
+    //   });
+    // }
+  };
+  const sendOTP = async () => {
+    const confirmation = await auth().signInWithPhoneNumber(
+      "+91" + userInfo.phoneNumber
+    );
+    if (confirmation) {
+      setShowOtpField(true);
+      console.log("Confirmation", confirmation);
+      setConfirm(confirmation);
     }
-    navigation.navigate("BhandaraBookingPayment");
+  };
+  const Confirm = async () => {
+    try {
+      const response = await confirm?.confirm(userInfo.otp);
+      console.log("Response", response);
+      if (response) {
+        navigation.navigate("BhandaraBookingPayment", {
+          name: userInfo.name,
+          phoneNumber: userInfo.phoneNumber,
+          place: userInfo.place,
+          selectedDate: date,
+          selectedTime: time,
+        });
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -112,7 +152,9 @@ const BhandaraBooking = () => {
 
       {/* Date Field */}
       <View style={styles.bookingDateContainer}>
-        <Text style={styles.bookingDateText}>{`${date} ${time}`}</Text>
+        <Text style={styles.bookingDateText}>{`${moment(date.dateString).format(
+          "dddd, DD MMM yyyy"
+        )} (${time})`}</Text>
       </View>
 
       {/* formFields */}
@@ -210,46 +252,55 @@ const BhandaraBooking = () => {
       ) : (
         <Text></Text>
       )}
+      {showOtpField && (
+        <>
+          <View>
+            <Labels labelName="OTP" />
+          </View>
 
-      <View>
-        <Labels labelName="OTP" />
-      </View>
-
-      <View>
-        <TextInputs
-          onChangeText={(val: string) =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                otp: val,
-              };
-            })
-          }
-          onFocus={() =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                otpErrMsg: "",
-              };
-            })
-          }
-        />
-      </View>
-
-      {userInfo.otpErrMsg ? (
-        <View style={styles.errorContainer}>
-          <Text style={{ color: "red" }}>{userInfo.otpErrMsg}</Text>
-        </View>
-      ) : (
-        <Text></Text>
+          <View>
+            <TextInputs
+              onChangeText={(val: string) =>
+                setUserInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    otp: val,
+                  };
+                })
+              }
+              onFocus={() =>
+                setUserInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    otpErrMsg: "",
+                  };
+                })
+              }
+            />
+          </View>
+          {userInfo.otpErrMsg && (
+            <View style={styles.errorContainer}>
+              <Text style={{ color: "red" }}>{userInfo.otpErrMsg}</Text>
+            </View>
+          )}
+        </>
       )}
 
       {/* confirmButton */}
       <TouchableOpacity
         style={styles.btnStyle}
-        onPress={() => [SendOTP(), Keyboard.dismiss()]}
+        onPress={() => {
+          Keyboard.dismiss();
+          if (!showOtpField) {
+            SendOTP();
+          } else {
+            Confirm();
+          }
+        }}
       >
-        <Text style={styles.btnTextStyle}>Send OTP</Text>
+        <Text style={styles.btnTextStyle}>
+          {!showOtpField ? "Send OTP" : "Confirm"}
+        </Text>
       </TouchableOpacity>
     </View>
   );

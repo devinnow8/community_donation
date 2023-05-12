@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { Calendar } from "react-native-calendars";
@@ -13,14 +14,33 @@ import moment from "moment";
 import styles from "./styles";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import { useNavigation } from "@react-navigation/native";
+import firestore from "@react-native-firebase/firestore";
+
 const TabView1 = () => {
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState<any>({});
   const navigation: any = useNavigation();
   const handleNavigation = (val: string) => {
     navigation.navigate("BhandaraBooking", {
       time: val,
-      date: moment(selectedDate).format("dddd, DD MMMM"),
+      date: selectedDate,
     });
+  };
+  const getCurrentDateData = async (timestamp: number) => {
+    firestore()
+      .collection("Test3")
+      .doc(timestamp.toString())
+      .get()
+      .then((data) => {
+        if (data._exists) {
+          console.log("Data for current Date", data);
+        }
+      })
+      .catch(() => {
+        Alert.alert("Error fetching collections");
+      })
+      .finally(() => {
+        // dispatch(setLoader(false));
+      });
   };
   return (
     <>
@@ -63,15 +83,13 @@ const TabView1 = () => {
               </View>
             );
           }}
-          date={selectedDate}
-          onDayPress={(res) => {
-            setSelectedDate(res.dateString);
-          }}
+          date={selectedDate.dateString}
           dayComponent={(res: any) => {
             return (
               <TouchableOpacity
                 onPress={() => {
-                  setSelectedDate(res.date?.dateString);
+                  setSelectedDate(res.date);
+                  getCurrentDateData(res.date.timestamp);
                 }}
                 style={[
                   styles.dateView,
@@ -79,7 +97,7 @@ const TabView1 = () => {
                     backgroundColor:
                       res.state === "disabled"
                         ? "white"
-                        : selectedDate === res.date?.dateString
+                        : selectedDate.dateString === res.date?.dateString
                         ? "#EB6611"
                         : "#FFF7E7",
                   },
@@ -90,7 +108,7 @@ const TabView1 = () => {
                     color:
                       res.state === "disabled"
                         ? "black"
-                        : selectedDate === res.date?.dateString
+                        : selectedDate.dateString === res.date?.dateString
                         ? "white"
                         : "#EB6611",
                   }}
@@ -101,9 +119,11 @@ const TabView1 = () => {
             );
           }}
         />
-        {selectedDate !== "" && (
+        {selectedDate.dateString !== "" && (
           <View style={styles.timeSlotWrapper}>
-            <Text>{moment(selectedDate).format("dddd, MMMM DD")}</Text>
+            <Text>
+              {moment(selectedDate.dateString).format("dddd, MMMM DD")}
+            </Text>
             <View style={styles.selectedDateView}>
               <TouchableOpacity
                 onPress={() => handleNavigation("11:00 AM")}

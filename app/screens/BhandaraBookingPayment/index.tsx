@@ -1,11 +1,55 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import firestore from "@react-native-firebase/firestore";
+import { useRoute } from "@react-navigation/native";
+
 const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
+  const { params } = useRoute();
+  const { name, phoneNumber, place, selectedDate, selectedTime } = params;
+  const saveData = async (mode: String) => {
+    const currentData = {
+      name,
+      phoneNumber,
+      place,
+      selectedDate: selectedDate.dateString,
+      selectedTime,
+      amount: selectedAmount,
+      mode,
+      status: mode === "CASH" ? "Pending" : "Completed",
+    };
+    firestore()
+      .collection("Test3")
+      .doc(selectedDate.timestamp.toString())
+      .get()
+      .then((data) => {
+        console.log("Getting Data from Collection", data._exists);
+        let newData = [currentData];
+        if (data._exists) {
+          newData = [...newData, data._data];
+        }
+        firestore()
+          .collection("Test3")
+          .doc(selectedDate.timestamp.toString())
+          .set({ [selectedTime]: newData }, { merge: true })
+          .then((res) => {
+            console.log("Response after adding new data", res);
+          })
+          .catch((err) => {
+            console.log("Error", err);
+          });
+      })
+      .catch(() => {
+        Alert.alert("Error fetching collections");
+      })
+      .finally(() => {
+        // dispatch(setLoader(false));
+      });
+  };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* headerBar */}
@@ -91,6 +135,7 @@ const BhandaraBookingPayment = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => saveData("CASH")}
           style={[styles.payBtnStyle, { backgroundColor: "#EB6611" }]}
         >
           <Text style={[styles.btnTextStyle, { color: "#FFFFFF" }]}>
