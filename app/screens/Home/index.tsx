@@ -29,7 +29,21 @@ const TabView1 = () => {
           style={styles.imageStyle}
           source={require("../../assets/images/MainScreenIcon.png")}
         />
-        <Text style={styles.headingText}>'सब की सेवा, रब की सेवा' ट्रस्ट</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={styles.headingText}>
+            'सब की सेवा, रब की सेवा' ट्रस्ट
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("InfoScreen");
+            }}
+          >
+            <Image
+              style={{ marginLeft: 5 }}
+              source={require("../../assets/images/InfoIcon.png")}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.calendarView}>
         <Calendar

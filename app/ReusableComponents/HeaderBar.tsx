@@ -7,6 +7,8 @@ interface IHeaderBarText {
   HeadingRightText?: string;
   twoHeadings?: boolean;
   hasBackButton?: any;
+  rightText?: String;
+  onRightButtonPress?: any;
 }
 
 const HeaderBar = ({
@@ -15,6 +17,8 @@ const HeaderBar = ({
   headingLeftText,
   HeadingRightText,
   hasBackButton,
+  rightText,
+  onRightButtonPress,
 }: IHeaderBarText) => {
   const navigation: any = useNavigation();
 
@@ -38,6 +42,7 @@ const HeaderBar = ({
         <View style={[styles.headerBarContainer]}>
           {hasBackButton && (
             <TouchableOpacity
+              style={rightText && { width: 40 }}
               onPress={() => {
                 navigation.goBack();
               }}
@@ -46,7 +51,14 @@ const HeaderBar = ({
             </TouchableOpacity>
           )}
           <Text style={styles.headerBarText}>{headingText}</Text>
-          <Text></Text>
+          <Text
+            style={styles.rightText}
+            onPress={() => {
+              onRightButtonPress && onRightButtonPress();
+            }}
+          >
+            {rightText}
+          </Text>
         </View>
       )}
     </View>
@@ -76,4 +88,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  rightText: { fontSize: 16, fontWeight: "700", color: "#EB6611" },
 });

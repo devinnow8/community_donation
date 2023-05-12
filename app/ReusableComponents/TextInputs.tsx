@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
     borderColor: "#BCBCBC",
     marginTop: getHeight(4),
     padding: getWidth(8),
+    borderRadius: getWidth(5),
   },
 });
