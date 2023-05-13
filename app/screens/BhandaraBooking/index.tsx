@@ -154,7 +154,7 @@ const BhandaraBooking = () => {
       <View style={styles.bookingDateContainer}>
         <Text style={styles.bookingDateText}>{`${moment(date.dateString).format(
           "dddd, DD MMM yyyy"
-        )} (${time})`}</Text>
+        )} (${time === 0 ? "11:00  AM" : "02:00 PM"})`}</Text>
       </View>
 
       {/* formFields */}

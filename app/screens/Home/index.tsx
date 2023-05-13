@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Calendar } from "react-native-calendars";
 import moment from "moment";
 import styles from "./styles";
@@ -18,24 +19,32 @@ import firestore from "@react-native-firebase/firestore";
 
 const TabView1 = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
+  const [loader, setLoader] = useState(false);
+  const [selectedDateData, setSelectedDateData] = useState<any>({});
   const navigation: any = useNavigation();
-  const handleNavigation = (val: string) => {
+  const handleNavigation = (val: number) => {
     navigation.navigate("BhandaraBooking", {
       time: val,
       date: selectedDate,
     });
   };
   const getCurrentDateData = async (timestamp: number) => {
+    setLoader(true);
     firestore()
-      .collection("Test3")
+      .collection("Test4")
       .doc(timestamp.toString())
       .get()
       .then((data) => {
+        setLoader(false);
         if (data._exists) {
           console.log("Data for current Date", data);
+          setSelectedDateData(data?._data);
+        } else {
+          setSelectedDateData({});
         }
       })
       .catch(() => {
+        setLoader(false);
         Alert.alert("Error fetching collections");
       })
       .finally(() => {
@@ -124,20 +133,90 @@ const TabView1 = () => {
             <Text>
               {moment(selectedDate.dateString).format("dddd, MMMM DD")}
             </Text>
-            <View style={styles.selectedDateView}>
-              <TouchableOpacity
-                onPress={() => handleNavigation("11:00 AM")}
-                style={styles.timeSlotView}
-              >
-                <Text style={styles.timeText}>11:00 AM</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => handleNavigation("02:00 PM")}
-                style={styles.timeSlotView}
-              >
-                <Text style={styles.timeText}>02:00 PM</Text>
-              </TouchableOpacity>
-            </View>
+            {loader ? (
+              <ActivityIndicator />
+            ) : (
+              <View style={styles.selectedDateView}>
+                <View>
+                  <TouchableOpacity
+                    disabled={selectedDateData.firstSlot}
+                    onPress={() => handleNavigation(0)}
+                    style={[
+                      styles.timeSlotView,
+                      {
+                        borderColor: selectedDateData.firstSlot
+                          ? "gray"
+                          : "#EB6611",
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.timeText,
+                        {
+                          color: selectedDateData.firstSlot
+                            ? "grey"
+                            : "#EB6611",
+                        },
+                      ]}
+                    >
+                      11:00 AM
+                    </Text>
+                  </TouchableOpacity>
+                  {selectedDateData.firstSlot && (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginTop: 10,
+                      }}
+                    >
+                      <Text>{selectedDateData.firstSlot?.name}</Text>
+                      <Text>{selectedDateData.firstSlot?.amount}</Text>
+                    </View>
+                  )}
+                </View>
+                <View>
+                  <TouchableOpacity
+                    disabled={selectedDateData.secondSlot}
+                    onPress={() => handleNavigation(1)}
+                    style={[
+                      styles.timeSlotView,
+                      {
+                        borderColor: selectedDateData.secondSlot
+                          ? "gray"
+                          : "#EB6611",
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.timeText,
+                        {
+                          color: selectedDateData.secondSlot
+                            ? "gray"
+                            : "#EB6611",
+                        },
+                      ]}
+                    >
+                      02:00 PM
+                    </Text>
+                  </TouchableOpacity>
+                  {selectedDateData.secondSlot && (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginTop: 10,
+                      }}
+                    >
+                      <Text>{selectedDateData.secondSlot?.name}</Text>
+                      <Text>{selectedDateData.secondSlot?.amount}</Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+            )}
           </View>
         )}
       </View>

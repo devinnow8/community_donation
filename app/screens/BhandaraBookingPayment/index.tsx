@@ -18,42 +18,40 @@ const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
   const [moneyErr, setMoneyErr] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const PayMoney = () => {
+  const PayMoney = (mode: string) => {
     if (Number(selectedAmount) < 11000) {
       setMoneyErr("* Amount should be above 11000rs *");
     } else {
-      setShowModal(true);
+      saveData(mode);
     }
   };
   const { params } = useRoute();
   const { name, phoneNumber, place, selectedDate, selectedTime }: any = params;
   const saveData = async (mode: String) => {
+    const selectedTimeSlot = selectedTime === 0 ? "firstSlot" : "secondSlot";
     const currentData = {
       name,
       phoneNumber,
       place,
       selectedDate: selectedDate.dateString,
-      selectedTime,
+      selectedTime: selectedTimeSlot,
       amount: selectedAmount,
       mode,
       status: mode === "CASH" ? "Pending" : "Completed",
     };
     firestore()
-      .collection("Test3")
+      .collection("Test4")
       .doc(selectedDate.timestamp.toString())
       .get()
       .then((data) => {
         console.log("Getting Data from Collection", data._exists);
-        let newData = [currentData];
-        if (data._exists) {
-          newData = [...newData, data._data];
-        }
         firestore()
-          .collection("Test3")
+          .collection("Test4")
           .doc(selectedDate.timestamp.toString())
-          .set({ [selectedTime]: newData }, { merge: true })
+          .set({ [selectedTimeSlot]: currentData }, { merge: true })
           .then((res) => {
             console.log("Response after adding new data", res);
+            setShowModal(true);
           })
           .catch((err) => {
             console.log("Error", err);
@@ -62,9 +60,6 @@ const BhandaraBookingPayment = () => {
       .catch(() => {
         Alert.alert("Error fetching collections");
       })
-      .finally(() => {
-        // dispatch(setLoader(false));
-      });
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -161,16 +156,15 @@ const BhandaraBookingPayment = () => {
       <View style={styles.PayingButtonsContainer}>
         <TouchableOpacity
           style={[styles.payBtnStyle, { backgroundColor: "#EB6611" }]}
-          onPress={() => [PayMoney(), Keyboard.dismiss()]}
+          onPress={() => [PayMoney("ONLINE"), Keyboard.dismiss()]}
         >
           <Text style={[styles.btnTextStyle, { color: "#FFFFFF" }]}>
             Pay Online
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => saveData("CASH")}
           style={[styles.payBtnStyle, { backgroundColor: "#EB6611" }]}
-          onPress={() => [PayMoney(), Keyboard.dismiss()]}
+          onPress={() => [PayMoney("CASH"), Keyboard.dismiss()]}
         >
           <Text style={[styles.btnTextStyle, { color: "#FFFFFF" }]}>
             Pay Cash
