@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
@@ -8,15 +8,15 @@ import { useNavigation } from "@react-navigation/native";
 const AdminLogin = () => {
   const navigation: any = useNavigation();
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFF" }}>
+    <View style={styles.adminLoginContainer}>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
-      <View style={{ marginTop: 35 }}>
+      <View style={styles.idLabelContainer}>
         <Labels labelName="ID नंबर " />
       </View>
       <View>
         <TextInputs />
       </View>
-      <View style={{ marginTop: 20 }}>
+      <View style={styles.passwordContainer}>
         <Labels labelName="पासवर्ड" />
       </View>
       <View>

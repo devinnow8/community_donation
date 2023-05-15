@@ -12,14 +12,7 @@ const SeatEditModal = ({
 }: any) => {
   return (
     <Modal isVisible={isVisible}>
-      <View
-        style={{
-          backgroundColor: "#FFFFFF",
-          alignItems: "center",
-          paddingVertical: getHeight(18),
-          borderRadius: 10,
-        }}
-      >
+      <View style={styles.seatModalOuterContainer}>
         <TouchableOpacity onPress={() => setIsVisible(false)}>
           <Image
             source={require("../assets/images/crossIcon.png")}
@@ -28,7 +21,7 @@ const SeatEditModal = ({
         </TouchableOpacity>
 
         <Text
-          style={{ fontSize: 16, fontWeight: "800" }}
+          style={styles.seatModalHeadingText}
         >{`${listData[index]?.name} reserved Seats`}</Text>
 
         <View style={styles.seatsCountContainer}>
@@ -59,15 +52,7 @@ const SeatEditModal = ({
 
         {/* SaveButton */}
         <View style={styles.saveBtn}>
-          <Text
-            style={{
-              textAlign: "center",
-              color: "white",
-              fontSize: 15,
-            }}
-          >
-            Save
-          </Text>
+          <Text style={styles.saveButtonText}>Save</Text>
         </View>
       </View>
     </Modal>
@@ -85,13 +70,12 @@ const styles = StyleSheet.create({
   seatsCountContainer: {
     flexDirection: "row",
     marginVertical: getHeight(16),
-
-    width: 100,
+    width: getWidth(100),
     justifyContent: "space-between",
     alignItems: "center",
   },
   updateBtn: {
-    fontSize: 20,
+    fontSize: getHeight(20),
     fontWeight: "700",
   },
   updateNumberContainer: {
@@ -108,5 +92,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#EB6611",
     justifyContent: "center",
     borderRadius: 5,
+  },
+  seatModalOuterContainer: {
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    paddingVertical: getHeight(18),
+    borderRadius: 10,
+  },
+  seatModalHeadingText: {
+    fontSize: getHeight(16),
+    fontWeight: "800",
+  },
+  saveButtonText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: getHeight(15),
   },
 });

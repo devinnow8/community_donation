@@ -1,16 +1,10 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  FlatList,
-} from "react-native";
+import { Image, Text, TouchableOpacity, View, FlatList } from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import { useNavigation } from "@react-navigation/native";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { getWidth } from "../../utils/pixelConversion";
 import SeatEditModal from "../../ReusableComponents/SeatEditModal";
+import styles from "./styles";
 const passengerData = [
   {
     id: 1,
@@ -74,80 +68,36 @@ const AdminBookingDetail = () => {
           </TouchableOpacity>
         </View>
 
-        <Text
-          style={{
-            color: "#EB6611",
-            fontSize: 18,
-            alignSelf: "center",
-            marginTop: 5,
-          }}
-        >
+        <Text style={styles.bookingContainerHeadingText}>
           चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर)
         </Text>
 
-        <View
-          style={{
-            alignSelf: "center",
-            marginTop: 22,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text style={{ width: "45%" }}>Onboarding Point : </Text>
-            <Text style={{ width: 150, textAlign: "left" }}>
+        <View style={styles.belowHeadingTextOuterContainer}>
+          <View style={styles.belowHeadingTextSubContainer}>
+            <Text style={styles.leftSideText}>Onboarding Point : </Text>
+            <Text style={styles.rightSideText}>
               Housing board lights Chandigarh
             </Text>
           </View>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 10,
-            }}
+            style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
           >
-            <Text style={{ width: "45%" }}>Time of Departure : </Text>
-            <Text style={{ width: 150, textAlign: "left" }}>08:00 AM</Text>
+            <Text style={styles.leftSideText}>Time of Departure : </Text>
+            <Text style={styles.rightSideText}>08:00 AM</Text>
           </View>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 10,
-            }}
+            style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
           >
-            <Text style={{ width: "45%" }}>Seats Available :</Text>
-            <Text style={{ width: 150, textAlign: "left" }}>50 Seats</Text>
+            <Text style={styles.leftSideText}>Seats Available :</Text>
+            <Text style={styles.rightSideText}>50 Seats</Text>
           </View>
         </View>
       </View>
 
       {/* seats Available */}
       <View style={styles.availableSeatsContainer}>
-        <Text
-          style={{
-            textAlign: "center",
-            marginLeft: getWidth(15),
-            fontSize: 16,
-            fontWeight: "600",
-          }}
-        >
-          Available Seats{" "}
-        </Text>
-        <Text
-          style={{
-            textAlign: "center",
-            marginRight: getWidth(15),
-            color: "#EB6611",
-            fontSize: 16,
-            fontWeight: "600",
-          }}
-        >
-          20 Seats
-        </Text>
+        <Text style={styles.seatAvailableText}>Available Seats </Text>
+        <Text style={styles.seatAvailableNumberText}>20 Seats</Text>
       </View>
 
       {/* chart */}
@@ -204,61 +154,3 @@ const AdminBookingDetail = () => {
 };
 
 export default AdminBookingDetail;
-
-const styles = StyleSheet.create({
-  bookingDetailContainer: {
-    backgroundColor: "#FFF8F3",
-    marginHorizontal: getWidth(24),
-    borderRadius: 7,
-    paddingVertical: getHeight(14),
-    shadowColor: "grey",
-    shadowOffset: { height: 10, width: 0 },
-    shadowRadius: 5,
-    shadowOpacity: 0.2,
-    marginTop: 20,
-  },
-  iconEditStyle: {
-    height: getHeight(20),
-    width: getWidth(20),
-    marginLeft: getWidth(300),
-    marginRight: getWidth(50),
-    position: "absolute",
-    marginTop: getHeight(-20),
-  },
-  availableSeatsContainer: {
-    width: getWidth(325),
-    height: getHeight(40),
-    backgroundColor: "#FFF8F3",
-    marginHorizontal: getWidth(24),
-    marginVertical: getHeight(30),
-    shadowColor: "grey",
-    shadowOffset: { height: 10, width: 0 },
-    shadowRadius: 5,
-    shadowOpacity: 0.2,
-    borderRadius: 7,
-    padding: getHeight(10),
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  chartContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderBottomWidth: 1,
-    paddingVertical: 5,
-  },
-  chatOuterContainer: {
-    marginHorizontal: getWidth(30),
-  },
-  horizontalBar: {
-    borderWidth: 0.6,
-    marginVertical: getHeight(8),
-  },
-  chartItems: {
-    width: getWidth(120),
-  },
-  chartIconOuter: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-});

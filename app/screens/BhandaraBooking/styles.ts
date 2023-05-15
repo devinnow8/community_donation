@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 
 const styles = StyleSheet.create({

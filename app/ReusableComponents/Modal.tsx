@@ -1,45 +1,23 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
-import { getHeight } from "../utils/pixelConversion";
+import { getHeight, getWidth } from "../utils/pixelConversion";
 
-const CustomModal = ({ isVisible, setIsVisible, message }) => {
+const CustomModal = ({ isVisible, setIsVisible, message }: any) => {
   return (
     <Modal isVisible={isVisible}>
-      <View
-        style={{
-          backgroundColor: "#FFFFFF",
-          alignItems: "center",
-          paddingVertical: getHeight(18),
-          borderRadius: 10,
-        }}
-      >
+      <View style={styles.modalOuterContainer}>
         <Image source={require("../assets/images/ThanksIcon.png")} />
-        <Text
-          style={{
-            fontSize: 17,
-            fontWeight: "600",
-            color: "#4B4B4B",
-            marginTop: 13,
-          }}
-        >
+        <Text style={styles.modalHeadingText}>
           {message ?? "आपकी यात्रा मंगलमय रहे"}
         </Text>
         <TouchableOpacity
-          style={{
-            paddingVertical: 9,
-            paddingHorizontal: 34,
-            backgroundColor: "#EB6611",
-            borderRadius: 5,
-            marginTop: 17,
-          }}
+          style={styles.modalGreetingButton}
           onPress={() => {
             setIsVisible(false);
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "700", color: "#FFF" }}>
-            धन्यवाद!
-          </Text>
+          <Text style={styles.modalButtonText}>धन्यवाद!</Text>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -48,4 +26,29 @@ const CustomModal = ({ isVisible, setIsVisible, message }) => {
 
 export default CustomModal;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  modalOuterContainer: {
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    paddingVertical: getHeight(18),
+    borderRadius: 10,
+  },
+  modalHeadingText: {
+    fontSize: getHeight(17),
+    fontWeight: "600",
+    color: "#4B4B4B",
+    marginTop: getHeight(13),
+  },
+  modalGreetingButton: {
+    paddingVertical: getHeight(9),
+    paddingHorizontal: getWidth(34),
+    backgroundColor: "#EB6611",
+    borderRadius: 5,
+    marginTop: getHeight(17),
+  },
+  modalButtonText: {
+    fontSize: getHeight(22),
+    fontWeight: "700",
+    color: "#FFF",
+  },
+});

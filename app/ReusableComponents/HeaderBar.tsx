@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { getHeight, getWidth } from "../utils/pixelConversion";
 interface IHeaderBarText {
   headingText?: string;
   headingLeftText?: string;
@@ -29,12 +30,7 @@ const HeaderBar = ({
           <Text style={[styles.headerBarText, { marginLeft: 20 }]}>
             {headingLeftText}
           </Text>
-          <Text
-            style={[
-              styles.headerBarText,
-              { color: "#EB6611", marginRight: 20 },
-            ]}
-          >
+          <Text style={[styles.headerBarText, styles.headerBarRightText]}>
             {HeadingRightText}
           </Text>
         </View>
@@ -70,16 +66,16 @@ export default HeaderBar;
 const styles = StyleSheet.create({
   headerBarContainer: {
     padding: 12,
-    paddingHorizontal: 20,
+    paddingHorizontal: getWidth(20),
     backgroundColor: "#FFF7E7",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   headerBarText: {
-    fontSize: 17,
+    fontSize: getHeight(17),
     fontWeight: "600",
-    lineHeight: 22,
+    lineHeight: getHeight(22),
     letterSpacing: -0.4,
   },
   headerBarContainerWithTwoFields: {
@@ -88,5 +84,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  rightText: { fontSize: 16, fontWeight: "700", color: "#EB6611" },
+  rightText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#EB6611",
+  },
+  headerBarRightText: {
+    color: "#EB6611",
+    marginRight: 20,
+  },
 });

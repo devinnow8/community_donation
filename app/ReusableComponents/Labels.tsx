@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-
+import { getWidth, getHeight } from "../utils/pixelConversion";
 interface ILabelName {
   labelName: string;
 }
@@ -17,11 +17,11 @@ export default Labels;
 const styles = StyleSheet.create({
   labelContainer: {
     // marginTop: 10,
-    marginLeft: 34,
+    marginLeft: getWidth(34),
   },
   labelText: {
     color: "#EB6611",
     fontWeight: "400",
-    fontSize: 16,
+    fontSize: getHeight(16),
   },
 });

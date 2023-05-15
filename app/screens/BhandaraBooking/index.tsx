@@ -1,20 +1,13 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Keyboard,
-} from "react-native";
+import { Text, View, TouchableOpacity, Keyboard } from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import moment from "moment";
-
+import styles from "./styles";
 const BhandaraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
@@ -184,7 +177,7 @@ const BhandaraBooking = () => {
       </View>
       {userInfo.nameErrMsg ? (
         <View style={styles.errorContainer}>
-          <Text style={{ color: "red" }}>{userInfo.nameErrMsg}</Text>
+          <Text style={styles.errorText}>{userInfo.nameErrMsg}</Text>
         </View>
       ) : (
         <Text></Text>
@@ -216,7 +209,7 @@ const BhandaraBooking = () => {
       </View>
       {userInfo.phoneErrMsg ? (
         <View style={styles.errorContainer}>
-          <Text style={{ color: "red" }}>{userInfo.phoneErrMsg}</Text>
+          <Text style={styles.errorText}>{userInfo.phoneErrMsg}</Text>
         </View>
       ) : (
         <Text></Text>
@@ -247,7 +240,7 @@ const BhandaraBooking = () => {
       </View>
       {userInfo.placeErrMsg ? (
         <View style={styles.errorContainer}>
-          <Text style={{ color: "red" }}>{userInfo.placeErrMsg}</Text>
+          <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
         </View>
       ) : (
         <Text></Text>
@@ -280,7 +273,7 @@ const BhandaraBooking = () => {
           </View>
           {userInfo.otpErrMsg && (
             <View style={styles.errorContainer}>
-              <Text style={{ color: "red" }}>{userInfo.otpErrMsg}</Text>
+              <Text style={styles.errorText}>{userInfo.otpErrMsg}</Text>
             </View>
           )}
         </>
@@ -307,34 +300,3 @@ const BhandaraBooking = () => {
 };
 
 export default BhandaraBooking;
-
-const styles = StyleSheet.create({
-  btnTextStyle: {
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "400",
-    color: "#FFFFFF",
-  },
-  btnStyle: {
-    backgroundColor: "#EB6611",
-    marginHorizontal: getWidth(110),
-    marginVertical: getHeight(40),
-    height: getHeight(40),
-    width: getWidth(154),
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  errorContainer: {
-    marginHorizontal: getWidth(34),
-    marginBottom: getHeight(30),
-  },
-  bookingDateContainer: {
-    marginHorizontal: getWidth(35),
-    marginVertical: getHeight(30),
-  },
-  bookingDateText: {
-    fontSize: 20,
-    fontWeight: "400",
-  },
-});

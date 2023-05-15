@@ -3,74 +3,54 @@ import React from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
 import { useNavigation } from "@react-navigation/native";
+import styles from "./styles";
 const AdminYatra = () => {
   const navigation: any = useNavigation();
   const BookingDetail = () => {
     navigation.navigate("AdminBookingDetail");
   };
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFF" }}>
+    <View style={styles.outerContainer}>
       <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />
-      <View style={{ marginTop: 35 }}>
+      <View style={styles.nameLabel}>
         <Labels labelName="Name" />
       </View>
       <View>
         <TextInputs />
       </View>
-      <View style={{ marginTop: 13 }}>
+      <View style={styles.labelViewStyle}>
         <Labels labelName="Date" />
       </View>
       <View>
         <TextInputs />
       </View>
-      <View style={{ marginTop: 13 }}>
+      <View style={styles.labelViewStyle}>
         <Labels labelName="Onboarding point" />
       </View>
       <View>
         <TextInputs />
       </View>
-      <View style={{ marginTop: 13 }}>
+      <View style={styles.labelViewStyle}>
         <Labels labelName="TIme of Departure" />
       </View>
       <View>
         <TextInputs />
       </View>
-      <View style={{ marginTop: 13 }}>
+      <View style={styles.labelViewStyle}>
         <Labels labelName="Seats" />
       </View>
       <View>
         <TextInputs />
       </View>
       <TouchableOpacity
-        style={{
-          backgroundColor: "#EB6611",
-          marginHorizontal: getWidth(110),
-          marginVertical: getHeight(40),
-          height: getHeight(40),
-          width: getWidth(154),
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 5,
-        }}
+        style={styles.submitButtonContainer}
         onPress={() => BookingDetail()}
       >
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 18,
-            fontWeight: "700",
-            color: "#FFFFFF",
-          }}
-        >
-          Submit
-        </Text>
+        <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 export default AdminYatra;
-
-const styles = StyleSheet.create({});

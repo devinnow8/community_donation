@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
 import styles from "./styles";
 
 const MockData = [

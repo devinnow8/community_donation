@@ -10,10 +10,10 @@ import React, { useState } from "react";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
 import firestore from "@react-native-firebase/firestore";
 import { useRoute } from "@react-navigation/native";
 import CustomModal from "../../ReusableComponents/Modal";
+import styles from "./styles";
 const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
   const [moneyErr, setMoneyErr] = useState("");
@@ -59,7 +59,7 @@ const BhandaraBookingPayment = () => {
       })
       .catch(() => {
         Alert.alert("Error fetching collections");
-      })
+      });
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -184,54 +184,3 @@ const BhandaraBookingPayment = () => {
 };
 
 export default BhandaraBookingPayment;
-
-const styles = StyleSheet.create({
-  paymentFieldContainer: {
-    marginTop: getHeight(35),
-  },
-  btnTextStyle: {
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "400",
-    color: "#EB6611",
-    paddingVertical: getHeight(10),
-    paddingHorizontal: getWidth(20),
-  },
-  btnStyle: {
-    marginHorizontal: getWidth(110),
-
-    height: getHeight(45),
-    width: getWidth(93),
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-    borderColor: "#EB6611",
-    borderWidth: 1,
-  },
-  moneyButtonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginHorizontal: getWidth(30),
-
-    marginTop: getHeight(40),
-  },
-  payBtnStyle: {
-    marginHorizontal: getWidth(110),
-    marginVertical: getHeight(40),
-    height: getHeight(45),
-    width: getWidth(146),
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-    borderColor: "#EB6611",
-    borderWidth: 1,
-  },
-  errorContainer: {
-    marginHorizontal: getWidth(34),
-  },
-  PayingButtonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginHorizontal: getWidth(30),
-  },
-});

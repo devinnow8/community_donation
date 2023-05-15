@@ -1,17 +1,12 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Keyboard,
-} from "react-native";
+import { Text, View, TouchableOpacity, Keyboard } from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
-import { useRoute } from "@react-navigation/native";
+import { getHeight } from "../../utils/pixelConversion";
+
 import CustomModal from "../../ReusableComponents/Modal";
+import styles from "./styles";
 const YatraBooking = () => {
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -83,7 +78,7 @@ const YatraBooking = () => {
       </View>
 
       {/* formFields */}
-      <View style={{ marginTop: 20 }}>
+      <View style={{ marginTop: getHeight(20) }}>
         <Labels labelName="नाम" />
       </View>
 
@@ -109,7 +104,7 @@ const YatraBooking = () => {
       </View>
       {userInfo.nameErrMsg ? (
         <View style={styles.errorContainer}>
-          <Text style={{ color: "red" }}>{userInfo.nameErrMsg}</Text>
+          <Text style={styles.errorText}>{userInfo.nameErrMsg}</Text>
         </View>
       ) : (
         <Text></Text>
@@ -141,7 +136,7 @@ const YatraBooking = () => {
       </View>
       {userInfo.phoneErrMsg ? (
         <View style={styles.errorContainer}>
-          <Text style={{ color: "red" }}>{userInfo.phoneErrMsg}</Text>
+          <Text style={styles.errorText}>{userInfo.phoneErrMsg}</Text>
         </View>
       ) : (
         <Text></Text>
@@ -172,7 +167,7 @@ const YatraBooking = () => {
       </View>
       {userInfo.placeErrMsg ? (
         <View style={styles.errorContainer}>
-          <Text style={{ color: "red" }}>{userInfo.placeErrMsg}</Text>
+          <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
         </View>
       ) : (
         <Text></Text>
@@ -199,34 +194,3 @@ const YatraBooking = () => {
 };
 
 export default YatraBooking;
-
-const styles = StyleSheet.create({
-  btnTextStyle: {
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "400",
-    color: "#FFFFFF",
-  },
-  btnStyle: {
-    backgroundColor: "#EB6611",
-    marginHorizontal: getWidth(110),
-    marginVertical: getHeight(40),
-    height: getHeight(40),
-    width: getWidth(154),
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  errorContainer: {
-    marginHorizontal: getWidth(34),
-    marginBottom: getHeight(30),
-  },
-  bookingDateContainer: {
-    marginHorizontal: getWidth(35),
-    marginVertical: getHeight(30),
-  },
-  bookingDateText: {
-    fontSize: 20,
-    fontWeight: "400",
-  },
-});
