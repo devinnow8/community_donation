@@ -74,5 +74,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: "45%",
   },
+  buttonsView:{
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginTop: 16,
+  }
 });
 export default styles;

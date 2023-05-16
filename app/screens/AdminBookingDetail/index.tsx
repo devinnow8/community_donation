@@ -1,10 +1,11 @@
 import { Image, Text, TouchableOpacity, View, FlatList } from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
-import { useNavigation } from "@react-navigation/native";
-import { getWidth } from "../../utils/pixelConversion";
-import SeatEditModal from "../../ReusableComponents/SeatEditModal";
 import styles from "./styles";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { getHeight, getWidth } from "../../utils/pixelConversion";
+import SeatEditModal from "../../ReusableComponents/SeatEditModal";
+import moment from "moment";
 const passengerData = [
   {
     id: 1,
@@ -39,6 +40,8 @@ const passengerData = [
 ];
 const AdminBookingDetail = () => {
   const navigation = useNavigation();
+  const {params} = useRoute()
+  const {yatraDetails} = params
   const [showModal, setShowModal] = useState(false);
   const [listData, setListData] = useState(passengerData);
   const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
@@ -57,7 +60,7 @@ const AdminBookingDetail = () => {
           <Text
             style={{ fontSize: 16, fontWeight: "600", alignSelf: "center" }}
           >
-            12 JUN 2023
+            {moment(yatraDetails.date)?.format('DD MMM YYYY')}
           </Text>
           <TouchableOpacity>
             <Image
@@ -69,27 +72,35 @@ const AdminBookingDetail = () => {
         </View>
 
         <Text style={styles.bookingContainerHeadingText}>
-          चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर)
+          {/* चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर) */}
+          {yatraDetails.name}
+
         </Text>
 
         <View style={styles.belowHeadingTextOuterContainer}>
           <View style={styles.belowHeadingTextSubContainer}>
             <Text style={styles.leftSideText}>Onboarding Point : </Text>
             <Text style={styles.rightSideText}>
-              Housing board lights Chandigarh
+              {/* Housing board lights Chandigarh */}
+          {yatraDetails.onboardingPoint}
+
             </Text>
           </View>
           <View
             style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
           >
             <Text style={styles.leftSideText}>Time of Departure : </Text>
-            <Text style={styles.rightSideText}>08:00 AM</Text>
+            <Text style={styles.rightSideText}>
+          {yatraDetails.timeOfDeparture}
+              
+            </Text>
           </View>
           <View
             style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
           >
             <Text style={styles.leftSideText}>Seats Available :</Text>
-            <Text style={styles.rightSideText}>50 Seats</Text>
+            <Text style={styles.rightSideText}>{yatraDetails?.totalSeats}{' '}
+               Seats</Text>
           </View>
         </View>
       </View>
@@ -97,7 +108,7 @@ const AdminBookingDetail = () => {
       {/* seats Available */}
       <View style={styles.availableSeatsContainer}>
         <Text style={styles.seatAvailableText}>Available Seats </Text>
-        <Text style={styles.seatAvailableNumberText}>20 Seats</Text>
+        <Text style={styles.seatAvailableNumberText}>{yatraDetails?.availableSeats} Seats</Text>
       </View>
 
       {/* chart */}

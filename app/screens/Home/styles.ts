@@ -3,6 +3,18 @@ import { getHeight, getWidth } from "../../utils/pixelConversion";
 const styles = StyleSheet.create({
   mainContainer: { flex: 1, alignItems: "center", justifyContent: "center" },
   mainImage: { alignItems: "center", marginTop: 10 },
+  mainImage2:{ height: 83, width: 83, borderRadius: 83 / 2 },
+  yatraDetailCard:{
+    backgroundColor: "#FFF8F3",
+    marginHorizontal: 24,
+    borderRadius: 7,
+    paddingVertical: 14,
+    shadowColor: "grey",
+    shadowOffset: { height: 10, width: 0 },
+    shadowRadius: 5,
+    shadowOpacity: 0.2,
+    marginTop: 20,
+  },
   imageStyle: { height: getHeight(85), width: getWidth(65) },
   headingText: { fontSize: 22, fontWeight: "400", color: "#1E1E1E" },
   homeUpperContainer: {

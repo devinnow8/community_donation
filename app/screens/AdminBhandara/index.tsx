@@ -16,7 +16,7 @@ import moment from "moment";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
 const AdminBhandara = () => {
-  const [selectedDate, setSelectedDate] = useState<any>({});
+  const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
   const [selectedDateData, setSelectedDateData] = useState<any>({});
 
@@ -155,14 +155,53 @@ const AdminBhandara = () => {
                         <Text style={styles.itemText}>{item?.mode}</Text>
                       </View>
                     </View>
-
                     {item?.mode === "CASH" && item?.status === "Pending" && (
-                      <View style={styles.modePaymentContainer}>
-                        <TouchableOpacity style={styles.confirmButtonContainer}>
-                          <Text style={styles.ButtonText}>Confirm</Text>
+                      <View
+                        style={styles.buttonsView}
+                      >
+                        <TouchableOpacity
+                          onPress={() => {
+                            const currentData = {
+                              ...item,
+                              status: "Completed",
+                            };
+                            const timestamp = moment(
+                              item?.selectedDate
+                            ).valueOf();
+                            firestore()
+                              .collection("Test4")
+                              .doc(timestamp.toString())
+                              .set(
+                                { [item?.selectedTime]: currentData },
+                                { merge: true }
+                              )
+                              .then((res) => {
+                                console.log(
+                                  "Response after adding new data",
+                                  res
+                                );
+                                // setShowModal(true);
+                              })
+                              .catch((err) => {
+                                console.log("Error", err);
+                              });
+                          }}
+                          style={styles.confirmButtonContainer}
+                        >
+                          <Text
+                            style={styles.ButtonText}
+                          >
+                            Confirm
+                          </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.rejectButtonContainer}>
-                          <Text style={styles.ButtonText}>Reject</Text>
+                        <TouchableOpacity
+                          style={styles.rejectButtonContainer}
+                        >
+                          <Text
+                            style={styles.ButtonText}
+                          >
+                            Reject
+                          </Text>
                         </TouchableOpacity>
                       </View>
                     )}
@@ -172,9 +211,10 @@ const AdminBhandara = () => {
             </View>
           )
         )}
-        {Object.values(selectedDateData)?.length === 0 && (
-          <Text>No booking yet</Text>
-        )}
+        {selectedDate?.dateString !== "" &&
+          Object.values(selectedDateData)?.length === 0 && (
+            <Text>No booking yet</Text>
+          )}
       </ScrollView>
     </>
   );
