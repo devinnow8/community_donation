@@ -43,7 +43,7 @@ target 'community_donation' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'community_donationTests' do
+  target 'community_donationTests_app' do
     inherit! :complete
     # Pods for testing
   end
