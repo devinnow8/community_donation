@@ -14,15 +14,44 @@ import firestore from "@react-native-firebase/firestore";
 import { useRoute } from "@react-navigation/native";
 import CustomModal from "../../ReusableComponents/Modal";
 import styles from "./styles";
+import RazorpayCheckout from "react-native-razorpay";
+import { Paymenticon } from "../../assets/images/PaymentIcon";
 const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
   const [moneyErr, setMoneyErr] = useState("");
   const [showModal, setShowModal] = useState(false);
+
   const PayMoney = (mode: string) => {
     if (Number(selectedAmount) < 11000) {
       setMoneyErr("* Amount should be above 11000rs *");
-    } else {
+    } else if (mode === "CASH") {
       saveData(mode);
+    } else if (mode === "ONLINE") {
+      var options = {
+        description: "Credits towards consultation",
+        image: Paymenticon,
+        currency: "INR",
+        key: "rzp_test_CKghbIZojq126Q", // Your api key
+        amount: (Number(selectedAmount) * 100).toString(),
+        name: "'सब की सेवा, रब की सेवा' ट्रस्ट",
+        prefill: {
+          email: "void@razorpay.com",
+          contact: "9191919191",
+          name: "Razorpay Software",
+        },
+        theme: { color: "#FFF7E7" },
+      };
+      console.log("options===>", typeof options.amount);
+      RazorpayCheckout.open(options)
+        .then((data) => {
+          // handle success
+          console.log("======>", data);
+          alert(`Success: ${data.razorpay_payment_id}`);
+        })
+        .catch((error) => {
+          // handle failure
+          alert(`Error: ${error.code} | ${error.description}`);
+        });
     }
   };
   const { params } = useRoute();
@@ -37,7 +66,7 @@ const BhandaraBookingPayment = () => {
       selectedTime: selectedTimeSlot,
       amount: selectedAmount,
       mode,
-      timeStamp:selectedDate.timestamp,
+      timeStamp: selectedDate.timestamp,
       status: mode === "CASH" ? "Pending" : "Completed",
     };
     firestore()
