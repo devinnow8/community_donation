@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Dimensions,
+  FlatList,
   Image,
   ScrollView,
   StyleSheet,
@@ -8,13 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import { Calendar } from "react-native-calendars";
 
 import moment from "moment";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
+import { getWidth } from "../../utils/pixelConversion";
 const AdminBhandara = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
@@ -43,14 +45,11 @@ const AdminBhandara = () => {
         // dispatch(setLoader(false));
       });
   };
+
   return (
     <>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
-      <ScrollView
-        bounces={false}
-        showsVerticalScrollIndicator={false}
-        style={styles.scrollViewContainer}
-      >
+      <View style={styles.scrollViewContainer}>
         <View style={{ backgroundColor: "white" }}>
           <Calendar
             minDate={new Date().toString()}
@@ -114,8 +113,99 @@ const AdminBhandara = () => {
           <ActivityIndicator />
         ) : (
           selectedDate?.dateString !== "" && (
-            <View style={{ paddingBottom: 50 }}>
-              {Object.values(selectedDateData)?.map((item: any) => {
+            <View style={{ paddingBottom: 50, paddingRight: getWidth(20) }}>
+              <FlatList
+                data={Object.values(selectedDateData)}
+                horizontal
+                bounces={false}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  return (
+                    <View style={styles.belowCalenderOuterContainer}>
+                      <View style={{ alignSelf: "center" }}>
+                        <Text style={styles.selectedDateOuterContainer}>
+                          {moment(selectedDate?.dateString).format(
+                            "dddd, DD MMM yyyy"
+                          )}
+                          <Text>
+                            (
+                            {item?.selectedTime === "firstSlot"
+                              ? "11:00 AM"
+                              : "02:00 PM"}
+                            )
+                          </Text>
+                        </Text>
+                      </View>
+
+                      <View style={styles.nameAmountOuterContainer}>
+                        <View>
+                          <Text style={styles.nameLabelText}>नाम</Text>
+                          <Text style={styles.itemText}>{item?.name}</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.nameLabelText}>राशि</Text>
+                          <Text style={styles.itemText}>{item?.amount}</Text>
+                        </View>
+                      </View>
+
+                      <View style={styles.phoneNumberPaymentContainer}>
+                        <View>
+                          <Text style={styles.nameLabelText}>फ़ोन नंबर</Text>
+                          <Text style={styles.itemText}>
+                            {item?.phoneNumber}
+                          </Text>
+                        </View>
+                        <View>
+                          <Text style={styles.nameLabelText}>भुगतान</Text>
+                          <Text style={styles.itemText}>{item?.mode}</Text>
+                        </View>
+                      </View>
+                      {item?.mode === "CASH" && item?.status === "Pending" && (
+                        <View style={styles.buttonsView}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              const currentData = {
+                                ...item,
+                                status: "Completed",
+                              };
+                              const timestamp = moment(
+                                item?.selectedDate
+                              ).valueOf();
+                              firestore()
+                                .collection("Test4")
+                                .doc(timestamp.toString())
+                                .set(
+                                  { [item?.selectedTime]: currentData },
+                                  { merge: true }
+                                )
+                                .then((res) => {
+                                  console.log(
+                                    "Response after adding new data",
+                                    res
+                                  );
+                                  // setShowModal(true);
+                                })
+                                .catch((err) => {
+                                  console.log("Error", err);
+                                });
+                            }}
+                            style={styles.confirmButtonContainer}
+                          >
+                            <Text style={styles.ButtonText}>Confirm</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={styles.rejectButtonContainer}
+                          >
+                            <Text style={styles.ButtonText}>Reject</Text>
+                          </TouchableOpacity>
+                        </View>
+                      )}
+                    </View>
+                  );
+                }}
+              />
+              {/* {Object.values(selectedDateData)?.map((item: any) => {
+                console.log(selectedDateData, "itemitemitemitemitem");
                 console.log("ItemItemItem", item);
                 return (
                   <View style={styles.belowCalenderOuterContainer}>
@@ -156,9 +246,7 @@ const AdminBhandara = () => {
                       </View>
                     </View>
                     {item?.mode === "CASH" && item?.status === "Pending" && (
-                      <View
-                        style={styles.buttonsView}
-                      >
+                      <View style={styles.buttonsView}>
                         <TouchableOpacity
                           onPress={() => {
                             const currentData = {
@@ -188,26 +276,16 @@ const AdminBhandara = () => {
                           }}
                           style={styles.confirmButtonContainer}
                         >
-                          <Text
-                            style={styles.ButtonText}
-                          >
-                            Confirm
-                          </Text>
+                          <Text style={styles.ButtonText}>Confirm</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.rejectButtonContainer}
-                        >
-                          <Text
-                            style={styles.ButtonText}
-                          >
-                            Reject
-                          </Text>
+                        <TouchableOpacity style={styles.rejectButtonContainer}>
+                          <Text style={styles.ButtonText}>Reject</Text>
                         </TouchableOpacity>
                       </View>
                     )}
                   </View>
                 );
-              })}
+              })} */}
             </View>
           )
         )}
@@ -215,7 +293,7 @@ const AdminBhandara = () => {
           Object.values(selectedDateData)?.length === 0 && (
             <Text>No booking yet</Text>
           )}
-      </ScrollView>
+      </View>
     </>
   );
 };

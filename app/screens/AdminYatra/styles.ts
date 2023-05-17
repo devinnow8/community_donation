@@ -21,5 +21,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#FFFFFF",
   },
+  errMsgContainer: {
+    marginHorizontal: getWidth(35),
+    marginTop: getHeight(10),
+  },
+  errMsgText: {
+    color: "red",
+  },
 });
 export default styles;

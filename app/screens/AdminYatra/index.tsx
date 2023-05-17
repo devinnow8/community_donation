@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
@@ -10,35 +16,81 @@ import moment from "moment";
 
 const AdminYatra = () => {
   const navigation: any = useNavigation();
+  const [yatraDetails, setYatraDetails] = useState({
+    name: "",
+    date: "",
+    onboardingPoint: "",
+    timeOfDeparture: "",
+    totalSeats: "",
+    availableSeats: "",
+    nameErrMsg: "",
+    dobErrMsg: "",
+    onboardErrMsg: "",
+    timeErrMsg: "",
+    seatsErrMsg: "",
+  });
   const BookingDetail = () => {
-    const timestamp = moment(yatraDetails.date).valueOf()
-    console.log("TimeStamp",timestamp)
-    try {
-      // const 
-      firestore()
-      .collection("Yatra")
-      .doc(timestamp.toString())
-      .set(yatraDetails, { merge: true })
-      .then((res) => {
-        console.log("Response after adding new data", res);
-        navigation.navigate("AdminBookingDetail",{yatraDetails});
-        // setShowModal(true);
-      })
-      .catch((err) => {
-        console.log("Error", err);
+    let validate = true;
+
+    // name Validation
+    if (yatraDetails.name?.length === 0) {
+      validate = false;
+      setYatraDetails((prevState) => {
+        return {
+          ...prevState,
+          nameErrMsg: "Please Fill The Missing Field",
+        };
       });
-    } catch (error) {
-      console.log("Error",error)
+    }
+    // onBoarding Point validation
+    if (yatraDetails.onboardingPoint?.length === 0) {
+      validate = false;
+      setYatraDetails((prevState) => {
+        return {
+          ...prevState,
+          onboardErrMsg: "Please Fill The Missing Field",
+        };
+      });
+    }
+
+    // Time of departure validation
+    if (yatraDetails.timeOfDeparture?.length === 0) {
+      validate = false;
+      setYatraDetails((prevState) => {
+        return {
+          ...prevState,
+          timeErrMsg: "Please Fill The Missing Field",
+        };
+      });
+    }
+
+    // validate DOB
+
+    if (validate) {
+      sendFormData();
     }
   };
-  const [yatraDetails, setYatraDetails] = useState({
-    name:'',
-    date:'',
-    onboardingPoint:'',
-    timeOfDeparture:'',
-    totalSeats:'',
-    availableSeats:''
-  })
+
+  const sendFormData = () => {
+    const timestamp = moment(yatraDetails.date).valueOf();
+    try {
+      // const
+      firestore()
+        .collection("Yatra")
+        .doc(timestamp.toString())
+        .set(yatraDetails, { merge: true })
+        .then((res) => {
+          console.log("Response after adding new data", res);
+          navigation.navigate("AdminBookingDetail", { yatraDetails });
+          // setShowModal(true);
+        })
+        .catch((err) => {
+          console.log("Error", err);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
   return (
     <View style={styles.outerContainer}>
       <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />
@@ -49,59 +101,92 @@ const AdminYatra = () => {
         <TextInputs
           value={yatraDetails.name}
           placeholder="Name"
-          onChangeText={(text)=>{setYatraDetails({...yatraDetails,name:text})}}
+          onFocus={() => setYatraDetails({ ...yatraDetails, nameErrMsg: "" })}
+          onChangeText={(text) => {
+            setYatraDetails({ ...yatraDetails, name: text });
+          }}
         />
       </View>
+      {yatraDetails.nameErrMsg.length > 0 ? (
+        <View style={styles.errMsgContainer}>
+          <Text style={styles.errMsgText}>{yatraDetails.nameErrMsg}</Text>
+        </View>
+      ) : (
+        ""
+      )}
       <View style={styles.labelViewStyle}>
         <Labels labelName="Date(YYYY-MM-DD)" />
       </View>
       <View>
-        
-      <TextInputs
+        <TextInputs
           value={yatraDetails.date}
           placeholder="YYYY-MM-DD"
-          onChangeText={(text)=>{setYatraDetails({...yatraDetails,date:text})}}
+          onChangeText={(text) => {
+            setYatraDetails({ ...yatraDetails, date: text });
+          }}
         />
       </View>
       <View style={styles.labelViewStyle}>
         <Labels labelName="Onboarding point" />
       </View>
       <View>
-        
-      <TextInputs
+        <TextInputs
           value={yatraDetails.onboardingPoint}
           placeholder="Onboarding point"
-
-          onChangeText={(text)=>{setYatraDetails({...yatraDetails,onboardingPoint:text})}}
+          onFocus={() =>
+            setYatraDetails({ ...yatraDetails, onboardErrMsg: "" })
+          }
+          onChangeText={(text) => {
+            setYatraDetails({ ...yatraDetails, onboardingPoint: text });
+          }}
         />
       </View>
+      {yatraDetails.onboardErrMsg?.length > 0 ? (
+        <View style={styles.errMsgContainer}>
+          <Text style={styles.errMsgText}>{yatraDetails.onboardErrMsg}</Text>
+        </View>
+      ) : (
+        ""
+      )}
       <View style={styles.labelViewStyle}>
         <Labels labelName="TIme of Departure" />
       </View>
       <View>
-        
-      <TextInputs
+        <TextInputs
           value={yatraDetails.timeOfDeparture}
           placeholder="Time of Departure"
-
-          onChangeText={(text)=>{setYatraDetails({...yatraDetails,timeOfDeparture:text})}}
+          onFocus={() => setYatraDetails({ ...yatraDetails, timeErrMsg: "" })}
+          onChangeText={(text) => {
+            setYatraDetails({ ...yatraDetails, timeOfDeparture: text });
+          }}
         />
       </View>
+      {yatraDetails.timeErrMsg?.length > 0 ? (
+        <View style={styles.errMsgContainer}>
+          <Text style={styles.errMsgText}>{yatraDetails.timeErrMsg}</Text>
+        </View>
+      ) : (
+        ""
+      )}
       <View style={styles.labelViewStyle}>
         <Labels labelName="Seats" />
       </View>
       <View>
-        
-      <TextInputs
+        <TextInputs
           value={yatraDetails.totalSeats}
           placeholder="Seats"
-
-          onChangeText={(text)=>{setYatraDetails({...yatraDetails,totalSeats:text,availableSeats:text})}}
+          onChangeText={(text) => {
+            setYatraDetails({
+              ...yatraDetails,
+              totalSeats: text,
+              availableSeats: text,
+            });
+          }}
         />
       </View>
       <TouchableOpacity
         style={styles.submitButtonContainer}
-        onPress={() => BookingDetail()}
+        onPress={() => [BookingDetail(), Keyboard.dismiss()]}
       >
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>

@@ -2,8 +2,14 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
 import { getHeight, getWidth } from "../utils/pixelConversion";
-
-const CustomModal = ({ isVisible, setIsVisible, message }: any) => {
+import { useNavigation } from "@react-navigation/native";
+const CustomModal = ({
+  isVisible,
+  setIsVisible,
+  message,
+  navigationScreen,
+}: any) => {
+  const navigation = useNavigation();
   return (
     <Modal isVisible={isVisible}>
       <View style={styles.modalOuterContainer}>
@@ -14,7 +20,7 @@ const CustomModal = ({ isVisible, setIsVisible, message }: any) => {
         <TouchableOpacity
           style={styles.modalGreetingButton}
           onPress={() => {
-            setIsVisible(false);
+            [setIsVisible(false), navigation.navigate(navigationScreen)];
           }}
         >
           <Text style={styles.modalButtonText}>धन्यवाद!</Text>

@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
   headingText: { fontSize: getHeight(22), fontWeight: "700", color: "#1E1E1E" },
   trustInfoText: {
     fontSize: getHeight(18),
-    textAlign: "center",
     marginTop: getHeight(14),
     marginHorizontal: getWidth(35),
+    textAlign: "justify",
   },
 });
 export default styles;

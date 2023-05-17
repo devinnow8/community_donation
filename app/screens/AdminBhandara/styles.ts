@@ -22,15 +22,19 @@ const styles = StyleSheet.create({
     borderRadius: 37 / 2,
   },
   belowCalenderOuterContainer: {
+    marginLeft: getWidth(20),
+    // marginHorizontal: getWidth(20),
+    // width: "100%",
+    width: getWidth(300),
+    flex: 1,
     backgroundColor: "#FFF8F3",
-    marginHorizontal: getWidth(24),
     borderRadius: 7,
     paddingVertical: getHeight(14),
     shadowColor: "grey",
     shadowOffset: { height: getHeight(10), width: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.2,
-    marginTop: getHeight(20),
+    marginTop: getHeight(50),
   },
   selectedDateOuterContainer: { fontSize: getHeight(16), fontWeight: "700" },
   nameAmountOuterContainer: {
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
-    width: "45%",
+    width: "35%",
   },
   ButtonText: {
     fontWeight: "600",
@@ -72,13 +76,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
-    width: "45%",
+    width: "35%",
   },
-  buttonsView:{
+  buttonsView: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     marginTop: 16,
-  }
+  },
 });
 export default styles;

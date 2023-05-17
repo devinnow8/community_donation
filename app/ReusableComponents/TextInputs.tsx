@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, TextInput,TextInputProps } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TextInputProps,
+} from "react-native";
 import React from "react";
 import { getHeight, getWidth } from "../utils/pixelConversion";
 interface ITextInputFields {

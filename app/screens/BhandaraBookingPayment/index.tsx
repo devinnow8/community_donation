@@ -178,6 +178,7 @@ const BhandaraBookingPayment = () => {
         isVisible={showModal}
         setIsVisible={() => setShowModal(false)}
         message="भगवान् आपकी मनोकामना पूरी करे"
+        navigationScreen="Home"
       />
     </View>
   );

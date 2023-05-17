@@ -1,5 +1,11 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Pressable,
+  Keyboard,
+} from "react-native";
+import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
@@ -7,6 +13,32 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 const AdminLogin = () => {
   const navigation: any = useNavigation();
+  const [adminInfo, setAdminInfo] = useState({
+    adminName: "",
+    adminPassword: "",
+    errMsg: "",
+  });
+  const [showButtons, setShowButtons] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const adminLogin = () => {
+    const adminName = "Admin";
+    const password = "Admin@123";
+    if (
+      adminInfo.adminName === adminName &&
+      adminInfo.adminPassword === password
+    ) {
+      setShowButtons(true);
+      setAdminInfo({
+        ...adminInfo,
+        errMsg: "",
+      });
+    } else {
+      setAdminInfo({
+        ...adminInfo,
+        errMsg: "UserName or password may be incorrect",
+      });
+    }
+  };
   return (
     <View style={styles.adminLoginContainer}>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
@@ -14,25 +46,122 @@ const AdminLogin = () => {
         <Labels labelName="ID नंबर " />
       </View>
       <View>
-        <TextInputs />
+        <TextInputs
+          onChangeText={(val) => setAdminInfo({ ...adminInfo, adminName: val })}
+        />
       </View>
       <View style={styles.passwordContainer}>
         <Labels labelName="पासवर्ड" />
       </View>
       <View>
-        <TextInputs />
+        <TextInputs
+          secureTextEntry={true}
+          onFocus={() =>
+            setAdminInfo((prevState): any => {
+              return {
+                ...prevState,
+                errMsg: "",
+              };
+            })
+          }
+          onChangeText={(val) =>
+            setAdminInfo({ ...adminInfo, adminPassword: val })
+          }
+        />
       </View>
+
+      {/* errorMessage */}
+      {adminInfo.errMsg?.length > 0 ? (
+        <View style={styles.errMsgContainer}>
+          <Text style={styles.errMsgText}>{adminInfo.errMsg}</Text>
+        </View>
+      ) : (
+        ""
+      )}
+
+      {/* {selectedTab === 0 ? <TabView1 /> : <TabView2 />} */}
       <TouchableOpacity
-        style={styles.btnStyle}
-        onLongPress={() => {
-          navigation.navigate("AdminYatra");
-        }}
-        onPress={() => {
-          navigation.navigate("AdminBhandara");
-        }}
+        style={[
+          styles.btnStyle,
+          {
+            backgroundColor:
+              adminInfo.adminName?.length != 0 &&
+              adminInfo.adminPassword?.length != 0
+                ? "#EB6611"
+                : "transparent",
+          },
+        ]}
+        // onLongPress={() => {
+        //   navigation.navigate("AdminYatra");
+        // }}
+        onPress={() => [adminLogin(), Keyboard.dismiss()]}
       >
-        <Text style={styles.btnTextStyle}>Login</Text>
+        <Text
+          style={[
+            styles.btnTextStyle,
+            {
+              color:
+                adminInfo.adminName?.length != 0 &&
+                adminInfo.adminPassword?.length != 0
+                  ? "#FFF"
+                  : "#EB6611",
+            },
+          ]}
+        >
+          Login
+        </Text>
       </TouchableOpacity>
+
+      {showButtons && (
+        <View style={styles.adminLoginButtonView}>
+          <Pressable
+            style={[
+              styles.adminButtonView,
+              {
+                backgroundColor: selectedTab === 0 ? "#EB6611" : "transparent",
+              },
+            ]}
+            onPress={() => [
+              navigation.navigate("AdminBhandara"),
+              setSelectedTab(0),
+            ]}
+          >
+            <Text
+              style={[
+                styles.btnTextStyle,
+                {
+                  color: selectedTab === 0 ? "#FFF" : "#EB6611",
+                },
+              ]}
+            >
+              भोजन सेवा
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[
+              styles.adminButtonView,
+              {
+                backgroundColor: selectedTab === 1 ? "#EB6611" : "transparent",
+              },
+            ]}
+            onPress={() => [
+              navigation.navigate("AdminYatra"),
+              setSelectedTab(1),
+            ]}
+          >
+            <Text
+              style={[
+                styles.btnTextStyle,
+                {
+                  color: selectedTab === 1 ? "#FFF" : "#EB6611",
+                },
+              ]}
+            >
+              धर्म यात्रा
+            </Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };
