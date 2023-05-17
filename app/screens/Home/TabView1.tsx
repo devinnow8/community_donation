@@ -1,8 +1,8 @@
 import { ActivityIndicator, Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment';
 import { Calendar } from 'react-native-calendars';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
 
@@ -17,10 +17,16 @@ const TabView1 = () => {
         date: selectedDate,
       });
     };
+    const isFocused = useIsFocused()
+    useEffect(()=>{
+      if(isFocused){
+        setSelectedDate({dateString: ""})
+      }
+    },[isFocused])
     const getCurrentDateData = async (timestamp: number) => {
       setLoader(true);
       firestore()
-        .collection("Test4")
+        .collection("Test5")
         .doc(timestamp.toString())
         .get()
         .then((data:any) => {

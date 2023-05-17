@@ -1,57 +1,51 @@
-import { Image, Text, TouchableOpacity, View, FlatList } from "react-native";
-import React, { useState } from "react";
+import { Image, Text, TouchableOpacity, View, FlatList, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import styles from "./styles";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 import SeatEditModal from "../../ReusableComponents/SeatEditModal";
+import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
-const passengerData = [
-  {
-    id: 1,
-    name: "vikasDhiman",
-    seats: 5,
-  },
-  {
-    id: 2,
-    name: "Gaganpreet singh",
-    seats: 5,
-  },
-  {
-    id: 3,
-    name: "Sumit Kumar",
-    seats: 1,
-  },
-  {
-    id: 4,
-    name: "Mayank Sharma",
-    seats: 5,
-  },
-  {
-    id: 5,
-    name: "Parul Garg",
-    seats: 6,
-  },
-  {
-    id: 6,
-    name: "Shikhar",
-    seats: 1,
-  },
-];
 const AdminBookingDetail = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
-  const { yatraDetails } = params;
+  const [yatraDetails, setYatraDetails] = useState({})
   const [showModal, setShowModal] = useState(false);
-  const [listData, setListData] = useState(passengerData);
+  const [listData, setListData] = useState([]);
   const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
   const editItem = (name: string, seats: number, index: number) => {
     setShowModal(true);
     setSelectedItemIndex(index);
   };
-  const AdminAddYatri = () => {
+  const AdminAddYatra = () => {
     navigation.navigate("AdminYatra");
   };
+  const isFocused = useIsFocused()
+  const getYatraDetails = async () => {
+    // setLoader(true);
+    firestore()
+      .collection("Yatra").orderBy('date','asc')
+      .get()
+      .then((data:any) => {
+        // setLoader(false);
+        if(data.docs){
+          const currentData = data.docs[0]._data
+          console.log("CurrentData",currentData)
+          setYatraDetails(currentData)
+          setListData(currentData?.seatData)
+        }
+      })
+      .catch(() => {
+        // setLoader(false);
+        Alert.alert("Error fetching collections");
+      })
+  };
+  useEffect(()=>{
+    if(isFocused){
+      getYatraDetails()
+    }
+  },[isFocused])
   return (
     <View style={{ flex: 1, backgroundColor: "#FFF" }}>
       {/* header */}
@@ -59,7 +53,7 @@ const AdminBookingDetail = () => {
         hasBackButton={true}
         headingText="यात्रा बुकिंग"
         hasAddUser={true}
-        onPress={AdminAddYatri}
+        onPress={AdminAddYatra}
       />
 
       <View style={styles.bookingDetailContainer}>
@@ -67,7 +61,7 @@ const AdminBookingDetail = () => {
           <Text
             style={{ fontSize: 16, fontWeight: "600", alignSelf: "center" }}
           >
-            {moment(yatraDetails.date)?.format("DD MMM YYYY")}
+            {moment(yatraDetails?.date)?.format("DD MMM YYYY")}
           </Text>
           <TouchableOpacity>
             <Image
@@ -80,7 +74,7 @@ const AdminBookingDetail = () => {
 
         <Text style={styles.bookingContainerHeadingText}>
           {/* चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर) */}
-          {yatraDetails.name}
+          {yatraDetails?.name}
         </Text>
 
         <View style={styles.belowHeadingTextOuterContainer}>
@@ -88,7 +82,7 @@ const AdminBookingDetail = () => {
             <Text style={styles.leftSideText}>Onboarding Point : </Text>
             <Text style={styles.rightSideText}>
               {/* Housing board lights Chandigarh */}
-              {yatraDetails.onboardingPoint}
+              {yatraDetails?.onboardingPoint}
             </Text>
           </View>
           <View
@@ -96,7 +90,7 @@ const AdminBookingDetail = () => {
           >
             <Text style={styles.leftSideText}>Time of Departure : </Text>
             <Text style={styles.rightSideText}>
-              {yatraDetails.timeOfDeparture}
+              {yatraDetails?.timeOfDeparture}
             </Text>
           </View>
           <View
@@ -127,7 +121,7 @@ const AdminBookingDetail = () => {
         </View>
 
         <FlatList
-          data={passengerData}
+          data={listData??[]}
           renderItem={({ item, index }) => {
             return (
               <View key={item.id} style={styles.chartContainer}>
@@ -135,7 +129,7 @@ const AdminBookingDetail = () => {
                   <Text>{item.name}</Text>
                 </View>
                 <View style={styles.chartItems}>
-                  <Text>{item.seats}</Text>
+                  <Text>{item.numberOfSeats}</Text>
                 </View>
                 <View style={styles.chartIconOuter}>
                   <TouchableOpacity

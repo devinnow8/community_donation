@@ -28,8 +28,8 @@ const SeatEditModal = ({
           <TouchableOpacity
             onPress={() => {
               let newData = listData;
-              if (newData[index]?.seats > 0) {
-                newData[index].seats = newData[index].seats - 1;
+              if (newData[index]?.numberOfSeats > 0) {
+                newData[index].numberOfSeats = newData[index].numberOfSeats - 1;
               }
               setListData([...newData]);
             }}
@@ -37,12 +37,12 @@ const SeatEditModal = ({
             <Text style={styles.updateBtn}>-</Text>
           </TouchableOpacity>
           <View style={styles.updateNumberContainer}>
-            <Text style={{ textAlign: "center" }}>{listData[index].seats}</Text>
+            <Text style={{ textAlign: "center" }}>{listData[index].numberOfSeats}</Text>
           </View>
           <TouchableOpacity
             onPress={() => {
               let newData = listData;
-              newData[index].seats = newData[index].seats + 1;
+              newData[index].numberOfSeats = newData[index].numberOfSeats + 1;
               setListData([...newData]);
             }}
           >

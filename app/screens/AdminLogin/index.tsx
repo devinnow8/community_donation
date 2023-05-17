@@ -145,7 +145,7 @@ const AdminLogin = () => {
               },
             ]}
             onPress={() => [
-              navigation.navigate("AdminYatra"),
+              navigation.navigate("AdminBookingDetail"),
               setSelectedTab(1),
             ]}
           >
