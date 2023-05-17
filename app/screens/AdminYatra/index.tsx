@@ -67,12 +67,19 @@ const AdminYatra = () => {
 
   const sendFormData = () => {
     const timestamp = moment(yatraDetails.date).valueOf();
+    const newData = {
+      name: yatraDetails?.name,
+      date: yatraDetails?.date,
+      onboardingPoint: yatraDetails?.onboardingPoint,
+      timeOfDeparture: yatraDetails?.timeOfDeparture,
+      totalSeats: yatraDetails?.totalSeats,
+      availableSeats: yatraDetails?.availableSeats,
+    };
     try {
-      // const
       firestore()
         .collection("Yatra")
         .doc(timestamp.toString())
-        .set(yatraDetails, { merge: true })
+        .set(newData, { merge: true })
         .then((res) => {
           console.log("Response after adding new data", res);
           navigation.navigate("AdminBookingDetail", { yatraDetails });
