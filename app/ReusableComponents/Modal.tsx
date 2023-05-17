@@ -20,7 +20,10 @@ const CustomModal = ({
         <TouchableOpacity
           style={styles.modalGreetingButton}
           onPress={() => {
-            [setIsVisible(false), navigation.navigate(navigationScreen)];
+            [
+              setIsVisible(false),
+              navigationScreen && navigation.navigate(navigationScreen),
+            ];
           }}
         >
           <Text style={styles.modalButtonText}>धन्यवाद!</Text>

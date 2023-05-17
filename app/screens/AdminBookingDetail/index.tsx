@@ -40,8 +40,8 @@ const passengerData = [
 ];
 const AdminBookingDetail = () => {
   const navigation = useNavigation();
-  const {params} = useRoute()
-  const {yatraDetails} = params
+  const { params } = useRoute();
+  const { yatraDetails } = params;
   const [showModal, setShowModal] = useState(false);
   const [listData, setListData] = useState(passengerData);
   const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
@@ -49,18 +49,25 @@ const AdminBookingDetail = () => {
     setShowModal(true);
     setSelectedItemIndex(index);
   };
-
+  const AdminAddYatri = () => {
+    navigation.navigate("AdminYatra");
+  };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFF" }}>
       {/* header */}
-      <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />
+      <HeaderBar
+        hasBackButton={true}
+        headingText="यात्रा बुकिंग"
+        hasAddUser={true}
+        onPress={AdminAddYatri}
+      />
 
       <View style={styles.bookingDetailContainer}>
         <View style={{ justifyContent: "center" }}>
           <Text
             style={{ fontSize: 16, fontWeight: "600", alignSelf: "center" }}
           >
-            {moment(yatraDetails.date)?.format('DD MMM YYYY')}
+            {moment(yatraDetails.date)?.format("DD MMM YYYY")}
           </Text>
           <TouchableOpacity>
             <Image
@@ -74,7 +81,6 @@ const AdminBookingDetail = () => {
         <Text style={styles.bookingContainerHeadingText}>
           {/* चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर) */}
           {yatraDetails.name}
-
         </Text>
 
         <View style={styles.belowHeadingTextOuterContainer}>
@@ -82,8 +88,7 @@ const AdminBookingDetail = () => {
             <Text style={styles.leftSideText}>Onboarding Point : </Text>
             <Text style={styles.rightSideText}>
               {/* Housing board lights Chandigarh */}
-          {yatraDetails.onboardingPoint}
-
+              {yatraDetails.onboardingPoint}
             </Text>
           </View>
           <View
@@ -91,16 +96,16 @@ const AdminBookingDetail = () => {
           >
             <Text style={styles.leftSideText}>Time of Departure : </Text>
             <Text style={styles.rightSideText}>
-          {yatraDetails.timeOfDeparture}
-              
+              {yatraDetails.timeOfDeparture}
             </Text>
           </View>
           <View
             style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
           >
             <Text style={styles.leftSideText}>Seats Available :</Text>
-            <Text style={styles.rightSideText}>{yatraDetails?.totalSeats}{' '}
-               Seats</Text>
+            <Text style={styles.rightSideText}>
+              {yatraDetails?.totalSeats} Seats
+            </Text>
           </View>
         </View>
       </View>
@@ -108,7 +113,9 @@ const AdminBookingDetail = () => {
       {/* seats Available */}
       <View style={styles.availableSeatsContainer}>
         <Text style={styles.seatAvailableText}>Available Seats </Text>
-        <Text style={styles.seatAvailableNumberText}>{yatraDetails?.availableSeats} Seats</Text>
+        <Text style={styles.seatAvailableNumberText}>
+          {yatraDetails?.availableSeats} Seats
+        </Text>
       </View>
 
       {/* chart */}

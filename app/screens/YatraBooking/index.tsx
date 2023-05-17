@@ -1,10 +1,4 @@
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Keyboard,
-  Alert,
-} from "react-native";
+import { Text, View, TouchableOpacity, Keyboard, Alert } from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
@@ -28,8 +22,8 @@ const YatraBooking = () => {
     placeErrMsg: "",
   });
   const navigation: any = useNavigation();
-  const {params}:any = useRoute()
-  const {yatraDetails,numberOfSeats} = params
+  const { params }: any = useRoute();
+  const { yatraDetails, numberOfSeats } = params;
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
   const [showThanksModal, setShowThanksModal] = useState(false);
@@ -48,36 +42,43 @@ const YatraBooking = () => {
       const response = await confirm?.confirm(userInfo.otp);
       console.log("Response", response);
       if (response) {
-        const timeStamp = moment(yatraDetails?.date).valueOf()
-firestore()
-      .collection("Yatra")
-      .doc((timeStamp).toString())
-      .get()
-      .then((data:any) => {
-        let newData = data?._data
-        let seatData = []
-        if(newData?.seatData){
-          seatData = newData.seatData
-        }
-        newData.availableSeats = newData.availableSeats-numberOfSeats
-        seatData = [...seatData,{name:userInfo.name,phoneNumber:userInfo.phoneNumber,numberOfSeats}]
-        newData.seatData = seatData
+        const timeStamp = moment(yatraDetails?.date).valueOf();
         firestore()
           .collection("Yatra")
           .doc(timeStamp.toString())
-          .set(newData, { merge: true })
-          .then((res) => {
-            console.log("Response after adding new data", res);
-            // setShowModal(true);
-            setShowThanksModal(true)
+          .get()
+          .then((data: any) => {
+            let newData = data?._data;
+            let seatData = [];
+            if (newData?.seatData) {
+              seatData = newData.seatData;
+            }
+            newData.availableSeats = newData.availableSeats - numberOfSeats;
+            seatData = [
+              ...seatData,
+              {
+                name: userInfo.name,
+                phoneNumber: userInfo.phoneNumber,
+                numberOfSeats,
+              },
+            ];
+            newData.seatData = seatData;
+            firestore()
+              .collection("Yatra")
+              .doc(timeStamp.toString())
+              .set(newData, { merge: true })
+              .then((res) => {
+                console.log("Response after adding new data", res);
+                // setShowModal(true);
+                setShowThanksModal(true);
+              })
+              .catch((err) => {
+                console.log("Error", err);
+              });
           })
-          .catch((err) => {
-            console.log("Error", err);
+          .catch(() => {
+            Alert.alert("Error fetching collections");
           });
-      })
-      .catch(() => {
-        Alert.alert("Error fetching collections");
-      })
       }
     } catch (error) {
       console.log("Error", error);
@@ -149,61 +150,62 @@ firestore()
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{userInfo.phoneErrMsg}</Text>
         </View>
-      ) }
-      {showOtpField && <>
-      <View>
-        <Labels labelName="OTP" />
-      </View>
+      )}
+      {showOtpField && (
+        <>
+          <View>
+            <Labels labelName="OTP" />
+          </View>
 
-      <View>
-        <TextInputs
-          onChangeText={(val: string) =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                otp: val,
-              };
-            })
-          }
-          onFocus={() =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                placeErrMsg: "",
-              };
-            })
-          }
-        />
-      </View>
+          <View>
+            <TextInputs
+              onChangeText={(val: string) =>
+                setUserInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    otp: val,
+                  };
+                })
+              }
+              onFocus={() =>
+                setUserInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    placeErrMsg: "",
+                  };
+                })
+              }
+            />
+          </View>
 
-      {userInfo.placeErrMsg && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
-        </View>
-      )} 
-      </>}
-      
+          {userInfo.placeErrMsg && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
+            </View>
+          )}
+        </>
+      )}
 
       {/* confirmButton */}
       <TouchableOpacity
         style={styles.btnStyle}
         onPress={() => {
-          Keyboard.dismiss()
-          showOtpField?Confirm():sendOTP()
-        }
-      }
+          Keyboard.dismiss();
+          showOtpField ? Confirm() : sendOTP();
+        }}
       >
-        <Text style={styles.btnTextStyle}>{showOtpField?'Confirm': "Send OTP"}</Text>
+        <Text style={styles.btnTextStyle}>
+          {showOtpField ? "Confirm" : "Send OTP"}
+        </Text>
       </TouchableOpacity>
       <CustomModal
         setIsVisible={setShowThanksModal}
         isVisible={showThanksModal}
         message={"आपकी यात्रा मंगलमय रहे"}
+        navigationScreen="Home"
       />
     </View>
   );
 };
 
 export default YatraBooking;
-
-

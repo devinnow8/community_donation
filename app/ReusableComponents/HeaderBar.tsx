@@ -10,6 +10,8 @@ interface IHeaderBarText {
   hasBackButton?: any;
   rightText?: String;
   onRightButtonPress?: any;
+  hasAddUser?: boolean;
+  onPress?: any;
 }
 
 const HeaderBar = ({
@@ -20,6 +22,8 @@ const HeaderBar = ({
   hasBackButton,
   rightText,
   onRightButtonPress,
+  hasAddUser,
+  onPress,
 }: IHeaderBarText) => {
   const navigation: any = useNavigation();
 
@@ -32,6 +36,23 @@ const HeaderBar = ({
           </Text>
           <Text style={[styles.headerBarText, styles.headerBarRightText]}>
             {HeadingRightText}
+          </Text>
+        </View>
+      ) : hasAddUser ? (
+        <View style={[styles.headerBarContainer]}>
+          {hasBackButton && (
+            <TouchableOpacity
+              style={rightText && { width: 40 }}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image source={require("../assets/images/LeftIcon.png")} />
+            </TouchableOpacity>
+          )}
+          <Text style={styles.headerBarText}>{headingText}</Text>
+          <Text style={styles.rightText} onPress={onPress}>
+            Add
           </Text>
         </View>
       ) : (
