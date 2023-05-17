@@ -5,12 +5,13 @@ import styles from "./styles";
 import { useRoute } from "@react-navigation/native";
 
 const YatraInfo = () => {
-  const {params}:any = useRoute();
+  const { params }: any = useRoute();
   return (
     <View style={styles.mainContainer}>
       <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />
       <FlatList
-        data={params.seatData??[]}
+        data={params.seatData ?? []}
+        bounces={false}
         ListHeaderComponent={() => (
           <View style={styles.listHeaderView}>
             <Text>Name</Text>

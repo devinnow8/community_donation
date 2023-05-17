@@ -32,6 +32,18 @@ const AdminBookingDetail = () => {
   const AdminAddYatra = () => {
     navigation.navigate("AdminYatra");
   };
+  const adminEditYatraBooking = () => {
+    const editableData = {
+      yatraName: yatraDetails?.name,
+      yatraDate: yatraDetails?.date,
+      yatraOnboardPoint: yatraDetails?.onboardingPoint,
+      yatraTimeOfDeparture: yatraDetails?.timeOfDeparture,
+      totalYatraSeats: yatraDetails?.totalSeats,
+      availableSeats: yatraDetails?.availableSeats,
+      seatData: listData,
+    };
+    navigation.navigate("AdminYatra", editableData);
+  };
   const isFocused = useIsFocused();
   const getYatraDetails = async () => {
     // setLoader(true);
@@ -76,17 +88,17 @@ const AdminBookingDetail = () => {
       .then((res) => {
         console.log("Response after adding new data", res);
         // setShowModal(true);
-        getYatraDetails()
+        getYatraDetails();
       })
       .catch((err) => {
         console.log("Error", err);
       });
   };
-  const editEntry = () =>{
-    let seatCount = 0
-    listData?.forEach((item:any)=>{
-      seatCount += item?.numberOfSeats
-    })
+  const editEntry = () => {
+    let seatCount = 0;
+    listData?.forEach((item: any) => {
+      seatCount += item?.numberOfSeats;
+    });
     let newYatraDetail = {
       ...yatraDetails,
       seatData: listData,
@@ -100,12 +112,12 @@ const AdminBookingDetail = () => {
       .set(newYatraDetail)
       .then((res) => {
         console.log("Response after adding new data", res);
-        getYatraDetails()
+        getYatraDetails();
       })
       .catch((err) => {
         console.log("Error", err);
       });
-  }
+  };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFF" }}>
       {/* header */}
@@ -123,7 +135,7 @@ const AdminBookingDetail = () => {
           >
             {moment(yatraDetails?.date)?.format("DD MMM YYYY")}
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={adminEditYatraBooking}>
             <Image
               source={require("../../assets/images/iconEdit.png")}
               resizeMode="contain"

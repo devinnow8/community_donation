@@ -3,20 +3,22 @@ import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import styles from "./styles";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
 
 const AdminYatra = () => {
   const navigation: any = useNavigation();
+  const { params }: any = useRoute();
   const [yatraDetails, setYatraDetails] = useState({
-    name: "",
-    date: "",
-    onboardingPoint: "",
-    timeOfDeparture: "",
-    totalSeats: "",
-    availableSeats: "",
+    name: params?.yatraName ?? "",
+    date: params?.yatraDate ?? "",
+    onboardingPoint: params?.yatraOnboardPoint ?? "",
+    timeOfDeparture: params?.yatraTimeOfDeparture ?? "",
+    totalSeats: params?.totalYatraSeats ?? "",
+    availableSeats: params?.availableSeats ?? "",
+    seatData: params?.seatData ?? "",
     nameErrMsg: "",
     dobErrMsg: "",
     onboardErrMsg: "",
@@ -67,14 +69,20 @@ const AdminYatra = () => {
 
   const sendFormData = () => {
     const timestamp = moment(yatraDetails.date).valueOf();
+    let seatCount = 0;
+    yatraDetails.seatData.forEach((item) => {
+      seatCount += item?.numberOfSeats;
+    });
     const newData = {
       name: yatraDetails?.name,
       date: yatraDetails?.date,
       onboardingPoint: yatraDetails?.onboardingPoint,
       timeOfDeparture: yatraDetails?.timeOfDeparture,
       totalSeats: yatraDetails?.totalSeats,
-      availableSeats: yatraDetails?.availableSeats,
+      availableSeats: yatraDetails?.totalSeats - seatCount,
     };
+    console.log("Yatra detail===>, ", yatraDetails);
+
     try {
       firestore()
         .collection("Yatra")
