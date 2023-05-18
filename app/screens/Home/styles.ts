@@ -3,8 +3,8 @@ import { getHeight, getWidth } from "../../utils/pixelConversion";
 const styles = StyleSheet.create({
   mainContainer: { flex: 1, alignItems: "center", justifyContent: "center" },
   mainImage: { alignItems: "center", marginTop: 10 },
-  mainImage2:{ height: 83, width: 83, borderRadius: 83 / 2 },
-  yatraDetailCard:{
+  mainImage2: { height: 83, width: 83, borderRadius: 83 / 2 },
+  yatraDetailCard: {
     backgroundColor: "#FFF8F3",
     marginHorizontal: 24,
     borderRadius: 7,
@@ -68,5 +68,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   timeText: { fontSize: 14, fontWeight: "600", color: "#EB6611" },
+  dataNotFound: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: getHeight(200),
+  },
+  dataNotFounfText: {
+    fontSize: getHeight(20),
+    fontWeight: "600",
+  },
 });
 export default styles;

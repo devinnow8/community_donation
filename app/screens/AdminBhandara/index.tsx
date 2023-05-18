@@ -31,7 +31,6 @@ const AdminBhandara = () => {
       .then((data) => {
         setLoader(false);
         if (data._exists) {
-          console.log("Data for current Date", data);
           setSelectedDateData(data?._data);
         } else {
           setSelectedDateData({});
@@ -113,13 +112,29 @@ const AdminBhandara = () => {
           <ActivityIndicator />
         ) : (
           selectedDate?.dateString !== "" && (
-            <View style={{ paddingBottom: 50, paddingRight: getWidth(20) }}>
+            <View
+              style={{
+                paddingBottom: 50,
+                paddingRight: getWidth(20),
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <FlatList
                 data={Object.values(selectedDateData)}
                 horizontal
                 bounces={false}
                 showsHorizontalScrollIndicator={false}
-                ListEmptyComponent={()=><View style={{}} ><Text>No booking yet</Text></View>}
+                ListEmptyComponent={() => (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text>No booking yet</Text>
+                  </View>
+                )}
                 renderItem={({ item }) => {
                   return (
                     <View style={styles.belowCalenderOuterContainer}>
@@ -177,15 +192,11 @@ const AdminBhandara = () => {
                                   { merge: true }
                                 )
                                 .then((res) => {
-                                  console.log(
-                                    "Response after adding new data",
-                                    res
-                                  );
                                   // setShowModal(true);
                                   getCurrentDateData(item?.timeStamp);
                                 })
                                 .catch((err) => {
-                                  console.log("Error", err);
+                                  // console.log("Error", err);
                                 });
                             }}
                             style={styles.confirmButtonContainer}
@@ -209,20 +220,16 @@ const AdminBhandara = () => {
                                     .doc(item?.timeStamp.toString())
                                     .set(currentData)
                                     .then((res) => {
-                                      console.log(
-                                        "Response after adding new data",
-                                        res
-                                      );
-                                  getCurrentDateData(item?.timeStamp);
+                                      getCurrentDateData(item?.timeStamp);
 
                                       // setShowModal(true);
                                     })
                                     .catch((err) => {
-                                      console.log("Error", err);
+                                      // console.log("Error", err);
                                     });
                                 })
                                 .catch((err) => {
-                                  console.log("Error", err);
+                                  // console.log("Error", err);
                                 });
                             }}
                             style={styles.rejectButtonContainer}

@@ -1,23 +1,28 @@
-import {
-  Text,
-  View,
-  SafeAreaView,
-  Pressable,
-} from "react-native";
+import { Text, View, SafeAreaView, Pressable } from "react-native";
 import React, { useState } from "react";
 import styles from "./styles";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import TabView1 from "./TabView1";
 import TabView2 from "./TabView2";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const navigation: any = useNavigation();
+
   return (
     <>
       <SafeAreaView style={styles.homeUpperContainer}>
         <HeaderBar
-          headingLeftText="भंडारा बुकिंग"
+          headingLeftText={
+            selectedTab === 0 ? "भंडारा बुकिंग" : "यात्रा बुकिंग"
+          }
           HeadingRightText="दान सेवा"
+          onRightTextPress={() => {
+            navigation.navigate("BhandaraBooking", {
+              screenType: "DaanSewa",
+            });
+          }}
           twoHeadings={true}
         />
         {selectedTab === 0 ? <TabView1 /> : <TabView2 />}

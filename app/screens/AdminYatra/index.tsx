@@ -1,4 +1,11 @@
-import { Keyboard, Text, TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Pressable,
+} from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
@@ -7,10 +14,12 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import styles from "./styles";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
-
+import { Calendar } from "react-native-calendars";
+import Modal from "react-native-modal";
 const AdminYatra = () => {
   const navigation: any = useNavigation();
   const { params }: any = useRoute();
+  const [isCalenderVisible, setCalenderVisible] = useState(false);
   const [yatraDetails, setYatraDetails] = useState({
     name: params?.yatraName ?? "",
     date: params?.yatraDate ?? "",
@@ -18,7 +27,7 @@ const AdminYatra = () => {
     timeOfDeparture: params?.yatraTimeOfDeparture ?? "",
     totalSeats: params?.totalYatraSeats ?? "",
     availableSeats: params?.availableSeats ?? "",
-    seatData: params?.seatData ?? "",
+    seatData: params?.seatData ?? [],
     nameErrMsg: "",
     dobErrMsg: "",
     onboardErrMsg: "",
@@ -70,7 +79,7 @@ const AdminYatra = () => {
   const sendFormData = () => {
     const timestamp = moment(yatraDetails.date).valueOf();
     let seatCount = 0;
-    yatraDetails.seatData.forEach((item) => {
+    yatraDetails?.seatData?.forEach((item) => {
       seatCount += item?.numberOfSeats;
     });
     const newData = {
@@ -81,7 +90,6 @@ const AdminYatra = () => {
       totalSeats: yatraDetails?.totalSeats,
       availableSeats: yatraDetails?.totalSeats - seatCount,
     };
-    console.log("Yatra detail===>, ", yatraDetails);
 
     try {
       firestore()
@@ -89,20 +97,20 @@ const AdminYatra = () => {
         .doc(timestamp.toString())
         .set(newData, { merge: true })
         .then((res) => {
-          console.log("Response after adding new data", res);
           navigation.navigate("AdminBookingDetail", { yatraDetails });
           // setShowModal(true);
         })
         .catch((err) => {
-          console.log("Error", err);
+          // console.log("Error", err);
         });
     } catch (error) {
-      console.log("Error", error);
+      // console.log("Error", error);
     }
   };
   return (
     <View style={styles.outerContainer}>
       <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />
+
       <View style={styles.nameLabel}>
         <Labels labelName="Name" />
       </View>
@@ -130,9 +138,7 @@ const AdminYatra = () => {
         <TextInputs
           value={yatraDetails.date}
           placeholder="YYYY-MM-DD"
-          onChangeText={(text) => {
-            setYatraDetails({ ...yatraDetails, date: text });
-          }}
+          onFocus={() => [setCalenderVisible(true), Keyboard.dismiss()]}
         />
       </View>
       <View style={styles.labelViewStyle}>
@@ -199,6 +205,49 @@ const AdminYatra = () => {
       >
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
+
+      <Modal
+        hasBackdrop={true}
+        backdropOpacity={0.4}
+        isVisible={isCalenderVisible}
+        style={styles.modalStyles}
+        onBackdropPress={() => setCalenderVisible(false)}
+      >
+        <View style={styles.parentView}>
+          <Pressable hitSlop={10} onPress={() => setCalenderVisible(false)}>
+            <Image
+              source={require("../../assets/images/crossIcon.png")}
+              style={styles.calenderCloseIcon}
+            />
+          </Pressable>
+          <Calendar
+            minDate={new Date().toString()}
+            style={styles.calenderStyle}
+            renderArrow={(res) => {
+              return (
+                <View>
+                  <Image
+                    source={
+                      res === "left"
+                        ? require("../../assets/images/LeftIcon.png")
+                        : require("../../assets/images/RightIcon.png")
+                    }
+                  />
+                </View>
+              );
+            }}
+            onDayPress={(day) => {
+              setCalenderVisible(false);
+              setYatraDetails((prevState) => {
+                return {
+                  ...prevState,
+                  date: day.dateString,
+                };
+              });
+            }}
+          />
+        </View>
+      </Modal>
     </View>
   );
 };

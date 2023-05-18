@@ -28,5 +28,25 @@ const styles = StyleSheet.create({
   errMsgText: {
     color: "red",
   },
+  modalStyles: {
+    flex: 1,
+    alignItems: "center",
+  },
+  parentView: {
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  calenderCloseIcon: {
+    height: getHeight(20),
+    width: getWidth(18),
+    marginLeft: getWidth(300),
+    marginBottom: getHeight(20),
+  },
+  calenderStyle: {
+    width: getWidth(300),
+    // height: getHeight(200),
+  },
 });
 export default styles;

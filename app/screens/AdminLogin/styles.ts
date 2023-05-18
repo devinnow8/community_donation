@@ -43,5 +43,18 @@ const styles = StyleSheet.create({
   errMsgText: {
     color: "red",
   },
+  adminDonationButtonView: {
+    // width: getWidth(30),
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+    paddingVertical: getHeight(8),
+    borderWidth: 1,
+    borderColor: "#EB6611",
+  },
+  adminDonationBtnOuterContainer: {
+    marginVertical: getHeight(30),
+    marginHorizontal: getWidth(40),
+  },
 });
 export default styles;

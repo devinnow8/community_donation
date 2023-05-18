@@ -23,7 +23,9 @@ const BhandaraBooking = () => {
   });
   const route = useRoute();
   const navigation: any = useNavigation();
-  const { time, date }: any = route.params;
+  const date: any = route.params?.date;
+  const time: any = route.params?.time;
+  const screenType: any = route.params?.screenType;
   const SendOTP = () => {
     // Name Validation
     let error = false;
@@ -73,7 +75,7 @@ const BhandaraBooking = () => {
       error = true;
     }
     // placeValidation
-    if (userInfo.place.length === 0) {
+    if (screenType !== "DaanSewa" && userInfo.place.length === 0) {
       setUserInfo((prevState) => {
         return {
           ...prevState,
@@ -122,33 +124,52 @@ const BhandaraBooking = () => {
   const Confirm = async () => {
     try {
       const response = await confirm?.confirm(userInfo.otp);
-      console.log("Response", response);
+
       if (response) {
-        navigation.navigate("BhandaraBookingPayment", {
+        let params;
+        params = {
           name: userInfo.name,
           phoneNumber: userInfo.phoneNumber,
-          place: userInfo.place,
-          selectedDate: date,
-          selectedTime: time,
-        });
+        };
+        if (screenType !== "DaanSewa") {
+          params = {
+            ...params,
+            place: userInfo?.place,
+            selectedDate: date,
+            selectedTime: time,
+          };
+        } else {
+          params = {
+            ...params,
+            screenType: "DaanSewa",
+          };
+        }
+        navigation.navigate("BhandaraBookingPayment", params);
       }
     } catch (error) {
-      console.log("Error", error);
+      // console.log("Error", error);
     }
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* headerBar */}
       <View>
-        <HeaderBar hasBackButton={true} headingText="भंडारा बुकिंग" />
+        <HeaderBar
+          hasBackButton={true}
+          headingText={screenType !== "DaanSewa" ? "भंडारा बुकिंग" : "दान सेवा"}
+        />
       </View>
 
       {/* Date Field */}
-      <View style={styles.bookingDateContainer}>
-        <Text style={styles.bookingDateText}>{`${moment(date.dateString).format(
-          "dddd, DD MMM yyyy"
-        )} (${time === 0 ? "11:00  AM" : "02:00 PM"})`}</Text>
-      </View>
+      {screenType !== "DaanSewa" && (
+        <View style={styles.bookingDateContainer}>
+          <Text style={styles.bookingDateText}>{`${moment(
+            date.dateString
+          ).format("dddd, DD MMM yyyy")} (${
+            time === 0 ? "11:00  AM" : "02:00 PM"
+          })`}</Text>
+        </View>
+      )}
 
       {/* formFields */}
       <View>
@@ -214,40 +235,42 @@ const BhandaraBooking = () => {
       ) : (
         <Text></Text>
       )}
-      <View>
-        <Labels labelName="स्थान" />
-      </View>
+      {screenType !== "DaanSewa" && (
+        <>
+          <View>
+            <Labels labelName="स्थान" />
+          </View>
 
-      <View>
-        <TextInputs
-          onChangeText={(val: string) =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                place: val,
-              };
-            })
-          }
-          onFocus={() =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                placeErrMsg: "",
-              };
-            })
-          }
-        />
-      </View>
-      {userInfo.placeErrMsg ? (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
-        </View>
-      ) : (
-        <Text></Text>
+          <View>
+            <TextInputs
+              onChangeText={(val: string) =>
+                setUserInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    place: val,
+                  };
+                })
+              }
+              onFocus={() =>
+                setUserInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    placeErrMsg: "",
+                  };
+                })
+              }
+            />
+          </View>
+          {userInfo.placeErrMsg && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
+            </View>
+          )}
+        </>
       )}
       {showOtpField && (
         <>
-          <View>
+          <View style={{ marginTop: 20 }}>
             <Labels labelName="OTP" />
           </View>
 

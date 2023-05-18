@@ -12,6 +12,7 @@ interface IHeaderBarText {
   onRightButtonPress?: any;
   hasAddUser?: boolean;
   onPress?: any;
+  onRightTextPress?: any;
 }
 
 const HeaderBar = ({
@@ -24,6 +25,7 @@ const HeaderBar = ({
   onRightButtonPress,
   hasAddUser,
   onPress,
+  onRightTextPress,
 }: IHeaderBarText) => {
   const navigation: any = useNavigation();
 
@@ -34,7 +36,10 @@ const HeaderBar = ({
           <Text style={[styles.headerBarText, { marginLeft: 20 }]}>
             {headingLeftText}
           </Text>
-          <Text style={[styles.headerBarText, styles.headerBarRightText]}>
+          <Text
+            onPress={onRightTextPress}
+            style={[styles.headerBarText, styles.headerBarRightText]}
+          >
             {HeadingRightText}
           </Text>
         </View>

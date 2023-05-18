@@ -55,14 +55,13 @@ const AdminBookingDetail = () => {
         // setLoader(false);
         if (data.docs) {
           const currentData = data.docs[0]._data;
-          console.log("CurrentData", currentData);
           setYatraDetails(currentData);
           setListData(currentData?.seatData);
         }
       })
       .catch(() => {
         // setLoader(false);
-        Alert.alert("Error fetching collections");
+        // Alert.alert("Error fetching collections");
       });
   };
   useEffect(() => {
@@ -71,6 +70,7 @@ const AdminBookingDetail = () => {
     }
   }, [isFocused]);
   const deleteEntry = (item: any) => {
+    console.log("yatraDetailyatraDetailss", yatraDetails);
     let newSeatData = yatraDetails?.seatData?.filter(
       (data) => data?.phoneNumber !== item?.phoneNumber
     );
@@ -86,12 +86,11 @@ const AdminBookingDetail = () => {
       .doc(timestamp.toString())
       .set(newYatraDetail)
       .then((res) => {
-        console.log("Response after adding new data", res);
         // setShowModal(true);
         getYatraDetails();
       })
       .catch((err) => {
-        console.log("Error", err);
+        // console.log("Error", err);
       });
   };
   const editEntry = () => {
@@ -111,11 +110,10 @@ const AdminBookingDetail = () => {
       .doc(timestamp.toString())
       .set(newYatraDetail)
       .then((res) => {
-        console.log("Response after adding new data", res);
         getYatraDetails();
       })
       .catch((err) => {
-        console.log("Error", err);
+        // console.log("Error", err);
       });
   };
   return (
@@ -128,114 +126,140 @@ const AdminBookingDetail = () => {
         onPress={AdminAddYatra}
       />
 
-      <View style={styles.bookingDetailContainer}>
-        <View style={{ justifyContent: "center" }}>
-          <Text
-            style={{ fontSize: 16, fontWeight: "600", alignSelf: "center" }}
-          >
-            {moment(yatraDetails?.date)?.format("DD MMM YYYY")}
-          </Text>
-          <TouchableOpacity onPress={adminEditYatraBooking}>
-            <Image
-              source={require("../../assets/images/iconEdit.png")}
-              resizeMode="contain"
-              style={styles.iconEditStyle}
-            />
-          </TouchableOpacity>
-        </View>
+      {JSON.stringify(yatraDetails) !== "{}" ? (
+        <>
+          <View style={styles.bookingDetailContainer}>
+            <View style={{ justifyContent: "center" }}>
+              <Text
+                style={{ fontSize: 16, fontWeight: "600", alignSelf: "center" }}
+              >
+                {moment(yatraDetails?.date)?.format("DD MMM YYYY")}
+              </Text>
+              <TouchableOpacity onPress={adminEditYatraBooking}>
+                <Image
+                  source={require("../../assets/images/iconEdit.png")}
+                  resizeMode="contain"
+                  style={styles.iconEditStyle}
+                />
+              </TouchableOpacity>
+            </View>
 
-        <Text style={styles.bookingContainerHeadingText}>
-          {/* चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर) */}
-          {yatraDetails?.name}
-        </Text>
-
-        <View style={styles.belowHeadingTextOuterContainer}>
-          <View style={styles.belowHeadingTextSubContainer}>
-            <Text style={styles.leftSideText}>Onboarding Point : </Text>
-            <Text style={styles.rightSideText}>
-              {/* Housing board lights Chandigarh */}
-              {yatraDetails?.onboardingPoint}
+            <Text style={styles.bookingContainerHeadingText}>
+              {/* चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर) */}
+              {yatraDetails?.name}
             </Text>
-          </View>
-          <View
-            style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
-          >
-            <Text style={styles.leftSideText}>Time of Departure : </Text>
-            <Text style={styles.rightSideText}>
-              {yatraDetails?.timeOfDeparture}
-            </Text>
-          </View>
-          <View
-            style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
-          >
-            <Text style={styles.leftSideText}>Seats Available :</Text>
-            <Text style={styles.rightSideText}>
-              {yatraDetails?.totalSeats} Seats
-            </Text>
-          </View>
-        </View>
-      </View>
 
-      {/* seats Available */}
-      <View style={styles.availableSeatsContainer}>
-        <Text style={styles.seatAvailableText}>Available Seats </Text>
-        <Text style={styles.seatAvailableNumberText}>
-          {yatraDetails?.availableSeats} Seats
-        </Text>
-      </View>
-
-      {/* chart */}
-      <View style={styles.chatOuterContainer}>
-        <View style={styles.chartContainer}>
-          <Text>Name</Text>
-          <Text>No. of seats booked</Text>
-          <Text>Action</Text>
-        </View>
-
-        <FlatList
-          data={listData ?? []}
-          renderItem={({ item, index }) => {
-            return (
-              <View key={item.id} style={styles.chartContainer}>
-                <View style={styles.chartItems}>
-                  <Text>{item.name}</Text>
-                </View>
-                <View style={styles.chartItems}>
-                  <Text>{item.numberOfSeats}</Text>
-                </View>
-                <View style={styles.chartIconOuter}>
-                  <TouchableOpacity
-                    onPress={() => editItem(item.name, item.seats, index)}
-                  >
-                    <Image
-                      source={require("../../assets/images/chartEdit.png")}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => deleteEntry(item)}
-                    style={{ marginHorizontal: getWidth(5) }}
-                  >
-                    <Image
-                      source={require("../../assets/images/emptyIcon.png")}
-                    />
-                  </TouchableOpacity>
-                </View>
+            <View style={styles.belowHeadingTextOuterContainer}>
+              <View style={styles.belowHeadingTextSubContainer}>
+                <Text style={styles.leftSideText}>Onboarding Point : </Text>
+                <Text style={styles.rightSideText}>
+                  {/* Housing board lights Chandigarh */}
+                  {yatraDetails?.onboardingPoint}
+                </Text>
               </View>
-            );
-          }}
-        />
-      </View>
+              <View
+                style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
+              >
+                <Text style={styles.leftSideText}>Time of Departure : </Text>
+                <Text style={styles.rightSideText}>
+                  {yatraDetails?.timeOfDeparture}
+                </Text>
+              </View>
+              <View
+                style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
+              >
+                <Text style={styles.leftSideText}>Seats Available :</Text>
+                <Text style={styles.rightSideText}>
+                  {yatraDetails?.totalSeats} Seats
+                </Text>
+              </View>
+            </View>
+          </View>
 
-      {/* modal */}
-      {selectedItemIndex !== -1 && (
-        <SeatEditModal
-          isVisible={showModal}
-          setIsVisible={setShowModal}
-          index={selectedItemIndex}
-          setListData={setListData}
-          listData={listData ?? []}
-          onSavePress={editEntry}
-        />
+          {/* seats Available */}
+          <View style={styles.availableSeatsContainer}>
+            <Text style={styles.seatAvailableText}>Available Seats </Text>
+            <Text style={styles.seatAvailableNumberText}>
+              {yatraDetails?.availableSeats} Seats
+            </Text>
+          </View>
+
+          {/* chart */}
+          <View style={styles.chatOuterContainer}>
+            <View style={styles.chartContainer}>
+              <Text>Name</Text>
+              <Text>No. of seats booked</Text>
+              <Text>Action</Text>
+            </View>
+
+            <FlatList
+              data={listData ?? []}
+              renderItem={({ item, index }) => {
+                return (
+                  <View key={item.id} style={styles.chartContainer}>
+                    <View style={styles.chartItems}>
+                      <Text>{item.name}</Text>
+                      <Text style={{ fontSize: 12 }}>{item.phoneNumber}</Text>
+                    </View>
+                    <View style={styles.chartItems}>
+                      <Text>{item.numberOfSeats}</Text>
+                    </View>
+                    <View style={styles.chartIconOuter}>
+                      <TouchableOpacity
+                        style={{
+                          justifyContent: "center",
+                        }}
+                        onPress={() => editItem(item.name, item.seats, index)}
+                      >
+                        <Image
+                          style={{
+                            width: 20,
+                            height: 20,
+                          }}
+                          resizeMode="contain"
+                          source={require("../../assets/images/iconEdit.png")}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => deleteEntry(item)}
+                        style={{
+                          marginHorizontal: getWidth(5),
+
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Image
+                          style={{
+                            width: 20,
+                            height: 20,
+                          }}
+                          resizeMode="contain"
+                          source={require("../../assets/images/emptyIcon.png")}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                );
+              }}
+            />
+          </View>
+
+          {/* modal */}
+          {selectedItemIndex !== -1 && (
+            <SeatEditModal
+              isVisible={showModal}
+              setIsVisible={setShowModal}
+              index={selectedItemIndex}
+              setListData={setListData}
+              listData={listData ?? []}
+              onSavePress={editEntry}
+            />
+          )}
+        </>
+      ) : (
+        <View style={styles.dataNotFound}>
+          <Text style={styles.dataNotFounfText}>No Upcomming Yatra</Text>
+        </View>
       )}
     </View>
   );

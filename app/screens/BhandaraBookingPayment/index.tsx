@@ -16,16 +16,27 @@ import CustomModal from "../../ReusableComponents/Modal";
 import styles from "./styles";
 import RazorpayCheckout from "react-native-razorpay";
 import { Paymenticon } from "../../assets/images/PaymentIcon";
+import moment from "moment";
 const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
   const [moneyErr, setMoneyErr] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const { params } = useRoute();
+  const {
+    name,
+    phoneNumber,
+    place,
+    selectedDate,
+    selectedTime,
+    screenType,
+  }: any = params;
 
   const PayMoney = (mode: string) => {
-    if (Number(selectedAmount) < 11000) {
+    if (screenType !== "DaanSewa" && Number(selectedAmount) < 11000) {
       setMoneyErr("* Amount should be above 11000rs *");
     } else if (mode === "CASH") {
       saveData(mode);
+      setShowModal(true);
     } else if (mode === "ONLINE") {
       var options = {
         description: "Credits towards consultation",
@@ -41,55 +52,71 @@ const BhandaraBookingPayment = () => {
         },
         theme: { color: "#FFF7E7" },
       };
-      console.log("options===>", typeof options.amount);
+
       RazorpayCheckout.open(options)
         .then((data) => {
           // handle success
-          console.log("======>", data);
-          alert(`Success: ${data.razorpay_payment_id}`);
+
+          saveData("ONLINE");
+          setShowModal(true);
+          // alert(`Success: ${data.razorpay_payment_id}`);
         })
         .catch((error) => {
           // handle failure
-          alert(`Error: ${error.code} | ${error.description}`);
+          // alert(`Error: ${error.code} | ${error.description}`);
         });
     }
   };
-  const { params } = useRoute();
-  const { name, phoneNumber, place, selectedDate, selectedTime }: any = params;
+
   const saveData = async (mode: String) => {
     const selectedTimeSlot = selectedTime === 0 ? "firstSlot" : "secondSlot";
-    const currentData = {
-      name,
-      phoneNumber,
-      place,
-      selectedDate: selectedDate.dateString,
-      selectedTime: selectedTimeSlot,
-      amount: selectedAmount,
-      mode,
-      timeStamp: selectedDate.timestamp,
-      status: mode === "CASH" ? "Pending" : "Completed",
-    };
-    firestore()
-      .collection("Test5")
-      .doc(selectedDate.timestamp.toString())
-      .get()
-      .then((data) => {
-        console.log("Getting Data from Collection", data._exists);
-        firestore()
-          .collection("Test5")
-          .doc(selectedDate.timestamp.toString())
-          .set({ [selectedTimeSlot]: currentData }, { merge: true })
-          .then((res) => {
-            console.log("Response after adding new data", res);
-            setShowModal(true);
-          })
-          .catch((err) => {
-            console.log("Error", err);
-          });
-      })
-      .catch(() => {
-        Alert.alert("Error fetching collections");
-      });
+
+    if (screenType === "DaanSewa") {
+      const daanSewaData = {
+        name,
+        phoneNumber,
+        amount: selectedAmount,
+        mode,
+        selectedDate: moment(new Date()).format("DD-MM-YYYY"),
+      };
+
+      firestore()
+        .collection("DaanSewa")
+        .doc()
+        .set(daanSewaData)
+        .then((res) => console.log("res====>", res));
+    } else {
+      const currentData = {
+        name,
+        phoneNumber,
+        place,
+        selectedDate: selectedDate.dateString,
+        selectedTime: selectedTimeSlot,
+        amount: selectedAmount,
+        mode,
+        timeStamp: selectedDate.timestamp,
+        status: mode === "CASH" ? "Pending" : "Completed",
+      };
+      firestore()
+        .collection("Test5")
+        .doc(selectedDate.timestamp.toString())
+        .get()
+        .then((data) => {
+          firestore()
+            .collection("Test5")
+            .doc(selectedDate.timestamp.toString())
+            .set({ [selectedTimeSlot]: currentData }, { merge: true })
+            .then((res) => {
+              setShowModal(true);
+            })
+            .catch((err) => {
+              // console.log("Error", err);
+            });
+        })
+        .catch(() => {
+          Alert.alert("Error fetching collections");
+        });
+    }
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>

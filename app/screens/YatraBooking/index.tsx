@@ -40,7 +40,7 @@ const YatraBooking = () => {
   const Confirm = async () => {
     try {
       const response = await confirm?.confirm(userInfo.otp);
-      console.log("Response", response);
+
       if (response) {
         const timeStamp = moment(yatraDetails?.date).valueOf();
         firestore()
@@ -68,12 +68,11 @@ const YatraBooking = () => {
               .doc(timeStamp.toString())
               .set(newData, { merge: true })
               .then((res) => {
-                console.log("Response after adding new data", res);
                 // setShowModal(true);
                 setShowThanksModal(true);
               })
               .catch((err) => {
-                console.log("Error", err);
+                // console.log("Error", err);
               });
           })
           .catch(() => {
@@ -81,7 +80,7 @@ const YatraBooking = () => {
           });
       }
     } catch (error) {
-      console.log("Error", error);
+      // console.log("Error", error);
     }
   };
   return (
