@@ -54,7 +54,8 @@ const AdminBookingDetail = () => {
       .then((data: any) => {
         // setLoader(false);
         if (data.docs) {
-          const currentData = data.docs[0]._data;
+          let requiredData = data.docs?.filter(item=>item?._data?.timestamp>moment().valueOf())
+          const currentData = requiredData[0]._data;
           setYatraDetails(currentData);
           setListData(currentData?.seatData);
         }

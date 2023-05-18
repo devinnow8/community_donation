@@ -89,6 +89,7 @@ const AdminYatra = () => {
       timeOfDeparture: yatraDetails?.timeOfDeparture,
       totalSeats: yatraDetails?.totalSeats,
       availableSeats: yatraDetails?.totalSeats - seatCount,
+      timestamp: moment(yatraDetails?.date).valueOf(),
     };
 
     try {
