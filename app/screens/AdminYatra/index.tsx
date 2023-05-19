@@ -16,6 +16,7 @@ import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
 import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const AdminYatra = () => {
   const navigation: any = useNavigation();
   const { params }: any = useRoute();
@@ -111,102 +112,107 @@ const AdminYatra = () => {
   return (
     <View style={styles.outerContainer}>
       <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />
-
-      <View style={styles.nameLabel}>
-        <Labels labelName="Name" />
-      </View>
-      <View>
-        <TextInputs
-          value={yatraDetails.name}
-          placeholder="Name"
-          onFocus={() => setYatraDetails({ ...yatraDetails, nameErrMsg: "" })}
-          onChangeText={(text) => {
-            setYatraDetails({ ...yatraDetails, name: text });
-          }}
-        />
-      </View>
-      {yatraDetails.nameErrMsg.length > 0 ? (
-        <View style={styles.errMsgContainer}>
-          <Text style={styles.errMsgText}>{yatraDetails.nameErrMsg}</Text>
-        </View>
-      ) : (
-        ""
-      )}
-      <View style={styles.labelViewStyle}>
-        <Labels labelName="Date(YYYY-MM-DD)" />
-      </View>
-      <View>
-        <TextInputs
-          value={yatraDetails.date}
-          placeholder="YYYY-MM-DD"
-          onFocus={() => [setCalenderVisible(true), Keyboard.dismiss()]}
-        />
-      </View>
-      <View style={styles.labelViewStyle}>
-        <Labels labelName="Onboarding point" />
-      </View>
-      <View>
-        <TextInputs
-          value={yatraDetails.onboardingPoint}
-          placeholder="Onboarding point"
-          onFocus={() =>
-            setYatraDetails({ ...yatraDetails, onboardErrMsg: "" })
-          }
-          onChangeText={(text) => {
-            setYatraDetails({ ...yatraDetails, onboardingPoint: text });
-          }}
-        />
-      </View>
-      {yatraDetails.onboardErrMsg?.length > 0 ? (
-        <View style={styles.errMsgContainer}>
-          <Text style={styles.errMsgText}>{yatraDetails.onboardErrMsg}</Text>
-        </View>
-      ) : (
-        ""
-      )}
-      <View style={styles.labelViewStyle}>
-        <Labels labelName="TIme of Departure" />
-      </View>
-      <View>
-        <TextInputs
-          value={yatraDetails.timeOfDeparture}
-          placeholder="Time of Departure"
-          onFocus={() => setYatraDetails({ ...yatraDetails, timeErrMsg: "" })}
-          onChangeText={(text) => {
-            setYatraDetails({ ...yatraDetails, timeOfDeparture: text });
-          }}
-        />
-      </View>
-      {yatraDetails.timeErrMsg?.length > 0 ? (
-        <View style={styles.errMsgContainer}>
-          <Text style={styles.errMsgText}>{yatraDetails.timeErrMsg}</Text>
-        </View>
-      ) : (
-        ""
-      )}
-      <View style={styles.labelViewStyle}>
-        <Labels labelName="Seats" />
-      </View>
-      <View>
-        <TextInputs
-          value={yatraDetails.totalSeats}
-          placeholder="Seats"
-          onChangeText={(text) => {
-            setYatraDetails({
-              ...yatraDetails,
-              totalSeats: text,
-              availableSeats: text,
-            });
-          }}
-        />
-      </View>
-      <TouchableOpacity
-        style={styles.submitButtonContainer}
-        onPress={() => [BookingDetail(), Keyboard.dismiss()]}
+      <KeyboardAwareScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.submitButtonText}>Submit</Text>
-      </TouchableOpacity>
+        <View style={styles.nameLabel}>
+          <Labels labelName="Name" />
+        </View>
 
+        <View>
+          <TextInputs
+            value={yatraDetails.name}
+            placeholder="Name"
+            onFocus={() => setYatraDetails({ ...yatraDetails, nameErrMsg: "" })}
+            onChangeText={(text) => {
+              setYatraDetails({ ...yatraDetails, name: text });
+            }}
+          />
+        </View>
+        {yatraDetails.nameErrMsg.length > 0 ? (
+          <View style={styles.errMsgContainer}>
+            <Text style={styles.errMsgText}>{yatraDetails.nameErrMsg}</Text>
+          </View>
+        ) : (
+          ""
+        )}
+        <View style={styles.labelViewStyle}>
+          <Labels labelName="Date(YYYY-MM-DD)" />
+        </View>
+        <View>
+          <TextInputs
+            value={yatraDetails.date}
+            placeholder="YYYY-MM-DD"
+            onFocus={() => [setCalenderVisible(true), Keyboard.dismiss()]}
+          />
+        </View>
+        <View style={styles.labelViewStyle}>
+          <Labels labelName="Onboarding point" />
+        </View>
+        <View>
+          <TextInputs
+            value={yatraDetails.onboardingPoint}
+            placeholder="Onboarding point"
+            onFocus={() =>
+              setYatraDetails({ ...yatraDetails, onboardErrMsg: "" })
+            }
+            onChangeText={(text) => {
+              setYatraDetails({ ...yatraDetails, onboardingPoint: text });
+            }}
+          />
+        </View>
+        {yatraDetails.onboardErrMsg?.length > 0 ? (
+          <View style={styles.errMsgContainer}>
+            <Text style={styles.errMsgText}>{yatraDetails.onboardErrMsg}</Text>
+          </View>
+        ) : (
+          ""
+        )}
+        <View style={styles.labelViewStyle}>
+          <Labels labelName="TIme of Departure" />
+        </View>
+        <View>
+          <TextInputs
+            value={yatraDetails.timeOfDeparture}
+            placeholder="Time of Departure"
+            onFocus={() => setYatraDetails({ ...yatraDetails, timeErrMsg: "" })}
+            onChangeText={(text) => {
+              setYatraDetails({ ...yatraDetails, timeOfDeparture: text });
+            }}
+          />
+        </View>
+        {yatraDetails.timeErrMsg?.length > 0 ? (
+          <View style={styles.errMsgContainer}>
+            <Text style={styles.errMsgText}>{yatraDetails.timeErrMsg}</Text>
+          </View>
+        ) : (
+          ""
+        )}
+        <View style={styles.labelViewStyle}>
+          <Labels labelName="Seats" />
+        </View>
+        <View>
+          <TextInputs
+            value={yatraDetails.totalSeats}
+            placeholder="Seats"
+            onChangeText={(text) => {
+              setYatraDetails({
+                ...yatraDetails,
+                totalSeats: text,
+                availableSeats: text,
+              });
+            }}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.submitButtonContainer}
+          onPress={() => [BookingDetail(), Keyboard.dismiss()]}
+        >
+          <Text style={styles.submitButtonText}>Submit</Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
       <Modal
         hasBackdrop={true}
         backdropOpacity={0.4}
