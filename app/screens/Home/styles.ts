@@ -77,5 +77,6 @@ const styles = StyleSheet.create({
     fontSize: getHeight(20),
     fontWeight: "600",
   },
+  infoIconstyle: { marginLeft: 5, height: 23, width: 23 },
 });
 export default styles;

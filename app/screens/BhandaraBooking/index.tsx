@@ -1,4 +1,10 @@
-import { Text, View, TouchableOpacity, Keyboard } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Keyboard,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
@@ -8,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import moment from "moment";
 import styles from "./styles";
+import { getHeight } from "../../utils/pixelConversion";
 const BhandaraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
@@ -226,6 +233,7 @@ const BhandaraBooking = () => {
             })
           }
           maxLength={10}
+          keyboardType="number-pad"
         />
       </View>
       {userInfo.phoneErrMsg ? (
@@ -270,7 +278,7 @@ const BhandaraBooking = () => {
       )}
       {showOtpField && (
         <>
-          <View style={{ marginTop: 20 }}>
+          <View>
             <Labels labelName="OTP" />
           </View>
 
@@ -292,6 +300,7 @@ const BhandaraBooking = () => {
                   };
                 })
               }
+              keyboardType="number-pad"
             />
           </View>
           {userInfo.otpErrMsg && (

@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import Modal from "react-native-modal";
 import { getHeight, getWidth } from "../utils/pixelConversion";
@@ -33,7 +40,7 @@ const SeatEditModal = ({
         <View style={styles.seatsCountContainer}>
           <TouchableOpacity
             onPress={() => {
-              setCounter(counter - 1);
+              counter > 0 && setCounter(counter - 1);
             }}
           >
             <Text style={styles.updateBtn}>-</Text>
@@ -43,7 +50,10 @@ const SeatEditModal = ({
           </View>
           <TouchableOpacity
             onPress={() => {
-              setCounter(counter + 1);
+              counter < 4 && setCounter(counter + 1);
+              if (counter === 4) {
+                Alert.alert("Number of Seats should be Maximum 4");
+              }
             }}
           >
             <Text style={styles.updateBtn}>+</Text>

@@ -61,9 +61,10 @@ const styles = StyleSheet.create({
   },
   bookingContainerHeadingText: {
     color: "#EB6611",
-    fontSize: getHeight(18),
+    fontSize: getHeight(22),
     alignSelf: "center",
     marginTop: getHeight(5),
+    fontWeight: "600",
   },
   belowHeadingTextOuterContainer: {
     alignSelf: "center",
@@ -89,9 +90,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   dataNotFound: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: getHeight(200),
   },
   dataNotFounfText: {
     fontSize: getHeight(20),

@@ -120,7 +120,7 @@ const YatraBooking = () => {
           <Text style={styles.errorText}>{userInfo.nameErrMsg}</Text>
         </View>
       )}
-      <View>
+      <View style={{ marginTop: getHeight(20) }}>
         <Labels labelName="फ़ोन नंबर" />
       </View>
 
@@ -152,7 +152,7 @@ const YatraBooking = () => {
       )}
       {showOtpField && (
         <>
-          <View>
+          <View style={{ marginTop: getHeight(20) }}>
             <Labels labelName="OTP" />
           </View>
 

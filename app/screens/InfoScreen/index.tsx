@@ -24,6 +24,12 @@ const InfoScreen = () => {
             'सब की सेवा, रब की सेवा' ट्रस्ट
           </Text>
         </View>
+        <View style={styles.adminContactContainer}>
+          <Text style={styles.adminContactText}>
+            अन्य जानकारी के लिया संपर्क करे{" "}
+          </Text>
+          <Text style={styles.adminContactText}>+919965848564</Text>
+        </View>
         <Text style={styles.trustInfoText}>
           {/* यह एक लंबा स्थापित तथ्य है कि जब एक पाठक एक पृष्ठ के खाखे को देखेगा तो
           पठनीय सामग्री से विचलित हो जाएगा */}

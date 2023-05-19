@@ -11,6 +11,7 @@ import moment from "moment";
 import styles from "./styles";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
+import { getHeight, getWidth } from "../../utils/pixelConversion";
 
 const TabView2 = () => {
   const [numberOfSeats, setNumberOfSeats] = useState(0);
@@ -27,7 +28,9 @@ const TabView2 = () => {
       .then((data: any) => {
         setLoader(false);
         if (data.docs) {
-          let requiredData = data.docs?.filter(item=>item?._data?.timestamp>moment().valueOf())
+          let requiredData = data.docs?.filter(
+            (item) => item?._data?.timestamp > moment().valueOf()
+          );
           const currentData = requiredData[0]._data;
           setYatraDetails(currentData);
         }
@@ -59,7 +62,7 @@ const TabView2 = () => {
           />
           <Text
             onPress={getYatraDetails}
-            style={[styles.headingText, { marginTop: 16 }]}
+            style={[styles.headingText, { marginTop: getHeight(16) }]}
           >
             'सब की सेवा, रब की सेवा' ट्रस्ट
           </Text>
@@ -69,7 +72,11 @@ const TabView2 = () => {
           <>
             <View style={styles.yatraDetailCard}>
               <Text
-                style={{ fontSize: 16, fontWeight: "600", alignSelf: "center" }}
+                style={{
+                  fontSize: getHeight(20),
+                  fontWeight: "600",
+                  alignSelf: "center",
+                }}
               >
                 {/* 12 JUN 2023 */}
                 {moment(yatraDetails?.date).format("DD MMM YYYY")}
@@ -77,9 +84,10 @@ const TabView2 = () => {
               <Text
                 style={{
                   color: "#EB6611",
-                  fontSize: 18,
+                  fontSize: getHeight(22),
                   alignSelf: "center",
-                  marginTop: 5,
+                  marginTop: getHeight(5),
+                  fontWeight: "700",
                 }}
               >
                 {/* चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर) */}
@@ -88,7 +96,7 @@ const TabView2 = () => {
               <View
                 style={{
                   alignSelf: "center",
-                  marginTop: 22,
+                  marginTop: getHeight(22),
                 }}
               >
                 <View
@@ -98,7 +106,7 @@ const TabView2 = () => {
                   }}
                 >
                   <Text style={{ width: "45%" }}>Onboarding Point : </Text>
-                  <Text style={{ width: 150, textAlign: "left" }}>
+                  <Text style={{ width: getWidth(150), textAlign: "left" }}>
                     {/* Housing board lights Chandigarh */}
                     {yatraDetails?.onboardingPoint}
                   </Text>
@@ -107,12 +115,12 @@ const TabView2 = () => {
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    marginTop: 10,
+                    marginTop: getHeight(10),
                   }}
                 >
                   <Text style={{ width: "45%" }}>Time of Departure : </Text>
 
-                  <Text style={{ width: 150, textAlign: "left" }}>
+                  <Text style={{ width: getWidth(150), textAlign: "left" }}>
                     {yatraDetails?.timeOfDeparture}
                   </Text>
                 </View>
@@ -120,11 +128,11 @@ const TabView2 = () => {
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    marginTop: 10,
+                    marginTop: getHeight(10),
                   }}
                 >
                   <Text style={{ width: "45%" }}>Seats Available :</Text>
-                  <Text style={{ width: 150, textAlign: "left" }}>
+                  <Text style={{ width: getWidth(150), textAlign: "left" }}>
                     {yatraDetails?.availableSeats} Seats
                     <Text
                       onPress={() => {
@@ -141,14 +149,14 @@ const TabView2 = () => {
             <View
               style={{
                 backgroundColor: "#FFF8F3",
-                marginHorizontal: 24,
+                marginHorizontal: getWidth(24),
                 borderRadius: 7,
-                paddingVertical: 14,
+                paddingVertical: getHeight(14),
                 shadowColor: "grey",
-                shadowOffset: { height: 10, width: 0 },
+                shadowOffset: { height: getHeight(10), width: 0 },
                 shadowRadius: 5,
                 shadowOpacity: 0.2,
-                marginTop: 20,
+                marginTop: getHeight(20),
               }}
             >
               <Text style={{ alignSelf: "center", fontWeight: "700" }}>
@@ -159,47 +167,50 @@ const TabView2 = () => {
                   flexDirection: "row",
                   alignItems: "center",
                   alignSelf: "center",
-                  marginVertical: 10,
+                  marginVertical: getHeight(10),
                 }}
               >
-                <Text
-                  style={{ fontSize: 20 }}
+                <TouchableOpacity
                   onPress={() => {
                     numberOfSeats > 0 && setNumberOfSeats(numberOfSeats - 1);
                   }}
+                  hitSlop={15}
                 >
-                  -
-                </Text>
+                  <Text style={{ fontSize: getHeight(25) }}>-</Text>
+                </TouchableOpacity>
                 <View
                   style={{
-                    paddingVertical: 5,
-                    paddingHorizontal: 20,
+                    paddingVertical: getHeight(5),
+                    paddingHorizontal: getWidth(20),
                     borderWidth: 1,
                     borderRadius: 7,
-                    marginHorizontal: 12,
+                    marginHorizontal: getWidth(12),
                     borderColor: "#EB6611",
                   }}
                 >
                   <Text>{numberOfSeats}</Text>
                 </View>
-                <Text
-                  style={{ fontSize: 20 }}
+                <TouchableOpacity
                   onPress={() => {
-                    numberOfSeats < 50 && setNumberOfSeats(numberOfSeats + 1);
+                    numberOfSeats < 4 && setNumberOfSeats(numberOfSeats + 1);
+                    if (numberOfSeats === 4) {
+                      Alert.alert("Number of Seats should be Maximum 4");
+                    }
                   }}
+                  hitSlop={15}
                 >
-                  +
-                </Text>
+                  <Text style={{ fontSize: getHeight(20) }}>+</Text>
+                </TouchableOpacity>
               </View>
               <TouchableOpacity
                 onPress={bookSeats}
                 style={{
-                  paddingVertical: 5,
-                  paddingHorizontal: 20,
+                  paddingVertical: getHeight(5),
+                  paddingHorizontal: getWidth(20),
                   borderRadius: 5,
                   backgroundColor: "#EB6611",
                   alignSelf: "center",
-                  marginTop: 5,
+                  marginTop: getHeight(5),
                 }}
               >
                 <Text style={{ color: "#FFFFFF", fontWeight: "700" }}>

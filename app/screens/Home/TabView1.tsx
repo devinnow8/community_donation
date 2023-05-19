@@ -100,12 +100,13 @@ const TabView1 = () => {
             'सब की सेवा, रब की सेवा' ट्रस्ट
           </Text>
           <TouchableOpacity
+            hitSlop={10}
             onPress={() => {
               navigation.navigate("InfoScreen");
             }}
           >
             <Image
-              style={{ marginLeft: 5 }}
+              style={styles.infoIconstyle}
               source={require("../../assets/images/InfoIcon.png")}
             />
           </TouchableOpacity>

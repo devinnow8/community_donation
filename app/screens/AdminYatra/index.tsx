@@ -23,7 +23,7 @@ const AdminYatra = () => {
   const [yatraDetails, setYatraDetails] = useState({
     name: params?.yatraName ?? "",
     date: params?.yatraDate ?? "",
-    onboardingPoint: params?.yatraOnboardPoint ?? "",
+    onboardingPoint: params?.yatraOnboardPoint ?? "Yavnika park panchkula",
     timeOfDeparture: params?.yatraTimeOfDeparture ?? "",
     totalSeats: params?.totalYatraSeats ?? "",
     availableSeats: params?.availableSeats ?? "",
