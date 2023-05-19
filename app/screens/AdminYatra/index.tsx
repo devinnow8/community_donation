@@ -90,21 +90,48 @@ const AdminYatra = () => {
       timeOfDeparture: yatraDetails?.timeOfDeparture,
       totalSeats: yatraDetails?.totalSeats,
       availableSeats: yatraDetails?.totalSeats - seatCount,
+      seatData: params?.seatData ?? [],
       timestamp: moment(yatraDetails?.date).valueOf(),
     };
-
     try {
-      firestore()
-        .collection("Yatra")
-        .doc(timestamp.toString())
-        .set(newData, { merge: true })
-        .then((res) => {
-          navigation.navigate("AdminBookingDetail", { yatraDetails });
-          // setShowModal(true);
-        })
-        .catch((err) => {
-          // console.log("Error", err);
-        });
+      if (
+        !params?.yatraDate ||
+        moment(params.yatraDate)?.valueOf() === timestamp
+      ) {
+        firestore()
+          .collection("Yatra")
+          .doc(timestamp.toString())
+          .set(newData, { merge: true })
+          .then((res) => {
+            navigation.navigate("AdminBookingDetail", { yatraDetails });
+            // setShowModal(true);
+          })
+          .catch((err) => {
+            // console.log("Error", err);
+          });
+      } else {
+        firestore()
+          .collection("Yatra")
+          .doc(moment(params.yatraDate)?.valueOf().toString())
+          .delete()
+          .then((res) => {
+            firestore()
+              .collection("Yatra")
+              .doc(timestamp.toString())
+              .set(newData, { merge: true })
+              .then((res) => {
+                navigation.navigate("AdminBookingDetail", { yatraDetails });
+                // setShowModal(true);
+              })
+              .catch((err) => {
+                // console.log("Error", err);
+              });
+            // setShowModal(true);
+          })
+          .catch((err) => {
+            // console.log("Error", err);
+          });
+      }
     } catch (error) {
       // console.log("Error", error);
     }
