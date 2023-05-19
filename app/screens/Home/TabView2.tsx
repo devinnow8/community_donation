@@ -1,6 +1,7 @@
 import {
   Alert,
   Image,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,6 +13,7 @@ import styles from "./styles";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { openNavigation } from "../../utils/openDirection";
 
 const TabView2 = () => {
   const [numberOfSeats, setNumberOfSeats] = useState(0);
@@ -110,6 +112,22 @@ const TabView2 = () => {
                     {/* Housing board lights Chandigarh */}
                     {yatraDetails?.onboardingPoint}
                   </Text>
+                  <Pressable
+                    hitSlop={10}
+                    onPress={() => {
+                      openNavigation(yatraDetails?.onboardingPoint);
+                    }}
+                  >
+                    <Image
+                      style={{
+                        width: getWidth(20),
+                        height: getHeight(20),
+                        resizeMode: "contain",
+                        marginRight: getWidth(5),
+                      }}
+                      source={require("../../assets/images/directionIcon.png")}
+                    />
+                  </Pressable>
                 </View>
                 <View
                   style={{
