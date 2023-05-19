@@ -198,7 +198,7 @@ const AdminYatra = () => {
           ""
         )}
         <View style={styles.labelViewStyle}>
-          <Labels labelName="TIme of Departure" />
+          <Labels labelName="Time of Departure" />
         </View>
         <View>
           <TextInputs

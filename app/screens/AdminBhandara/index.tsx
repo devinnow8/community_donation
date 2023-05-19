@@ -185,7 +185,7 @@ const AdminBhandara = () => {
                                 status: "Completed",
                               };
                               firestore()
-                                .collection("Test5")
+                                .collection("Bandhara Booking")
                                 .doc(item?.timeStamp.toString())
                                 .set(
                                   { [item?.selectedTime]: currentData },
@@ -216,7 +216,7 @@ const AdminBhandara = () => {
                                   let currentData = data._data;
                                   delete currentData[item?.selectedTime];
                                   firestore()
-                                    .collection("Test5")
+                                    .collection("Bandhara Booking")
                                     .doc(item?.timeStamp.toString())
                                     .set(currentData)
                                     .then((res) => {

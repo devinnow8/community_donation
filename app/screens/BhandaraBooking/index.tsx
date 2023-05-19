@@ -89,11 +89,21 @@ const BhandaraBooking = () => {
       error = true;
     }
     // placeValidation
-    if (screenType !== "DaanSewa" && userInfo.place.length === 0) {
+    if (screenType !== "DaanSewa" && userInfo.place?.length === 0) {
       setUserInfo((prevState) => {
         return {
           ...prevState,
           placeErrMsg: "*Please Fill The Missing Field*",
+        };
+      });
+      error = true;
+    }
+    // Address Validation
+    if (screenType !== "DaanSewa" && userInfo.address?.length === 0) {
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          addressErrMsg: "*Please Fill The Missing Field*",
         };
       });
       error = true;
@@ -322,8 +332,7 @@ const BhandaraBooking = () => {
                 />
               </View>
             )}
-
-            {userInfo.placeErrMsg && (
+            {userInfo.place?.length === 0 && (
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
               </View>
