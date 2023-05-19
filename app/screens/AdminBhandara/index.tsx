@@ -25,7 +25,7 @@ const AdminBhandara = () => {
   const getCurrentDateData = async (timestamp: number) => {
     setLoader(true);
     firestore()
-      .collection("Test5")
+      .collection("Bandhara Booking")
       .doc(timestamp.toString())
       .get()
       .then((data) => {
@@ -209,7 +209,7 @@ const AdminBhandara = () => {
                                 ...item,
                               };
                               firestore()
-                                .collection("Test5")
+                                .collection("Bandhara Booking")
                                 .doc(item?.timeStamp.toString())
                                 .get()
                                 .then((data: any) => {

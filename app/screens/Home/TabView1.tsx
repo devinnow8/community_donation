@@ -34,7 +34,7 @@ const TabView1 = () => {
   const getCurrentDateData = async (timestamp: number) => {
     setLoader(true);
     firestore()
-      .collection("Test5")
+      .collection("Bandhara Booking")
       .doc(timestamp.toString())
       .get()
       .then((data: any) => {
@@ -108,6 +108,7 @@ const TabView1 = () => {
             <Image
               style={styles.infoIconstyle}
               source={require("../../assets/images/InfoIcon.png")}
+              resizeMode="contain"
             />
           </TouchableOpacity>
         </View>

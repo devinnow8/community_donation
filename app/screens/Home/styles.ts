@@ -2,21 +2,26 @@ import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 const styles = StyleSheet.create({
   mainContainer: { flex: 1, alignItems: "center", justifyContent: "center" },
-  mainImage: { alignItems: "center", marginTop: 10 },
-  mainImage2: { height: 83, width: 83, borderRadius: 83 / 2 },
+  mainImage: { alignItems: "center", marginTop: getHeight(10) },
+  mainImage2: {
+    height: getHeight(95),
+    width: getWidth(80),
+    borderRadius: 95 / 2,
+    backgroundColor: "red",
+  },
   yatraDetailCard: {
     backgroundColor: "#FFF8F3",
-    marginHorizontal: 24,
+    marginHorizontal: getWidth(24),
     borderRadius: 7,
-    paddingVertical: 14,
+    paddingVertical: getHeight(14),
     shadowColor: "grey",
-    shadowOffset: { height: 10, width: 0 },
+    shadowOffset: { height: getHeight(10), width: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.2,
-    marginTop: 20,
+    marginTop: getHeight(20),
   },
   imageStyle: { height: getHeight(85), width: getWidth(65) },
-  headingText: { fontSize: 22, fontWeight: "400", color: "#1E1E1E" },
+  headingText: { fontSize: getHeight(22), fontWeight: "400", color: "#1E1E1E" },
   homeUpperContainer: {
     flex: 1,
     backgroundColor: "#FFF",
@@ -33,7 +38,7 @@ const styles = StyleSheet.create({
   },
   btnTextStyle: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: getHeight(20),
     fontWeight: "500",
     color: "white",
   },
@@ -57,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-around",
-    marginTop: 10,
+    marginTop: getHeight(10),
   },
   timeSlotWrapper: { marginTop: getHeight(27), marginLeft: getWidth(10) },
   timeSlotView: {
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     borderColor: "#EB6611",
     borderRadius: 5,
   },
-  timeText: { fontSize: 14, fontWeight: "600", color: "#EB6611" },
+  timeText: { fontSize: getHeight(14), fontWeight: "600", color: "#EB6611" },
   dataNotFound: {
     justifyContent: "center",
     alignItems: "center",
@@ -77,6 +82,20 @@ const styles = StyleSheet.create({
     fontSize: getHeight(20),
     fontWeight: "600",
   },
-  infoIconstyle: { marginLeft: 5, height: 23, width: 23 },
+  infoIconstyle: {
+    marginLeft: getWidth(5),
+    height: getHeight(23),
+    width: getWidth(23),
+  },
+  langerLocationContainer: {
+    marginHorizontal: getWidth(35),
+    marginTop: getHeight(20),
+  },
+  langerLocationText: {
+    textAlign: "center",
+    fontSize: getHeight(18),
+    fontWeight: "500",
+    letterSpacing: 0.6,
+  },
 });
 export default styles;

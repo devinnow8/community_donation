@@ -60,6 +60,7 @@ const YatraBooking = () => {
                 name: userInfo.name,
                 phoneNumber: userInfo.phoneNumber,
                 numberOfSeats,
+                id: new Date().valueOf(),
               },
             ];
             newData.seatData = seatData;

@@ -4,6 +4,9 @@ import {
   TouchableOpacity,
   Keyboard,
   KeyboardAvoidingView,
+  Image,
+  TextInput,
+  FlatList,
 } from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
@@ -15,17 +18,22 @@ import auth from "@react-native-firebase/auth";
 import moment from "moment";
 import styles from "./styles";
 import { getHeight } from "../../utils/pixelConversion";
+import upHeadIcon from "../../assets/images/upHeadIcon.png";
+import downHeadIcon from "../../assets/images/downHeadIcon.png";
 const BhandaraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
+  const [showDropDown, setShowUpDown] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: "",
     phoneNumber: "",
     place: "",
+    address: "",
     otp: "",
     nameErrMsg: "",
     phoneErrMsg: "",
     placeErrMsg: "",
+    addressErrMsg: "",
     otpErrMsg: "",
   });
   const route = useRoute();
@@ -141,7 +149,7 @@ const BhandaraBooking = () => {
         if (screenType !== "DaanSewa") {
           params = {
             ...params,
-            place: userInfo?.place,
+            place: userInfo?.address + " " + userInfo?.place,
             selectedDate: date,
             selectedTime: time,
           };
@@ -157,6 +165,24 @@ const BhandaraBooking = () => {
       // console.log("Error", error);
     }
   };
+  const dropDownItems = [
+    {
+      id: 1,
+      itemName: "Chandigarh",
+    },
+    {
+      id: 2,
+      itemName: "Panchkula",
+    },
+    {
+      id: 3,
+      itemName: "Mohali",
+    },
+    {
+      id: 4,
+      itemName: "zirakpur",
+    },
+  ];
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* headerBar */}
@@ -246,16 +272,77 @@ const BhandaraBooking = () => {
       {screenType !== "DaanSewa" && (
         <>
           <View>
-            <Labels labelName="स्थान" />
+            <Labels labelName="शहर" />
+          </View>
+
+          <TouchableOpacity
+            onPress={() => setShowUpDown(!showDropDown)}
+            style={[
+              styles.textInputContainer,
+              showDropDown && {
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+              },
+            ]}
+          >
+            <Text>{userInfo.place}</Text>
+            <Image
+              source={showDropDown ? upHeadIcon : downHeadIcon}
+              style={styles.upDownArrow}
+            />
+          </TouchableOpacity>
+          {showDropDown && (
+            <View style={styles.dropDownOuterContainer}>
+              <FlatList
+                data={dropDownItems}
+                renderItem={({ item }) => (
+                  <View
+                    style={{ borderBottomWidth: 1, borderColor: "#BCBCBC" }}
+                    key={item.id}
+                  >
+                    <TouchableOpacity
+                      style={styles.dropDownItemsContainer}
+                      onPress={() => {
+                        setShowUpDown(false);
+                        setUserInfo((prevState) => {
+                          return {
+                            ...prevState,
+                            place: item.itemName,
+                          };
+                        });
+                      }}
+                    >
+                      <Text>{item.itemName}</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              />
+            </View>
+          )}
+
+          {userInfo.placeErrMsg && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
+            </View>
+          )}
+
+          <View style={{ marginTop: getHeight(20) }}>
+            <Labels
+              labelColor={userInfo.place?.length !== 0 ? "orange" : "grey"}
+              labelName="स्थान"
+            />
           </View>
 
           <View>
             <TextInputs
+              editable={userInfo.place?.length !== 0 ? true : false}
+              multiline
+              textInputStyles={{ height: getHeight(80) }}
               onChangeText={(val: string) =>
                 setUserInfo((prevState) => {
                   return {
                     ...prevState,
-                    place: val,
+                    address: val,
                   };
                 })
               }
@@ -263,13 +350,13 @@ const BhandaraBooking = () => {
                 setUserInfo((prevState) => {
                   return {
                     ...prevState,
-                    placeErrMsg: "",
+                    addressErrMsg: "",
                   };
                 })
               }
             />
           </View>
-          {userInfo.placeErrMsg && (
+          {userInfo.addressErrMsg?.length > 0 && (
             <View style={styles.errorContainer}>
               <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
             </View>
@@ -278,7 +365,7 @@ const BhandaraBooking = () => {
       )}
       {showOtpField && (
         <>
-          <View>
+          <View style={{ marginTop: getHeight(20) }}>
             <Labels labelName="OTP" />
           </View>
 

@@ -98,12 +98,12 @@ const BhandaraBookingPayment = () => {
         status: mode === "CASH" ? "Pending" : "Completed",
       };
       firestore()
-        .collection("Test5")
+        .collection("Bandhara Booking")
         .doc(selectedDate.timestamp.toString())
         .get()
         .then((data) => {
           firestore()
-            .collection("Test5")
+            .collection("Bandhara Booking")
             .doc(selectedDate.timestamp.toString())
             .set({ [selectedTimeSlot]: currentData }, { merge: true })
             .then((res) => {

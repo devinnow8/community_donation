@@ -50,10 +50,7 @@ const SeatEditModal = ({
           </View>
           <TouchableOpacity
             onPress={() => {
-              counter < 4 && setCounter(counter + 1);
-              if (counter === 4) {
-                Alert.alert("Number of Seats should be Maximum 4");
-              }
+              setCounter(counter + 1);
             }}
           >
             <Text style={styles.updateBtn}>+</Text>

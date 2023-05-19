@@ -61,6 +61,7 @@ const TabView2 = () => {
           <Image
             style={styles.mainImage2}
             source={require("../../assets/images/MainScreenIcon2.png")}
+            resizeMode="cover"
           />
           <Text
             onPress={getYatraDetails}
@@ -108,7 +109,7 @@ const TabView2 = () => {
                   }}
                 >
                   <Text style={{ width: "45%" }}>Onboarding Point : </Text>
-                  <Text style={{ width: getWidth(150), textAlign: "left" }}>
+                  <Text style={{ textAlign: "left" }}>
                     {/* Housing board lights Chandigarh */}
                     {yatraDetails?.onboardingPoint}
                   </Text>
@@ -138,7 +139,7 @@ const TabView2 = () => {
                 >
                   <Text style={{ width: "45%" }}>Time of Departure : </Text>
 
-                  <Text style={{ width: getWidth(150), textAlign: "left" }}>
+                  <Text style={{ width: "45%", textAlign: "left" }}>
                     {yatraDetails?.timeOfDeparture}
                   </Text>
                 </View>
@@ -164,6 +165,16 @@ const TabView2 = () => {
                 </View>
               </View>
             </View>
+
+            <View style={styles.langerLocationContainer}>
+              <Text style={styles.langerLocationText}>
+                दर्शन के बाद अग्रवाल धर्मशाला में
+              </Text>
+              <Text style={styles.langerLocationText}>
+                रात्रि भोजन की व्यवस्था है
+              </Text>
+            </View>
+
             <View
               style={{
                 backgroundColor: "#FFF8F3",

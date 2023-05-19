@@ -75,7 +75,7 @@ const AdminBookingDetail = () => {
   const deleteEntry = (item: any) => {
     console.log("yatraDetailyatraDetailss", yatraDetails);
     let newSeatData = yatraDetails?.seatData?.filter(
-      (data) => data?.phoneNumber !== item?.phoneNumber
+      (data) => data?.id !== item?.id
     );
     let newYatraDetail = {
       ...yatraDetails,
@@ -171,7 +171,7 @@ const AdminBookingDetail = () => {
               <View
                 style={[styles.belowHeadingTextSubContainer, { marginTop: 10 }]}
               >
-                <Text style={styles.leftSideText}>Seats Available :</Text>
+                <Text style={styles.leftSideText}>Total Seats :</Text>
                 <Text style={styles.rightSideText}>
                   {yatraDetails?.totalSeats} Seats
                 </Text>

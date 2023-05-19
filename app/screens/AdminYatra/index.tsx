@@ -25,7 +25,7 @@ const AdminYatra = () => {
     date: params?.yatraDate ?? "",
     onboardingPoint: params?.yatraOnboardPoint ?? "Yavnika park panchkula",
     timeOfDeparture: params?.yatraTimeOfDeparture ?? "",
-    totalSeats: params?.totalYatraSeats ?? "",
+    totalSeats: params?.totalYatraSeats ?? "45",
     availableSeats: params?.availableSeats ?? "",
     seatData: params?.seatData ?? [],
     nameErrMsg: "",
