@@ -179,7 +179,7 @@ const BhandaraBooking = () => {
     },
     {
       id: 4,
-      itemName: "zirakpur",
+      itemName: "Zirakpur",
     },
   ];
   return (
