@@ -1,12 +1,44 @@
-import { Image, Text, View } from "react-native";
-import React from "react";
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  Platform,
+  Linking,
+  Alert,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import styles from "./styles";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
-
+import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
 const InfoScreen = () => {
   const navigation: any = useNavigation();
+  const [adminPhoneNumber, setAdminPhoneNumber] = useState("");
+  const getAdminPhoneNumber = () => {
+    firestore()
+      .collection("adminLogin")
+      .doc("Admin")
+      .get()
+      .then(({ _data }: any) => setAdminPhoneNumber(_data.phoneNumber))
+      .catch(() => {
+        Alert.alert("Error fetching collections");
+      });
+  };
+  useEffect(() => {
+    getAdminPhoneNumber();
+  }, []);
+  const openDialScreen = () => {
+    let number = "";
+    if (Platform.OS === "ios") {
+      number = `telprompt:${adminPhoneNumber}`;
+    } else {
+      number = `tel:${adminPhoneNumber}`;
+    }
+    console.log("AdminNumber====>", adminPhoneNumber);
+    Linking.openURL(number);
+  };
   return (
     <View style={styles.mainContainer}>
       <HeaderBar
@@ -24,12 +56,13 @@ const InfoScreen = () => {
             'सब की सेवा, रब की सेवा' ट्रस्ट
           </Text>
         </View>
-        <View style={styles.adminContactContainer}>
-          <Text style={styles.adminContactText}>
-            अन्य जानकारी के लिया संपर्क करे{" "}
-          </Text>
-          <Text style={styles.adminContactText}>+919965848564</Text>
-        </View>
+        <TouchableOpacity
+          style={styles.adminContactContainer}
+          onPress={() => openDialScreen()}
+        >
+          <Text style={styles.adminContactText}>संपर्क करे</Text>
+          <Text style={styles.adminContactTextNumber}>{adminPhoneNumber}</Text>
+        </TouchableOpacity>
         <Text style={styles.trustInfoText}>
           {/* यह एक लंबा स्थापित तथ्य है कि जब एक पाठक एक पृष्ठ के खाखे को देखेगा तो
           पठनीय सामग्री से विचलित हो जाएगा */}
