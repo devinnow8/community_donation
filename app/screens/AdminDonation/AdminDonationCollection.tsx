@@ -8,7 +8,6 @@ const AdminDonationCollection = () => {
   const [listData, setListData] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const RenderDonationList = ({ item }) => {
-    console.log("item===>", item);
     return (
       <View>
         <View

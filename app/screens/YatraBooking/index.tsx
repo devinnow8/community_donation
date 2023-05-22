@@ -1,4 +1,11 @@
-import { Text, View, TouchableOpacity, Keyboard, Alert } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Keyboard,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
@@ -27,17 +34,21 @@ const YatraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
   const [showThanksModal, setShowThanksModal] = useState(false);
+  const [isLoaderVisible, setLoaderVisible] = useState(false);
   const sendOTP = async () => {
+    setLoaderVisible(true);
     const confirmation = await auth().signInWithPhoneNumber(
       "+91" + userInfo.phoneNumber
     );
     if (confirmation) {
+      setLoaderVisible(false);
       setShowOtpField(true);
       setConfirm(confirmation);
     }
   };
 
   const Confirm = async () => {
+    setLoaderVisible(true);
     try {
       const response = await confirm?.confirm(userInfo.otp);
 
@@ -69,18 +80,22 @@ const YatraBooking = () => {
               .doc(timeStamp.toString())
               .set(newData, { merge: true })
               .then((res) => {
+                setLoaderVisible(false);
                 // setShowModal(true);
                 setShowThanksModal(true);
               })
               .catch((err) => {
+                setLoaderVisible(false);
                 // console.log("Error", err);
               });
           })
           .catch(() => {
+            setLoaderVisible(false);
             Alert.alert("Error fetching collections");
           });
       }
     } catch (error) {
+      setLoaderVisible(false);
       // console.log("Error", error);
     }
   };
@@ -194,9 +209,13 @@ const YatraBooking = () => {
           showOtpField ? Confirm() : sendOTP();
         }}
       >
-        <Text style={styles.btnTextStyle}>
-          {showOtpField ? "Confirm" : "Send OTP"}
-        </Text>
+        {isLoaderVisible ? (
+          <ActivityIndicator size={"small"} color={"#ffffff"} />
+        ) : (
+          <Text style={styles.btnTextStyle}>
+            {showOtpField ? "Confirm" : "Send OTP"}
+          </Text>
+        )}
       </TouchableOpacity>
       <CustomModal
         setIsVisible={setShowThanksModal}

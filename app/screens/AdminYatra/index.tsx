@@ -5,6 +5,7 @@ import {
   View,
   Image,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
@@ -21,6 +22,7 @@ const AdminYatra = () => {
   const navigation: any = useNavigation();
   const { params }: any = useRoute();
   const [isCalenderVisible, setCalenderVisible] = useState(false);
+  const [isLoaderVisible, setLoaderVisible] = useState(false);
   const [yatraDetails, setYatraDetails] = useState({
     name: params?.yatraName ?? "",
     date: params?.yatraDate ?? "",
@@ -78,6 +80,7 @@ const AdminYatra = () => {
   };
 
   const sendFormData = () => {
+    setLoaderVisible(true);
     const timestamp = moment(yatraDetails.date).valueOf();
     let seatCount = 0;
     yatraDetails?.seatData?.forEach((item) => {
@@ -103,10 +106,12 @@ const AdminYatra = () => {
           .doc(timestamp.toString())
           .set(newData, { merge: true })
           .then((res) => {
+            setLoaderVisible(false);
             navigation.navigate("AdminBookingDetail", { yatraDetails });
             // setShowModal(true);
           })
           .catch((err) => {
+            setLoaderVisible(false);
             // console.log("Error", err);
           });
       } else {
@@ -120,19 +125,23 @@ const AdminYatra = () => {
               .doc(timestamp.toString())
               .set(newData, { merge: true })
               .then((res) => {
+                setLoaderVisible(false);
                 navigation.navigate("AdminBookingDetail", { yatraDetails });
                 // setShowModal(true);
               })
               .catch((err) => {
+                setLoaderVisible(false);
                 // console.log("Error", err);
               });
             // setShowModal(true);
           })
           .catch((err) => {
+            setLoaderVisible(false);
             // console.log("Error", err);
           });
       }
     } catch (error) {
+      setLoaderVisible(false);
       // console.log("Error", error);
     }
   };
@@ -166,12 +175,16 @@ const AdminYatra = () => {
           ""
         )}
         <View style={styles.labelViewStyle}>
-          <Labels labelName="Date(YYYY-MM-DD)" />
+          <Labels labelName="Date(DD-MM-YYYY)" />
         </View>
         <View>
           <TextInputs
-            value={yatraDetails.date}
-            placeholder="YYYY-MM-DD"
+            value={
+              yatraDetails.date === ""
+                ? ""
+                : moment(yatraDetails.date).format("DD-MM-YYYY")
+            }
+            placeholder="DD-MM-YYYY"
             onFocus={() => [setCalenderVisible(true), Keyboard.dismiss()]}
           />
         </View>
@@ -237,7 +250,11 @@ const AdminYatra = () => {
           style={styles.submitButtonContainer}
           onPress={() => [BookingDetail(), Keyboard.dismiss()]}
         >
-          <Text style={styles.submitButtonText}>Submit</Text>
+          {isLoaderVisible ? (
+            <ActivityIndicator size={"small"} color={"#ffffff"} />
+          ) : (
+            <Text style={styles.submitButtonText}>Submit</Text>
+          )}
         </TouchableOpacity>
       </KeyboardAwareScrollView>
       <Modal

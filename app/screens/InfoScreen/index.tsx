@@ -38,7 +38,7 @@ const InfoScreen = () => {
     } else {
       number = `tel:${adminPhoneNumber}`;
     }
-    console.log("AdminNumber====>", adminPhoneNumber);
+
     Linking.openURL(number);
   };
   return (

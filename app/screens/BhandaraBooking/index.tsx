@@ -5,6 +5,7 @@ import {
   Keyboard,
   Image,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
@@ -23,6 +24,7 @@ const BhandaraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
   const [showDropDown, setShowUpDown] = useState(false);
+  const [isLoaderVisible, setLoaderVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: "",
     phoneNumber: "",
@@ -109,6 +111,7 @@ const BhandaraBooking = () => {
       error = true;
     }
     if (!error) {
+      setLoaderVisible(true);
       sendOTP();
     }
 
@@ -141,11 +144,13 @@ const BhandaraBooking = () => {
       "+91" + userInfo.phoneNumber
     );
     if (confirmation) {
+      setLoaderVisible(false);
       setShowOtpField(true);
       setConfirm(confirmation);
     }
   };
   const Confirm = async () => {
+    setLoaderVisible(true);
     try {
       const response = await confirm?.confirm(userInfo.otp);
 
@@ -168,9 +173,11 @@ const BhandaraBooking = () => {
             screenType: "DaanSewa",
           };
         }
+        setLoaderVisible(false);
         navigation.navigate("BhandaraBookingPayment", params);
       }
     } catch (error) {
+      setLoaderVisible(false);
       // console.log("Error", error);
     }
   };
@@ -351,7 +358,10 @@ const BhandaraBooking = () => {
               <TextInputs
                 editable={userInfo.place?.length !== 0 ? true : false}
                 multiline
-                textInputStyles={{ height: getHeight(80) }}
+                textInputStyles={{
+                  height: getHeight(80),
+                  textAlignVertical: "top",
+                }}
                 onChangeText={(val: string) =>
                   setUserInfo((prevState) => {
                     return {
@@ -424,9 +434,13 @@ const BhandaraBooking = () => {
             }
           }}
         >
-          <Text style={styles.btnTextStyle}>
-            {!showOtpField ? "Send OTP" : "Confirm"}
-          </Text>
+          {isLoaderVisible ? (
+            <ActivityIndicator size={"small"} color={"#ffffff"} />
+          ) : (
+            <Text style={styles.btnTextStyle}>
+              {!showOtpField ? "Send OTP" : "Confirm"}
+            </Text>
+          )}
         </TouchableOpacity>
       </KeyboardAwareScrollView>
     </View>

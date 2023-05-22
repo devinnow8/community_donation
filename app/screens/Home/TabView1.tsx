@@ -54,12 +54,6 @@ const TabView1 = () => {
       });
   };
   const renderCalendarDate = (res: any) => {
-    console.log(
-      " ========??????>>>>",
-      res.date.timestamp,
-      moment(res.date.timestamp).startOf("day").valueOf(),
-      moment().startOf("day").add({ days: 4 }).valueOf()
-    );
     return (
       <TouchableOpacity
         disabled={res.date?.timestamp < moment(new Date()).valueOf() ?? false}

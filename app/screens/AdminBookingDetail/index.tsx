@@ -73,7 +73,6 @@ const AdminBookingDetail = () => {
     }
   }, [isFocused]);
   const deleteEntry = (item: any) => {
-    console.log("yatraDetailyatraDetailss", yatraDetails);
     let newSeatData = yatraDetails?.seatData?.filter(
       (data) => data?.id !== item?.id
     );
