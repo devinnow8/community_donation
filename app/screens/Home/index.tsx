@@ -1,14 +1,17 @@
 import { Text, View, SafeAreaView, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import TabView1 from "./TabView1";
 import TabView2 from "./TabView2";
 import { useNavigation } from "@react-navigation/native";
-
+import SplashScreen from "react-native-splash-screen";
 const Home = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const navigation: any = useNavigation();
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <>
