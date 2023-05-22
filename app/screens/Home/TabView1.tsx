@@ -53,10 +53,16 @@ const TabView1 = () => {
         // dispatch(setLoader(false));
       });
   };
-  const renderCalendatDate = (res: any) => {
+  const renderCalendarDate = (res: any) => {
+    console.log(
+      " ========??????>>>>",
+      res.date.timestamp,
+      moment(res.date.timestamp).startOf("day").valueOf(),
+      moment().startOf("day").add({ days: 4 }).valueOf()
+    );
     return (
       <TouchableOpacity
-        disabled={res.date?.timestamp < moment(new Date()).valueOf()}
+        disabled={res.date?.timestamp < moment(new Date()).valueOf() ?? false}
         onPress={() => {
           setSelectedDate(res.date);
           getCurrentDateData(res.date.timestamp);
@@ -65,7 +71,9 @@ const TabView1 = () => {
           styles.dateView,
           {
             backgroundColor:
-              res.state === "disabled"
+              res.state === "disabled" ||
+              moment(res.date.timestamp).startOf("day").valueOf() ===
+                moment().startOf("day").valueOf()
                 ? "white"
                 : selectedDate.dateString === res.date?.dateString
                 ? "#EB6611"
@@ -76,7 +84,9 @@ const TabView1 = () => {
         <Text
           style={{
             color:
-              res.state === "disabled"
+              res?.state === "disabled" ||
+              moment(res.date.timestamp).startOf("day").valueOf() ===
+                moment().startOf("day").valueOf()
                 ? "black"
                 : selectedDate.dateString === res.date?.dateString
                 ? "white"
@@ -116,7 +126,7 @@ const TabView1 = () => {
       </View>
       <View style={styles.calendarView}>
         <Calendar
-          minDate={new Date().toString()}
+          minDate={new Date().toISOString()}
           style={{}}
           theme={{}}
           renderArrow={(res) => {
@@ -133,7 +143,7 @@ const TabView1 = () => {
             );
           }}
           date={selectedDate.dateString}
-          dayComponent={renderCalendatDate}
+          dayComponent={renderCalendarDate}
         />
         {selectedDate.dateString !== "" && (
           <View style={styles.timeSlotWrapper}>
@@ -146,12 +156,14 @@ const TabView1 = () => {
               <View style={styles.selectedDateView}>
                 <View>
                   <TouchableOpacity
-                    disabled={selectedDateData.firstSlot}
+                    disabled={
+                      selectedDateData?.firstSlot === undefined ?? false
+                    }
                     onPress={() => handleNavigation(0)}
                     style={[
                       styles.timeSlotView,
                       {
-                        borderColor: selectedDateData.firstSlot
+                        borderColor: selectedDateData?.firstSlot
                           ? "gray"
                           : "#EB6611",
                       },
@@ -161,7 +173,7 @@ const TabView1 = () => {
                       style={[
                         styles.timeText,
                         {
-                          color: selectedDateData.firstSlot
+                          color: selectedDateData?.firstSlot
                             ? "grey"
                             : "#EB6611",
                         },
@@ -170,7 +182,7 @@ const TabView1 = () => {
                       11:00 AM
                     </Text>
                   </TouchableOpacity>
-                  {selectedDateData.firstSlot && (
+                  {selectedDateData?.firstSlot && (
                     <View
                       style={{
                         flexDirection: "row",
@@ -178,19 +190,21 @@ const TabView1 = () => {
                         marginTop: 10,
                       }}
                     >
-                      <Text>{selectedDateData.firstSlot?.name}</Text>
-                      <Text>{selectedDateData.firstSlot?.amount}</Text>
+                      <Text>{selectedDateData?.firstSlot?.name}</Text>
+                      <Text>{selectedDateData?.firstSlot?.amount}</Text>
                     </View>
                   )}
                 </View>
                 <View>
                   <TouchableOpacity
-                    disabled={selectedDateData.secondSlot}
+                    disabled={
+                      selectedDateData?.secondSlot === undefined ?? false
+                    }
                     onPress={() => handleNavigation(1)}
                     style={[
                       styles.timeSlotView,
                       {
-                        borderColor: selectedDateData.secondSlot
+                        borderColor: selectedDateData?.secondSlot
                           ? "gray"
                           : "#EB6611",
                       },
@@ -200,7 +214,7 @@ const TabView1 = () => {
                       style={[
                         styles.timeText,
                         {
-                          color: selectedDateData.secondSlot
+                          color: selectedDateData?.secondSlot
                             ? "gray"
                             : "#EB6611",
                         },
@@ -209,7 +223,7 @@ const TabView1 = () => {
                       02:00 PM
                     </Text>
                   </TouchableOpacity>
-                  {selectedDateData.secondSlot && (
+                  {selectedDateData?.secondSlot && (
                     <View
                       style={{
                         flexDirection: "row",
@@ -217,8 +231,8 @@ const TabView1 = () => {
                         marginTop: 10,
                       }}
                     >
-                      <Text>{selectedDateData.secondSlot?.name}</Text>
-                      <Text>{selectedDateData.secondSlot?.amount}</Text>
+                      <Text>{selectedDateData?.secondSlot?.name}</Text>
+                      <Text>{selectedDateData?.secondSlot?.amount}</Text>
                     </View>
                   )}
                 </View>

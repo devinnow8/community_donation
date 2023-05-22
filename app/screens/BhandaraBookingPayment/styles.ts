@@ -10,8 +10,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "400",
     color: "#EB6611",
-    paddingVertical: getHeight(10),
-    paddingHorizontal: getWidth(20),
   },
   btnStyle: {
     marginHorizontal: getWidth(110),

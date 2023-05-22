@@ -16,7 +16,7 @@ import { Calendar } from "react-native-calendars";
 import moment from "moment";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
-import { getWidth } from "../../utils/pixelConversion";
+import { getHeight, getWidth } from "../../utils/pixelConversion";
 const AdminBhandara = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
@@ -116,8 +116,6 @@ const AdminBhandara = () => {
               style={{
                 paddingBottom: 50,
                 paddingRight: getWidth(20),
-                flex: 1,
-                justifyContent: "center",
                 alignItems: "center",
               }}
             >
@@ -130,6 +128,7 @@ const AdminBhandara = () => {
                   <View
                     style={{
                       justifyContent: "center",
+                      marginTop: getHeight(100),
                     }}
                   >
                     <Text>No booking yet</Text>

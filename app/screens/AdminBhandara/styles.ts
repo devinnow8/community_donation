@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: getWidth(20),
     // width: "100%",
     width: getWidth(300),
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#FFF8F3",
     borderRadius: 7,
     paddingVertical: getHeight(14),
