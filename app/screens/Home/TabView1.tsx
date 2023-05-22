@@ -92,6 +92,7 @@ const TabView1 = () => {
     <>
       <View style={styles.mainImage}>
         <Image
+          resizeMode="contain"
           style={styles.imageStyle}
           source={require("../../assets/images/MainScreenIcon.png")}
         />

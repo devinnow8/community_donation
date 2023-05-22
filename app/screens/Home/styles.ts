@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     height: getHeight(95),
     width: getWidth(80),
     borderRadius: 95 / 2,
-    backgroundColor: "red",
   },
   yatraDetailCard: {
     backgroundColor: "#FFF8F3",
@@ -20,7 +19,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     marginTop: getHeight(20),
   },
-  imageStyle: { height: getHeight(85), width: getWidth(65) },
+  imageStyle: { height: getHeight(100), width: getWidth(75) },
   headingText: { fontSize: getHeight(22), fontWeight: "400", color: "#1E1E1E" },
   homeUpperContainer: {
     flex: 1,
