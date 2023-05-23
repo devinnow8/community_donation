@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     borderWidth: 1,
-    height: getHeight(40),
+    height: getHeight(50),
     width: getWidth(307),
     marginHorizontal: getWidth(34),
     borderColor: Colors.TEXT_INPUT_BORDER_COLOR,

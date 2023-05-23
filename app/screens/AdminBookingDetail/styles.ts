@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   availableSeatsContainer: {
     width: getWidth(325),
-    height: getHeight(40),
+    height: getHeight(45),
     backgroundColor: Colors.SECONDARY,
     marginHorizontal: getWidth(24),
     marginVertical: getHeight(30),
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     padding: getHeight(10),
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   chartContainer: {
     flexDirection: "row",

@@ -88,6 +88,7 @@ const AdminDonationCollection = () => {
           stickyHeaderIndices={[0]}
           bounces={false}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 10 }}
         />
       </View>
     </View>
