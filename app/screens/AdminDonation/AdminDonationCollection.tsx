@@ -11,20 +11,14 @@ const AdminDonationCollection = () => {
     return (
       <View>
         <View style={styles.mainContainer}>
-          <Text style={[styles.selectedDate, styles.textColor]}>
-            {item?.selectedDate}
-          </Text>
-          <Text style={[styles.itemNamePhoneNumber, styles.textColor]}>
+          <Text style={styles.selectedDate}>{item?.selectedDate}</Text>
+          <Text style={styles.itemNamePhoneNumber}>
             {item?.name}
             {"\n"} {item?.phoneNumber}
           </Text>
-          <Text style={[styles.itemAmount, styles.textColor]}>
-            ₹{item?.amount}
-          </Text>
+          <Text style={styles.itemAmount}>₹{item?.amount}</Text>
           <View style={styles.itemModeContainer}>
-            <Text style={[styles.itemModeText, styles.textColor]}>
-              {item?.mode}
-            </Text>
+            <Text style={styles.itemModeText}>{item?.mode}</Text>
           </View>
         </View>
         <View style={styles.fieldBottomBar}>

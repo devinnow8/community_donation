@@ -33,12 +33,14 @@ const styles = StyleSheet.create({
     flex: 3,
     fontSize: 14,
     textAlign: "center",
+    color: Colors.BLACK,
   },
   itemAmount: {
     flex: 2,
     textAlign: "center",
     paddingRight: getWidth(5),
     fontSize: 14,
+    color: Colors.BLACK,
   },
   itemModeContainer: {
     flex: 1.3,

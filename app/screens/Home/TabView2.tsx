@@ -2,7 +2,6 @@ import {
   Alert,
   Image,
   Pressable,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -75,26 +74,11 @@ const TabView2 = () => {
         {JSON.stringify(yatraDetails) !== "{}" ? (
           <>
             <View style={styles.yatraDetailCard}>
-              <Text
-                style={{
-                  fontSize: getHeight(20),
-                  fontWeight: "600",
-                  alignSelf: "center",
-                  color: Colors.BLACK,
-                }}
-              >
+              <Text style={styles.date}>
                 {/* 12 JUN 2023 */}
                 {moment(yatraDetails?.date).format("DD MMM YYYY")}
               </Text>
-              <Text
-                style={{
-                  color: Colors.PRIMARY,
-                  fontSize: getHeight(22),
-                  alignSelf: "center",
-                  marginTop: getHeight(5),
-                  fontWeight: "700",
-                }}
-              >
+              <Text style={styles.name}>
                 {/* चंडीगढ़ से माता बाला सुंदरी (त्रिलोकपुर) */}
                 {yatraDetails?.name}
               </Text>
@@ -104,22 +88,11 @@ const TabView2 = () => {
                   marginTop: getHeight(22),
                 }}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Text style={{ flex: 1, color: Colors.BLACK }}>
+                <View style={styles.onBoardingContainer}>
+                  <Text style={styles.onboardingHeading}>
                     Onboarding Point :
                   </Text>
-                  <Text
-                    style={{
-                      width: getWidth(125),
-                      textAlign: "left",
-                      color: Colors.BLACK,
-                    }}
-                  >
+                  <Text style={styles.onboardingPoint}>
                     {/* Housing board Lights Chandigarh */}
                     {yatraDetails?.onboardingPoint}
                   </Text>
@@ -130,54 +103,25 @@ const TabView2 = () => {
                     }}
                   >
                     <Image
-                      style={{
-                        width: getWidth(20),
-                        height: getHeight(20),
-                        resizeMode: "contain",
-                        marginRight: getWidth(5),
-                      }}
+                      style={styles.directionIconStyles}
                       source={require("../../assets/images/directionIcon.png")}
                     />
                   </Pressable>
                 </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginTop: getHeight(10),
-                  }}
-                >
-                  <Text style={{ flex: 1, color: Colors.BLACK }}>
-                    Time of Departure :{" "}
+                <View style={styles.textContainer}>
+                  <Text style={styles.onboardingHeading}>
+                    Time of Departure :
                   </Text>
 
-                  <Text
-                    style={{
-                      width: getWidth(150),
-                      textAlign: "left",
-                      color: Colors.BLACK,
-                    }}
-                  >
+                  <Text style={styles.textStyles}>
                     {yatraDetails?.timeOfDeparture}
                   </Text>
                 </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginTop: getHeight(10),
-                  }}
-                >
-                  <Text style={{ width: "45%", color: Colors.BLACK }}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.seatsAvailableText}>
                     Seats Available :
                   </Text>
-                  <Text
-                    style={{
-                      width: getWidth(150),
-                      textAlign: "left",
-                      color: Colors.BLACK,
-                    }}
-                  >
+                  <Text style={styles.textStyles}>
                     {yatraDetails?.availableSeats} Seats
                     <Text
                       onPress={() => {
@@ -201,47 +145,16 @@ const TabView2 = () => {
               </Text>
             </View>
 
-            <View
-              style={{
-                backgroundColor: Colors.SECONDARY,
-                marginHorizontal: getWidth(24),
-                borderRadius: 7,
-                paddingVertical: getHeight(14),
-                shadowColor: Colors.GRAY,
-                shadowOffset: { height: getHeight(10), width: 0 },
-                shadowRadius: 5,
-                shadowOpacity: 0.2,
-                marginTop: getHeight(20),
-              }}
-            >
-              <Text
-                style={{
-                  alignSelf: "center",
-                  fontWeight: "700",
-                  color: Colors.BLACK,
-                }}
-              >
-                Reserve your Seats
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  marginVertical: getHeight(10),
-                }}
-              >
+            <View style={styles.reserveSeatCard}>
+              <Text style={styles.reserveText}>Reserve your Seats</Text>
+              <View style={styles.seatsCountContainer}>
                 <TouchableOpacity
                   onPress={() => {
                     numberOfSeats > 0 && setNumberOfSeats(numberOfSeats - 1);
                   }}
                   hitSlop={15}
                 >
-                  <Text
-                    style={{ fontSize: getHeight(25), color: Colors.BLACK }}
-                  >
-                    -
-                  </Text>
+                  <Text style={styles.negativeBtn}>-</Text>
                 </TouchableOpacity>
                 <View style={styles.numberOfSeatsContainer}>
                   <Text style={styles.textColor}>{numberOfSeats}</Text>

@@ -134,5 +134,68 @@ const styles = StyleSheet.create({
     marginHorizontal: getWidth(12),
     borderColor: Colors.PRIMARY,
   },
+  date: {
+    fontSize: getHeight(20),
+    fontWeight: "600",
+    alignSelf: "center",
+    color: Colors.BLACK,
+  },
+  name: {
+    color: Colors.PRIMARY,
+    fontSize: getHeight(22),
+    alignSelf: "center",
+    marginTop: getHeight(5),
+    fontWeight: "700",
+  },
+  onBoardingContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  onboardingHeading: { flex: 1, color: Colors.BLACK },
+  onboardingPoint: {
+    width: getWidth(125),
+    textAlign: "left",
+    color: Colors.BLACK,
+  },
+  seatsAvailableText: { width: "45%", color: Colors.BLACK },
+  directionIconStyles: {
+    width: getWidth(20),
+    height: getHeight(20),
+    resizeMode: "contain",
+    marginRight: getWidth(5),
+  },
+  textContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: getHeight(10),
+  },
+  textStyles: {
+    width: getWidth(150),
+    textAlign: "left",
+    color: Colors.BLACK,
+  },
+  reserveSeatCard: {
+    backgroundColor: Colors.SECONDARY,
+    marginHorizontal: getWidth(24),
+    borderRadius: 7,
+    paddingVertical: getHeight(14),
+    shadowColor: Colors.GRAY,
+    shadowOffset: { height: getHeight(10), width: 0 },
+    shadowRadius: 5,
+    shadowOpacity: 0.2,
+    marginTop: getHeight(20),
+  },
+  reserveText: {
+    alignSelf: "center",
+    fontWeight: "700",
+    color: Colors.BLACK,
+  },
+  seatsCountContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
+    marginVertical: getHeight(10),
+  },
+  negativeBtn: { fontSize: getHeight(25), color: Colors.BLACK },
 });
 export default styles;
