@@ -150,9 +150,7 @@ const TabView1 = () => {
               <View style={styles.selectedDateView}>
                 <View>
                   <TouchableOpacity
-                    disabled={
-                      selectedDateData?.firstSlot === undefined ?? false
-                    }
+                    disabled={selectedDateData?.firstSlot !== undefined}
                     onPress={() => handleNavigation(0)}
                     style={[
                       styles.timeSlotView,
@@ -191,9 +189,7 @@ const TabView1 = () => {
                 </View>
                 <View>
                   <TouchableOpacity
-                    disabled={
-                      selectedDateData?.secondSlot === undefined ?? false
-                    }
+                    disabled={selectedDateData?.secondSlot !== undefined}
                     onPress={() => handleNavigation(1)}
                     style={[
                       styles.timeSlotView,
