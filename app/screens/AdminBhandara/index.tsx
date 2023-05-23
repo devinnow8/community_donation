@@ -119,7 +119,7 @@ const AdminBhandara = () => {
                 showsHorizontalScrollIndicator={false}
                 ListEmptyComponent={() => (
                   <View style={styles.listEmptyComponentView}>
-                    <Text>No booking yet</Text>
+                    <Text style={{ color: Colors.BLACK }}>No booking yet</Text>
                   </View>
                 )}
                 renderItem={({ item }) => {

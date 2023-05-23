@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   },
   chartItems: {
     width: getWidth(120),
+    color: Colors.BLACK,
   },
   chartIconOuter: {
     flexDirection: "row",
@@ -75,13 +76,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  leftSideText: { width: "45%" },
-  rightSideText: { width: getWidth(150), textAlign: "left" },
+  leftSideText: { width: "45%", color: Colors.BLACK },
+  rightSideText: {
+    width: getWidth(150),
+    textAlign: "left",
+    color: Colors.BLACK,
+  },
   seatAvailableText: {
     textAlign: "center",
     marginLeft: getWidth(15),
     fontSize: getHeight(16),
     fontWeight: "600",
+    color: Colors.BLACK,
   },
   seatAvailableNumberText: {
     textAlign: "center",
@@ -98,6 +104,7 @@ const styles = StyleSheet.create({
   dataNotFounfText: {
     fontSize: getHeight(20),
     fontWeight: "600",
+    color: Colors.BLACK,
   },
   container: {
     flex: 1,
@@ -110,9 +117,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     alignSelf: "center",
+    color: Colors.BLACK,
   },
   phoneNumberTextStyle: {
     fontSize: 12,
+    color: Colors.BLACK,
   },
   editTouchableStyle: {
     justifyContent: "center",
@@ -128,6 +137,9 @@ const styles = StyleSheet.create({
   deleteTouchableImageStyle: {
     width: 20,
     height: 20,
+  },
+  textColor: {
+    color: Colors.BLACK,
   },
 });
 export default styles;

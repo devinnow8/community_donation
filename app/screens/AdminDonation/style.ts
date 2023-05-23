@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   commonStyle: {
     fontSize: 18,
     fontWeight: "500",
+    color: Colors.BLACK,
   },
   mainContainer: {
     flexDirection: "row",
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   selectedDate: {
     flex: 2,
     color: Colors.PRIMARY,
-    fontSize: getHeight(14),
+    fontSize: getHeight(12),
   },
   itemNamePhoneNumber: {
     flex: 3,
@@ -79,6 +80,9 @@ const styles = StyleSheet.create({
   flatlistOuterContainer: {
     flex: 1,
     marginHorizontal: getWidth(20),
+  },
+  textColor: {
+    color: Colors.BLACK,
   },
 });
 export default styles;

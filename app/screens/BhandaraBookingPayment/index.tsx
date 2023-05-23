@@ -126,7 +126,7 @@ const BhandaraBookingPayment = () => {
       <View>
         <TextInputs
           placeholder={selectedAmount}
-          placeholderTextColor="#949494"
+          placeholderTextColor={Colors.GRAY}
           value={selectedAmount}
           onChangeText={(text: any) => setSelectedAmount(text)}
           onFocus={() => setMoneyErr("")}

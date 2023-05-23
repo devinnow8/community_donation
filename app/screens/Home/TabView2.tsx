@@ -243,17 +243,8 @@ const TabView2 = () => {
                     -
                   </Text>
                 </TouchableOpacity>
-                <View
-                  style={{
-                    paddingVertical: getHeight(5),
-                    paddingHorizontal: getWidth(20),
-                    borderWidth: 1,
-                    borderRadius: 7,
-                    marginHorizontal: getWidth(12),
-                    borderColor: Colors.PRIMARY,
-                  }}
-                >
-                  <Text style={styles.numberSeatsText}>{numberOfSeats}</Text>
+                <View style={styles.numberOfSeatsContainer}>
+                  <Text style={styles.textColor}>{numberOfSeats}</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => {
@@ -264,27 +255,14 @@ const TabView2 = () => {
                   }}
                   hitSlop={15}
                 >
-                  <Text
-                    style={{ fontSize: getHeight(20), color: Colors.BLACK }}
-                  >
-                    +
-                  </Text>
+                  <Text style={styles.addBtn}>+</Text>
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
                 onPress={bookSeats}
-                style={{
-                  paddingVertical: getHeight(5),
-                  paddingHorizontal: getWidth(20),
-                  borderRadius: 5,
-                  backgroundColor: Colors.PRIMARY,
-                  alignSelf: "center",
-                  marginTop: getHeight(5),
-                }}
+                style={styles.bookNowContainer}
               >
-                <Text style={{ color: Colors.WHITE, fontWeight: "700" }}>
-                  Book Now
-                </Text>
+                <Text style={styles.bookNowText}>Book Now</Text>
               </TouchableOpacity>
             </View>
           </>

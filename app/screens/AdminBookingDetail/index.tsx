@@ -18,6 +18,7 @@ import { getHeight, getWidth } from "../../utils/pixelConversion";
 import SeatEditModal from "../../ReusableComponents/SeatEditModal";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
+import { Colors } from "../../utils/colors";
 const AdminBookingDetail = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
@@ -187,9 +188,9 @@ const AdminBookingDetail = () => {
           {/* chart */}
           <View style={styles.chatOuterContainer}>
             <View style={styles.chartContainer}>
-              <Text>Name</Text>
-              <Text>No. of seats booked</Text>
-              <Text>Action</Text>
+              <Text style={styles.textColor}>Name</Text>
+              <Text style={styles.textColor}>No. of seats booked</Text>
+              <Text style={styles.textColor}>Action</Text>
             </View>
 
             <FlatList
@@ -198,13 +199,13 @@ const AdminBookingDetail = () => {
                 return (
                   <View key={item.id} style={styles.chartContainer}>
                     <View style={styles.chartItems}>
-                      <Text>{item.name}</Text>
+                      <Text style={styles.textColor}>{item.name}</Text>
                       <Text style={styles.phoneNumberTextStyle}>
                         {item.phoneNumber}
                       </Text>
                     </View>
                     <View style={styles.chartItems}>
-                      <Text>{item.numberOfSeats}</Text>
+                      <Text style={styles.textColor}>{item.numberOfSeats}</Text>
                     </View>
                     <View style={styles.chartIconOuter}>
                       <TouchableOpacity

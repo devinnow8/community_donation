@@ -37,7 +37,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     marginTop: getHeight(50),
   },
-  selectedDateOuterContainer: { fontSize: getHeight(16), fontWeight: "700" },
+  selectedDateOuterContainer: {
+    fontSize: getHeight(16),
+    fontWeight: "700",
+    color: Colors.BLACK,
+  },
   nameAmountOuterContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -45,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: getHeight(13),
   },
   nameLabelText: { color: Colors.PRIMARY },
-  itemText: { fontWeight: "500" },
+  itemText: { fontWeight: "500", color: Colors.BLACK },
   phoneNumberPaymentContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

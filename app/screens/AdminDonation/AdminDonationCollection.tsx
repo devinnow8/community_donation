@@ -11,14 +11,20 @@ const AdminDonationCollection = () => {
     return (
       <View>
         <View style={styles.mainContainer}>
-          <Text style={styles.selectedDate}>{item?.selectedDate}</Text>
-          <Text style={styles.itemNamePhoneNumber}>
+          <Text style={[styles.selectedDate, styles.textColor]}>
+            {item?.selectedDate}
+          </Text>
+          <Text style={[styles.itemNamePhoneNumber, styles.textColor]}>
             {item?.name}
             {"\n"} {item?.phoneNumber}
           </Text>
-          <Text style={styles.itemAmount}>₹{item?.amount}</Text>
+          <Text style={[styles.itemAmount, styles.textColor]}>
+            ₹{item?.amount}
+          </Text>
           <View style={styles.itemModeContainer}>
-            <Text style={styles.itemModeText}>{item?.mode}</Text>
+            <Text style={[styles.itemModeText, styles.textColor]}>
+              {item?.mode}
+            </Text>
           </View>
         </View>
         <View style={styles.fieldBottomBar}>
@@ -70,7 +76,7 @@ const AdminDonationCollection = () => {
     <View style={styles.daanSewaOuterContainer}>
       <HeaderBar hasBackButton={true} headingText="दान सेवा" />
       <View style={styles.donationTotalCollectionHeading}>
-        <Text style={styles.donationTextHeading}>
+        <Text style={[styles.donationTextHeading, styles.textColor]}>
           Total amount : ₹{totalAmount}
         </Text>
       </View>

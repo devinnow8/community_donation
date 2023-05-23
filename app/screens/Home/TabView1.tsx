@@ -101,7 +101,7 @@ const TabView1 = () => {
           style={styles.imageStyle}
           source={require("../../assets/images/MainScreenIcon.png")}
         />
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={styles.headingTextContainer}>
           <Text style={styles.headingText}>
             'सब की सेवा, रब की सेवा' ट्रस्ट
           </Text>
@@ -142,7 +142,7 @@ const TabView1 = () => {
         />
         {selectedDate.dateString !== "" && (
           <View style={styles.timeSlotWrapper}>
-            <Text>
+            <Text style={{ color: Colors.BLACK }}>
               {moment(selectedDate.dateString).format("dddd, MMMM DD")}
             </Text>
             {loader ? (
@@ -176,15 +176,13 @@ const TabView1 = () => {
                     </Text>
                   </TouchableOpacity>
                   {selectedDateData?.firstSlot && (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        marginTop: 10,
-                      }}
-                    >
-                      <Text>{selectedDateData?.firstSlot?.name}</Text>
-                      <Text>{selectedDateData?.firstSlot?.amount}</Text>
+                    <View style={styles.selectedSlotContainer}>
+                      <Text style={styles.textColor}>
+                        {selectedDateData?.firstSlot?.name}
+                      </Text>
+                      <Text style={styles.textColor}>
+                        {selectedDateData?.firstSlot?.amount}
+                      </Text>
                     </View>
                   )}
                 </View>
@@ -215,15 +213,13 @@ const TabView1 = () => {
                     </Text>
                   </TouchableOpacity>
                   {selectedDateData?.secondSlot && (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        marginTop: 10,
-                      }}
-                    >
-                      <Text>{selectedDateData?.secondSlot?.name}</Text>
-                      <Text>{selectedDateData?.secondSlot?.amount}</Text>
+                    <View style={styles.selectedSlotContainer}>
+                      <Text style={styles.textColor}>
+                        {selectedDateData?.secondSlot?.name}
+                      </Text>
+                      <Text style={styles.textColor}>
+                        {selectedDateData?.secondSlot?.amount}
+                      </Text>
                     </View>
                   )}
                 </View>

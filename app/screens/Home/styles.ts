@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   dataNotFounfText: {
     fontSize: getHeight(20),
     fontWeight: "600",
+    color: Colors.BLACK,
   },
   infoIconstyle: {
     marginLeft: getWidth(5),
@@ -106,8 +107,32 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     color: Colors.BLACK,
   },
-  numberSeatsText: {
+  textColor: {
     color: Colors.BLACK,
+  },
+  selectedSlotContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  headingTextContainer: { flexDirection: "row", alignItems: "center" },
+  bookNowContainer: {
+    paddingVertical: getHeight(5),
+    paddingHorizontal: getWidth(20),
+    borderRadius: 5,
+    backgroundColor: Colors.PRIMARY,
+    alignSelf: "center",
+    marginTop: getHeight(5),
+  },
+  bookNowText: { color: Colors.WHITE, fontWeight: "700" },
+  addBtn: { fontSize: getHeight(20), color: Colors.BLACK },
+  numberOfSeatsContainer: {
+    paddingVertical: getHeight(5),
+    paddingHorizontal: getWidth(20),
+    borderWidth: 1,
+    borderRadius: 7,
+    marginHorizontal: getWidth(12),
+    borderColor: Colors.PRIMARY,
   },
 });
 export default styles;

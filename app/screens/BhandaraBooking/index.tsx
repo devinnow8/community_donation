@@ -306,7 +306,7 @@ const BhandaraBooking = () => {
                 },
               ]}
             >
-              <Text>{userInfo.place}</Text>
+              <Text style={{ color: Colors.BLACK }}>{userInfo.place}</Text>
               <Image
                 source={showDropDown ? upHeadIcon : downHeadIcon}
                 style={styles.upDownArrow}

@@ -20,5 +20,5 @@ function App(): JSX.Element {
 export default App;
 
 const styles = StyleSheet.create({
-  safeAreaView: { flex: 1, backgroundColor: Colors.PRIMARY },
+  safeAreaView: { flex: 1, backgroundColor: Colors.SECONDARY },
 });

@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   updateBtn: {
     fontSize: getHeight(20),
     fontWeight: "700",
+    color: Colors.BLACK,
   },
   updateNumberContainer: {
     height: getHeight(30),
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
   seatModalHeadingText: {
     fontSize: getHeight(16),
     fontWeight: "800",
+    color: Colors.BLACK,
   },
   saveButtonText: {
     textAlign: "center",
@@ -127,5 +129,6 @@ const styles = StyleSheet.create({
   },
   counterView: {
     textAlign: "center",
+    color: Colors.BLACK,
   },
 });
