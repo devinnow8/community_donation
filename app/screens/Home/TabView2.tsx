@@ -108,9 +108,9 @@ const TabView2 = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <Text style={{ width: "45%" }}>Onboarding Point : </Text>
-                  <Text style={{ textAlign: "left" }}>
-                    {/* Housing board lights Chandigarh */}
+                  <Text style={{ flex: 1 }}>Onboarding Point : </Text>
+                  <Text style={{ width: getWidth(125), textAlign: "left" }}>
+                    {/* Housing board Lights Chandigarh */}
                     {yatraDetails?.onboardingPoint}
                   </Text>
                   <Pressable
@@ -137,9 +137,9 @@ const TabView2 = () => {
                     marginTop: getHeight(10),
                   }}
                 >
-                  <Text style={{ width: "45%" }}>Time of Departure : </Text>
+                  <Text style={{ flex: 1 }}>Time of Departure : </Text>
 
-                  <Text style={{ width: "45%", textAlign: "left" }}>
+                  <Text style={{ width: getWidth(150), textAlign: "left" }}>
                     {yatraDetails?.timeOfDeparture}
                   </Text>
                 </View>

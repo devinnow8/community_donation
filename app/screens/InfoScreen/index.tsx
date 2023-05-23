@@ -51,7 +51,10 @@ const InfoScreen = () => {
           navigation.navigate("AdminLogin");
         }}
       />
-      <ScrollView contentContainerStyle={{ paddingBottom: getHeight(30) }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: getHeight(30) }}
+      >
         <View style={styles.mainImage}>
           <Image
             resizeMode="contain"

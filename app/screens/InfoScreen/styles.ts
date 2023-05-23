@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     marginTop: getHeight(14),
     marginHorizontal: getWidth(35),
     textAlign: "justify",
+    color: "black",
   },
   adminContactContainer: {
     marginHorizontal: getWidth(35),
