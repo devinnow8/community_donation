@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
     marginTop: getHeight(4),
     padding: getWidth(8),
     borderRadius: getWidth(5),
-    color: "Colors.BLACK",
+    color: Colors.BLACK,
   },
 });

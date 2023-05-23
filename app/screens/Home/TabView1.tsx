@@ -82,7 +82,7 @@ const TabView1 = () => {
               res?.state === "disabled" ||
               moment(res.date.timestamp).startOf("day").valueOf() ===
                 moment().startOf("day").valueOf()
-                ? "Colors.BLACK"
+                ? Colors.BLACK
                 : selectedDate.dateString === res.date?.dateString
                 ? Colors.WHITE
                 : Colors.PRIMARY,

@@ -94,7 +94,7 @@ const AdminBhandara = () => {
                     style={{
                       color:
                         res.state === "disabled"
-                          ? "Colors.BLACK"
+                          ? Colors.BLACK
                           : selectedDate?.dateString === res.date?.dateString
                           ? Colors.WHITE
                           : Colors.PRIMARY,
