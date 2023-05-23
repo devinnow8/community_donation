@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getHeight, getWidth } from "../utils/pixelConversion";
+import { Colors } from "../utils/colors";
 interface IHeaderBarText {
   headingText?: string;
   headingLeftText?: string;
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   headerBarContainer: {
     padding: 12,
     paddingHorizontal: getWidth(20),
-    backgroundColor: "#FFF7E7",
+    backgroundColor: Colors.SECONDARY,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -104,20 +105,21 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     lineHeight: getHeight(22),
     letterSpacing: -0.4,
+    color: Colors.BLACK,
   },
   headerBarContainerWithTwoFields: {
     padding: 12,
-    backgroundColor: "#FFF7E7",
+    backgroundColor: Colors.SECONDARY,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   rightText: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#EB6611",
+    color: Colors.PRIMARY,
   },
   headerBarRightText: {
-    color: "#EB6611",
+    color: Colors.PRIMARY,
     marginRight: 20,
   },
 });

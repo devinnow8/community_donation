@@ -20,6 +20,7 @@ import { getHeight } from "../../utils/pixelConversion";
 import upHeadIcon from "../../assets/images/upHeadIcon.png";
 import downHeadIcon from "../../assets/images/downHeadIcon.png";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Colors } from "../../utils/colors";
 const BhandaraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
@@ -200,7 +201,7 @@ const BhandaraBooking = () => {
     },
   ];
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       {/* headerBar */}
       <View>
         <HeaderBar
@@ -317,7 +318,10 @@ const BhandaraBooking = () => {
                   data={dropDownItems}
                   renderItem={({ item }) => (
                     <View
-                      style={{ borderBottomWidth: 1, borderColor: "#BCBCBC" }}
+                      style={{
+                        borderBottomWidth: 1,
+                        borderColor: Colors.TEXT_INPUT_BORDER_COLOR,
+                      }}
                       key={item.id}
                     >
                       <TouchableOpacity
@@ -332,7 +336,9 @@ const BhandaraBooking = () => {
                           });
                         }}
                       >
-                        <Text>{item.itemName}</Text>
+                        <Text style={{ color: Colors.BLACK }}>
+                          {item.itemName}
+                        </Text>
                       </TouchableOpacity>
                     </View>
                   )}
@@ -348,7 +354,9 @@ const BhandaraBooking = () => {
             <View style={{ marginTop: getHeight(20) }}>
               <Labels
                 labelColor={
-                  userInfo.place?.length !== 0 ? "#EB6611" : "#BCBCBC"
+                  userInfo.place?.length !== 0
+                    ? Colors.PRIMARY
+                    : Colors.TEXT_INPUT_BORDER_COLOR
                 }
                 labelName="स्थान"
               />

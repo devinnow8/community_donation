@@ -1,10 +1,4 @@
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Alert,
-  Keyboard,
-} from "react-native";
+import { Text, View, TouchableOpacity, Alert, Keyboard } from "react-native";
 import React, { useState } from "react";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
@@ -16,6 +10,7 @@ import styles from "./styles";
 import RazorpayCheckout from "react-native-razorpay";
 import { Paymenticon } from "../../assets/images/PaymentIcon";
 import moment from "moment";
+import { Colors } from "../../utils/colors";
 const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
   const [moneyErr, setMoneyErr] = useState("");
@@ -39,7 +34,8 @@ const BhandaraBookingPayment = () => {
     } else if (mode === "ONLINE") {
       var options = {
         description: "Credits towards consultation",
-        image: 'https://firebasestorage.googleapis.com/v0/b/community-donation.appspot.com/o/Group%20434%20(1).png?alt=media&token=29d44072-a6ae-4fe5-9d3c-11b91c773b8c',
+        image:
+          "https://firebasestorage.googleapis.com/v0/b/community-donation.appspot.com/o/Group%20434%20(1).png?alt=media&token=29d44072-a6ae-4fe5-9d3c-11b91c773b8c",
         currency: "INR",
         key: "rzp_test_CKghbIZojq126Q", // Your api key
         amount: (Number(selectedAmount) * 100).toString(),
@@ -49,7 +45,7 @@ const BhandaraBookingPayment = () => {
           contact: "9191919191",
           name: "Razorpay Software",
         },
-        theme: { color: "#FFF7E7" },
+        theme: { color: Colors.SECONDARY },
       };
 
       RazorpayCheckout.open(options)
@@ -116,7 +112,7 @@ const BhandaraBookingPayment = () => {
     }
   };
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       {/* headerBar */}
       <View>
         <HeaderBar hasBackButton={true} headingText="भंडारा बुकिंग" />
@@ -144,14 +140,18 @@ const BhandaraBookingPayment = () => {
           style={[
             styles.btnStyle,
             {
-              backgroundColor: selectedAmount === "21000" ? "#EB6611" : "#FFF",
+              backgroundColor:
+                selectedAmount === "21000" ? Colors.PRIMARY : Colors.WHITE,
             },
           ]}
         >
           <Text
             style={[
               styles.btnTextStyle,
-              { color: selectedAmount === "21000" ? "#FFFFFF" : "#EB6611" },
+              {
+                color:
+                  selectedAmount === "21000" ? Colors.WHITE : Colors.PRIMARY,
+              },
             ]}
           >
             21,000
@@ -161,7 +161,8 @@ const BhandaraBookingPayment = () => {
           style={[
             styles.btnStyle,
             {
-              backgroundColor: selectedAmount === "31000" ? "#EB6611" : "#FFF",
+              backgroundColor:
+                selectedAmount === "31000" ? Colors.PRIMARY : Colors.WHITE,
             },
           ]}
           onPress={() => [setSelectedAmount("31000"), setMoneyErr("")]}
@@ -169,7 +170,10 @@ const BhandaraBookingPayment = () => {
           <Text
             style={[
               styles.btnTextStyle,
-              { color: selectedAmount === "31000" ? "#FFFFFF" : "#EB6611" },
+              {
+                color:
+                  selectedAmount === "31000" ? Colors.WHITE : Colors.PRIMARY,
+              },
             ]}
           >
             31,000
@@ -180,14 +184,18 @@ const BhandaraBookingPayment = () => {
           style={[
             styles.btnStyle,
             {
-              backgroundColor: selectedAmount === "51000" ? "#EB6611" : "#FFF",
+              backgroundColor:
+                selectedAmount === "51000" ? Colors.PRIMARY : Colors.WHITE,
             },
           ]}
         >
           <Text
             style={[
               styles.btnTextStyle,
-              { color: selectedAmount === "51000" ? "#FFFFFF" : "#EB6611" },
+              {
+                color:
+                  selectedAmount === "51000" ? Colors.WHITE : Colors.PRIMARY,
+              },
             ]}
           >
             51,000
@@ -199,7 +207,7 @@ const BhandaraBookingPayment = () => {
 
       {moneyErr ? (
         <View style={styles.errorContainer}>
-          <Text style={{ color: "red" }}>{moneyErr}</Text>
+          <Text style={{ color: Colors.RED }}>{moneyErr}</Text>
         </View>
       ) : (
         <Text></Text>
@@ -209,18 +217,18 @@ const BhandaraBookingPayment = () => {
 
       <View style={styles.PayingButtonsContainer}>
         <TouchableOpacity
-          style={[styles.payBtnStyle, { backgroundColor: "#EB6611" }]}
+          style={[styles.payBtnStyle, { backgroundColor: Colors.PRIMARY }]}
           onPress={() => [PayMoney("ONLINE"), Keyboard.dismiss()]}
         >
-          <Text style={[styles.btnTextStyle, { color: "#FFFFFF" }]}>
+          <Text style={[styles.btnTextStyle, { color: Colors.WHITE }]}>
             Pay Online
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.payBtnStyle, { backgroundColor: "#EB6611" }]}
+          style={[styles.payBtnStyle, { backgroundColor: Colors.PRIMARY }]}
           onPress={() => [PayMoney("CASH"), Keyboard.dismiss()]}
         >
-          <Text style={[styles.btnTextStyle, { color: "#FFFFFF" }]}>
+          <Text style={[styles.btnTextStyle, { color: Colors.WHITE }]}>
             Pay Cash
           </Text>
         </TouchableOpacity>

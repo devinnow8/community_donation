@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { Colors } from "../../utils/colors";
 const styles = StyleSheet.create({
   mainContainer: { flex: 1, alignItems: "center", justifyContent: "center" },
   mainImage: { alignItems: "center", marginTop: getHeight(10) },
@@ -9,21 +10,25 @@ const styles = StyleSheet.create({
     borderRadius: 95 / 2,
   },
   yatraDetailCard: {
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.SECONDARY,
     marginHorizontal: getWidth(24),
     borderRadius: 7,
     paddingVertical: getHeight(14),
-    shadowColor: "grey",
+    shadowColor: Colors.GRAY,
     shadowOffset: { height: getHeight(10), width: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.2,
     marginTop: getHeight(20),
   },
   imageStyle: { height: getHeight(100), width: getWidth(75) },
-  headingText: { fontSize: getHeight(22), fontWeight: "400", color: "#1E1E1E" },
+  headingText: {
+    fontSize: getHeight(22),
+    fontWeight: "400",
+    color: Colors.BLACK,
+  },
   homeUpperContainer: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: Colors.WHITE,
   },
   homeBottomContainer: {
     flexDirection: "row",
@@ -33,17 +38,17 @@ const styles = StyleSheet.create({
     padding: getWidth(10),
     width: "50%",
     borderWidth: 1,
-    borderColor: "#EB6611",
+    borderColor: Colors.PRIMARY,
   },
   btnTextStyle: {
     textAlign: "center",
     fontSize: getHeight(20),
     fontWeight: "500",
-    color: "white",
+    color: Colors.WHITE,
   },
-  calendarView: { backgroundColor: "white", flex: 1 },
+  calendarView: { backgroundColor: Colors.WHITE, flex: 1 },
   arrowView: {
-    backgroundColor: "#FFF7E7",
+    backgroundColor: Colors.SECONDARY,
     height: getHeight(35),
     width: getWidth(35),
     borderRadius: 35 / 2,
@@ -68,10 +73,14 @@ const styles = StyleSheet.create({
     paddingVertical: getHeight(13),
     paddingHorizontal: getWidth(43),
     borderWidth: 1,
-    borderColor: "#EB6611",
+    borderColor: Colors.PRIMARY,
     borderRadius: 5,
   },
-  timeText: { fontSize: getHeight(14), fontWeight: "600", color: "#EB6611" },
+  timeText: {
+    fontSize: getHeight(14),
+    fontWeight: "600",
+    color: Colors.PRIMARY,
+  },
   dataNotFound: {
     justifyContent: "center",
     alignItems: "center",
@@ -95,6 +104,10 @@ const styles = StyleSheet.create({
     fontSize: getHeight(18),
     fontWeight: "500",
     letterSpacing: 0.6,
+    color: Colors.BLACK,
+  },
+  numberSeatsText: {
+    color: Colors.BLACK,
   },
 });
 export default styles;

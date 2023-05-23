@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { Colors } from "../../utils/colors";
 
 const styles = StyleSheet.create({
   donationTotalCollectionHeading: {
@@ -17,14 +18,14 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flexDirection: "row",
-    borderColor: "grey",
+    borderColor: Colors.GRAY,
     paddingVertical: getHeight(5),
     justifyContent: "space-between",
     alignItems: "center",
   },
   selectedDate: {
     flex: 2,
-    color: "#EB6611",
+    color: Colors.PRIMARY,
     fontSize: getHeight(14),
   },
   itemNamePhoneNumber: {
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   },
   itemModeContainer: {
     flex: 1.3,
-    backgroundColor: "#EB6611",
+    backgroundColor: Colors.PRIMARY,
     padding: 5,
     borderRadius: 5,
     marginLeft: getWidth(5),
@@ -48,20 +49,20 @@ const styles = StyleSheet.create({
   itemModeText: {
     textAlign: "center",
     fontSize: 14,
-    color: "white",
+    color: Colors.WHITE,
     fontWeight: "bold",
   },
   fieldBottomBar: {
     flexDirection: "row",
     borderBottomWidth: getWidth(1),
-    borderColor: "grey",
+    borderColor: Colors.GRAY,
   },
   renderDonationFieldsView: {
     flexDirection: "row",
     borderBottomWidth: getWidth(1),
-    borderColor: "grey",
+    borderColor: Colors.GRAY,
     paddingBottom: getHeight(5),
-    backgroundColor: "#fff",
+    backgroundColor: Colors.WHITE,
     justifyContent: "space-between",
   },
   dateText: { flex: 2 },
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
   daanSewaOuterContainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.WHITE,
   },
   flatlistOuterContainer: {
     flex: 1,

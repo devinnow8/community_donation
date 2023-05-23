@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import Modal from "react-native-modal";
 import { getHeight, getWidth } from "../utils/pixelConversion";
+import { Colors } from "../utils/colors";
 
 const SeatEditModal = ({
   isVisible,
@@ -98,19 +99,19 @@ const styles = StyleSheet.create({
     height: getHeight(30),
     width: getWidth(54),
     justifyContent: "center",
-    borderColor: "#EB6611",
+    borderColor: Colors.PRIMARY,
     borderWidth: 1,
     borderRadius: 6,
   },
   saveBtn: {
     height: getHeight(28),
     width: getWidth(109),
-    backgroundColor: "#EB6611",
+    backgroundColor: Colors.PRIMARY,
     justifyContent: "center",
     borderRadius: 5,
   },
   seatModalOuterContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.WHITE,
     alignItems: "center",
     paddingVertical: getHeight(18),
     borderRadius: 10,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     textAlign: "center",
-    color: "white",
+    color: Colors.WHITE,
     fontSize: getHeight(15),
   },
   counterView: {

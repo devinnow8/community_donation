@@ -1,15 +1,13 @@
 import {
   ActivityIndicator,
-  Dimensions,
   FlatList,
   Image,
-  ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  Alert,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import { Calendar } from "react-native-calendars";
 
@@ -17,6 +15,7 @@ import moment from "moment";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { Colors } from "../../utils/colors";
 const AdminBhandara = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
@@ -84,10 +83,10 @@ const AdminBhandara = () => {
                     {
                       backgroundColor:
                         res.state === "disabled"
-                          ? "white"
+                          ? Colors.WHITE
                           : selectedDate?.dateString === res.date?.dateString
-                          ? "#EB6611"
-                          : "#FFF7E7",
+                          ? Colors.PRIMARY
+                          : Colors.SECONDARY,
                     },
                   ]}
                 >
@@ -95,10 +94,10 @@ const AdminBhandara = () => {
                     style={{
                       color:
                         res.state === "disabled"
-                          ? "black"
+                          ? "Colors.BLACK"
                           : selectedDate?.dateString === res.date?.dateString
-                          ? "white"
-                          : "#EB6611",
+                          ? Colors.WHITE
+                          : Colors.PRIMARY,
                     }}
                   >
                     {res.date.day}

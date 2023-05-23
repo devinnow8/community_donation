@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { Colors } from "../../utils/colors";
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: Colors.WHITE,
   },
   renderArrowStyle: {
-    backgroundColor: "#FFF7E7",
+    backgroundColor: Colors.SECONDARY,
     height: getHeight(35),
     width: getWidth(35),
     borderRadius: 35 / 2,
@@ -27,10 +28,10 @@ const styles = StyleSheet.create({
     // width: "100%",
     width: getWidth(300),
     // flex: 1,
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.SECONDARY,
     borderRadius: 7,
     paddingVertical: getHeight(14),
-    shadowColor: "grey",
+    shadowColor: Colors.GRAY,
     shadowOffset: { height: getHeight(10), width: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.2,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     marginHorizontal: getWidth(26),
     marginTop: getHeight(13),
   },
-  nameLabelText: { color: "#EB6611" },
+  nameLabelText: { color: Colors.PRIMARY },
   itemText: { fontWeight: "500" },
   phoneNumberPaymentContainer: {
     flexDirection: "row",
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   },
   confirmButtonContainer: {
     padding: 10,
-    backgroundColor: "#5CA300",
+    backgroundColor: Colors.CONFIRM_BUTTON,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
@@ -68,11 +69,11 @@ const styles = StyleSheet.create({
   ButtonText: {
     fontWeight: "600",
     fontSize: getHeight(12),
-    color: "#FFF",
+    color: Colors.WHITE,
   },
   rejectButtonContainer: {
     padding: 10,
-    backgroundColor: "#C21701",
+    backgroundColor: Colors.RED,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
@@ -96,6 +97,6 @@ const styles = StyleSheet.create({
   slotView: {
     alignSelf: "center",
   },
-  calenderOuterView: { backgroundColor: "white" },
+  calenderOuterView: { backgroundColor: Colors.WHITE },
 });
 export default styles;

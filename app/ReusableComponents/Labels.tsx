@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { getWidth, getHeight } from "../utils/pixelConversion";
+import { Colors } from "../utils/colors";
 interface ILabelName {
   labelName: string;
   labelColor?: any;
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     marginLeft: getWidth(34),
   },
   labelText: {
-    color: "#EB6611",
+    color: Colors.PRIMARY,
     fontWeight: "400",
     fontSize: getHeight(16),
   },

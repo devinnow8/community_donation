@@ -14,6 +14,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 import { openNavigation } from "../../utils/openDirection";
+import { Colors } from "../../utils/colors";
 
 const TabView2 = () => {
   const [numberOfSeats, setNumberOfSeats] = useState(0);
@@ -79,6 +80,7 @@ const TabView2 = () => {
                   fontSize: getHeight(20),
                   fontWeight: "600",
                   alignSelf: "center",
+                  color: Colors.BLACK,
                 }}
               >
                 {/* 12 JUN 2023 */}
@@ -86,7 +88,7 @@ const TabView2 = () => {
               </Text>
               <Text
                 style={{
-                  color: "#EB6611",
+                  color: Colors.PRIMARY,
                   fontSize: getHeight(22),
                   alignSelf: "center",
                   marginTop: getHeight(5),
@@ -108,8 +110,16 @@ const TabView2 = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <Text style={{ flex: 1 }}>Onboarding Point : </Text>
-                  <Text style={{ width: getWidth(125), textAlign: "left" }}>
+                  <Text style={{ flex: 1, color: Colors.BLACK }}>
+                    Onboarding Point :
+                  </Text>
+                  <Text
+                    style={{
+                      width: getWidth(125),
+                      textAlign: "left",
+                      color: Colors.BLACK,
+                    }}
+                  >
                     {/* Housing board Lights Chandigarh */}
                     {yatraDetails?.onboardingPoint}
                   </Text>
@@ -137,9 +147,17 @@ const TabView2 = () => {
                     marginTop: getHeight(10),
                   }}
                 >
-                  <Text style={{ flex: 1 }}>Time of Departure : </Text>
+                  <Text style={{ flex: 1, color: Colors.BLACK }}>
+                    Time of Departure :{" "}
+                  </Text>
 
-                  <Text style={{ width: getWidth(150), textAlign: "left" }}>
+                  <Text
+                    style={{
+                      width: getWidth(150),
+                      textAlign: "left",
+                      color: Colors.BLACK,
+                    }}
+                  >
                     {yatraDetails?.timeOfDeparture}
                   </Text>
                 </View>
@@ -150,14 +168,22 @@ const TabView2 = () => {
                     marginTop: getHeight(10),
                   }}
                 >
-                  <Text style={{ width: "45%" }}>Seats Available :</Text>
-                  <Text style={{ width: getWidth(150), textAlign: "left" }}>
+                  <Text style={{ width: "45%", color: Colors.BLACK }}>
+                    Seats Available :
+                  </Text>
+                  <Text
+                    style={{
+                      width: getWidth(150),
+                      textAlign: "left",
+                      color: Colors.BLACK,
+                    }}
+                  >
                     {yatraDetails?.availableSeats} Seats
                     <Text
                       onPress={() => {
                         navigation.navigate("YatraInfo", yatraDetails);
                       }}
-                      style={{ color: "#EB6611" }}
+                      style={{ color: Colors.PRIMARY }}
                     >
                       {"   "}Details
                     </Text>
@@ -177,18 +203,24 @@ const TabView2 = () => {
 
             <View
               style={{
-                backgroundColor: "#FFF8F3",
+                backgroundColor: Colors.SECONDARY,
                 marginHorizontal: getWidth(24),
                 borderRadius: 7,
                 paddingVertical: getHeight(14),
-                shadowColor: "grey",
+                shadowColor: Colors.GRAY,
                 shadowOffset: { height: getHeight(10), width: 0 },
                 shadowRadius: 5,
                 shadowOpacity: 0.2,
                 marginTop: getHeight(20),
               }}
             >
-              <Text style={{ alignSelf: "center", fontWeight: "700" }}>
+              <Text
+                style={{
+                  alignSelf: "center",
+                  fontWeight: "700",
+                  color: Colors.BLACK,
+                }}
+              >
                 Reserve your Seats
               </Text>
               <View
@@ -205,7 +237,11 @@ const TabView2 = () => {
                   }}
                   hitSlop={15}
                 >
-                  <Text style={{ fontSize: getHeight(25) }}>-</Text>
+                  <Text
+                    style={{ fontSize: getHeight(25), color: Colors.BLACK }}
+                  >
+                    -
+                  </Text>
                 </TouchableOpacity>
                 <View
                   style={{
@@ -214,10 +250,10 @@ const TabView2 = () => {
                     borderWidth: 1,
                     borderRadius: 7,
                     marginHorizontal: getWidth(12),
-                    borderColor: "#EB6611",
+                    borderColor: Colors.PRIMARY,
                   }}
                 >
-                  <Text>{numberOfSeats}</Text>
+                  <Text style={styles.numberSeatsText}>{numberOfSeats}</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => {
@@ -228,7 +264,11 @@ const TabView2 = () => {
                   }}
                   hitSlop={15}
                 >
-                  <Text style={{ fontSize: getHeight(20) }}>+</Text>
+                  <Text
+                    style={{ fontSize: getHeight(20), color: Colors.BLACK }}
+                  >
+                    +
+                  </Text>
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
@@ -237,12 +277,12 @@ const TabView2 = () => {
                   paddingVertical: getHeight(5),
                   paddingHorizontal: getWidth(20),
                   borderRadius: 5,
-                  backgroundColor: "#EB6611",
+                  backgroundColor: Colors.PRIMARY,
                   alignSelf: "center",
                   marginTop: getHeight(5),
                 }}
               >
-                <Text style={{ color: "#FFFFFF", fontWeight: "700" }}>
+                <Text style={{ color: Colors.WHITE, fontWeight: "700" }}>
                   Book Now
                 </Text>
               </TouchableOpacity>

@@ -18,6 +18,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
+import { Colors } from "../../utils/colors";
 
 const YatraBooking = () => {
   const [userInfo, setUserInfo] = useState({
@@ -100,7 +101,7 @@ const YatraBooking = () => {
     }
   };
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       {/* headerBar */}
       <View>
         <HeaderBar hasBackButton={true} headingText="यात्रा बुकिंग" />

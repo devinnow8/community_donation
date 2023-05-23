@@ -1,12 +1,7 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TextInputProps,
-} from "react-native";
+import { StyleSheet, TextInput, TextInputProps } from "react-native";
 import React from "react";
 import { getHeight, getWidth } from "../utils/pixelConversion";
+import { Colors } from "../utils/colors";
 interface ITextInputFields {
   onChangeText: any;
 }
@@ -30,10 +25,10 @@ const styles = StyleSheet.create({
     height: getHeight(40),
     width: getWidth(307),
     marginHorizontal: getWidth(34),
-    borderColor: "#BCBCBC",
+    borderColor: Colors.TEXT_INPUT_BORDER_COLOR,
     marginTop: getHeight(4),
     padding: getWidth(8),
     borderRadius: getWidth(5),
-    color: "black",
+    color: "Colors.BLACK",
   },
 });

@@ -14,6 +14,7 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import messaging from "@react-native-firebase/messaging";
+import { Colors } from "../../utils/colors";
 
 const AdminLogin = () => {
   const navigation: any = useNavigation();
@@ -132,7 +133,7 @@ const AdminLogin = () => {
             backgroundColor:
               adminInfo.adminName?.length != 0 &&
               adminInfo.adminPassword?.length != 0
-                ? "#EB6611"
+                ? Colors.PRIMARY
                 : "transparent",
           },
         ]}
@@ -148,8 +149,8 @@ const AdminLogin = () => {
               color:
                 adminInfo.adminName?.length != 0 &&
                 adminInfo.adminPassword?.length != 0
-                  ? "#FFF"
-                  : "#EB6611",
+                  ? Colors.WHITE
+                  : Colors.PRIMARY,
             },
           ]}
         >
@@ -165,7 +166,7 @@ const AdminLogin = () => {
                 styles.adminButtonView,
                 {
                   backgroundColor:
-                    selectedTab === 0 ? "#EB6611" : "transparent",
+                    selectedTab === 0 ? Colors.PRIMARY : "transparent",
                 },
               ]}
               onPress={() => [
@@ -177,7 +178,7 @@ const AdminLogin = () => {
                 style={[
                   styles.btnTextStyle,
                   {
-                    color: selectedTab === 0 ? "#FFF" : "#EB6611",
+                    color: selectedTab === 0 ? Colors.WHITE : Colors.PRIMARY,
                   },
                 ]}
               >
@@ -189,7 +190,7 @@ const AdminLogin = () => {
                 styles.adminButtonView,
                 {
                   backgroundColor:
-                    selectedTab === 1 ? "#EB6611" : "transparent",
+                    selectedTab === 1 ? Colors.PRIMARY : "transparent",
                 },
               ]}
               onPress={() => [
@@ -201,7 +202,7 @@ const AdminLogin = () => {
                 style={[
                   styles.btnTextStyle,
                   {
-                    color: selectedTab === 1 ? "#FFF" : "#EB6611",
+                    color: selectedTab === 1 ? Colors.WHITE : Colors.PRIMARY,
                   },
                 ]}
               >
@@ -215,7 +216,7 @@ const AdminLogin = () => {
                 styles.adminDonationButtonView,
                 {
                   backgroundColor:
-                    selectedTab === 2 ? "#EB6611" : "transparent",
+                    selectedTab === 2 ? Colors.PRIMARY : "transparent",
                 },
               ]}
               onPress={() => [
@@ -227,7 +228,7 @@ const AdminLogin = () => {
                 style={[
                   styles.btnTextStyle,
                   {
-                    color: selectedTab === 2 ? "#FFF" : "#EB6611",
+                    color: selectedTab === 2 ? Colors.WHITE : Colors.PRIMARY,
                   },
                 ]}
               >

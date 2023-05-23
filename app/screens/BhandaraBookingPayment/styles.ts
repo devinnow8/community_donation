@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { Colors } from "../../utils/colors";
 
 const styles = StyleSheet.create({
   paymentFieldContainer: {
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "400",
-    color: "#EB6611",
+    color: Colors.PRIMARY,
   },
   btnStyle: {
     marginHorizontal: getWidth(110),
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
-    borderColor: "#EB6611",
+    borderColor: Colors.PRIMARY,
     borderWidth: 1,
   },
   moneyButtonsContainer: {
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
-    borderColor: "#EB6611",
+    borderColor: Colors.PRIMARY,
     borderWidth: 1,
   },
   errorContainer: {

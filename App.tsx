@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import NavigationStack from "./app/navigation/NavigationStack";
+import { Colors } from "./app/utils/colors";
 function App(): JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
@@ -10,6 +11,7 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
+      <StatusBar backgroundColor={Colors.SECONDARY} barStyle={"dark-content"} />
       <NavigationStack />
     </SafeAreaView>
   );
@@ -18,5 +20,5 @@ function App(): JSX.Element {
 export default App;
 
 const styles = StyleSheet.create({
-  safeAreaView: { flex: 1, backgroundColor: "#FFF7E7" },
+  safeAreaView: { flex: 1, backgroundColor: Colors.PRIMARY },
 });

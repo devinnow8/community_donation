@@ -14,14 +14,14 @@ const YatraInfo = () => {
         bounces={false}
         ListHeaderComponent={() => (
           <View style={styles.listHeaderView}>
-            <Text>Name</Text>
-            <Text>No. Of Seats Booked</Text>
+            <Text style={styles.textColor}>Name</Text>
+            <Text style={styles.textColor}>No. Of Seats Booked</Text>
           </View>
         )}
         renderItem={({ item }) => (
           <View style={styles.itemView}>
-            <Text>{item.name}</Text>
-            <Text>{item.numberOfSeats}</Text>
+            <Text style={styles.textColor}>{item.name}</Text>
+            <Text style={styles.textColor}>{item.numberOfSeats}</Text>
           </View>
         )}
       />

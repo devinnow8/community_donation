@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { Colors } from "../../utils/colors";
 
 const styles = StyleSheet.create({
   bookingDetailContainer: {
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.SECONDARY,
     marginHorizontal: getWidth(24),
     borderRadius: 7,
     paddingVertical: getHeight(14),
-    shadowColor: "grey",
+    shadowColor: Colors.GRAY,
     shadowOffset: { height: 10, width: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.2,
@@ -24,10 +25,10 @@ const styles = StyleSheet.create({
   availableSeatsContainer: {
     width: getWidth(325),
     height: getHeight(40),
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.SECONDARY,
     marginHorizontal: getWidth(24),
     marginVertical: getHeight(30),
-    shadowColor: "grey",
+    shadowColor: Colors.GRAY,
     shadowOffset: { height: 10, width: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.2,
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomWidth: getWidth(1),
-    borderColor: "grey",
+    borderColor: Colors.GRAY,
     paddingVertical: getHeight(5),
   },
   chatOuterContainer: {
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bookingContainerHeadingText: {
-    color: "#EB6611",
+    color: Colors.PRIMARY,
     fontSize: getHeight(22),
     alignSelf: "center",
     marginTop: getHeight(5),
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   seatAvailableNumberText: {
     textAlign: "center",
     marginRight: getWidth(15),
-    color: "#EB6611",
+    color: Colors.PRIMARY,
     fontSize: getHeight(16),
     fontWeight: "600",
   },
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: Colors.WHITE,
   },
   dateView: {
     justifyContent: "center",

@@ -3,6 +3,8 @@ import React from "react";
 import Modal from "react-native-modal";
 import { getHeight, getWidth } from "../utils/pixelConversion";
 import { useNavigation } from "@react-navigation/native";
+import { Colors } from "../utils/colors";
+
 const CustomModal = ({
   isVisible,
   setIsVisible,
@@ -37,7 +39,7 @@ export default CustomModal;
 
 const styles = StyleSheet.create({
   modalOuterContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.WHITE,
     alignItems: "center",
     paddingVertical: getHeight(18),
     borderRadius: 10,
@@ -45,19 +47,19 @@ const styles = StyleSheet.create({
   modalHeadingText: {
     fontSize: getHeight(17),
     fontWeight: "600",
-    color: "#4B4B4B",
+    color: Colors.CUSTOM_MODAL_TEXT_COLOR,
     marginTop: getHeight(13),
   },
   modalGreetingButton: {
     paddingVertical: getHeight(9),
     paddingHorizontal: getWidth(34),
-    backgroundColor: "#EB6611",
+    backgroundColor: Colors.PRIMARY,
     borderRadius: 5,
     marginTop: getHeight(17),
   },
   modalButtonText: {
     fontSize: getHeight(22),
     fontWeight: "700",
-    color: "#FFF",
+    color: Colors.WHITE,
   },
 });

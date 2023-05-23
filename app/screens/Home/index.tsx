@@ -5,6 +5,7 @@ import HeaderBar from "../../ReusableComponents/HeaderBar";
 import TabView1 from "./TabView1";
 import TabView2 from "./TabView2";
 import { useNavigation } from "@react-navigation/native";
+import { Colors } from "../../utils/colors";
 
 const Home = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -30,14 +31,17 @@ const Home = () => {
         <Pressable
           style={[
             styles.btnStyle,
-            { backgroundColor: selectedTab === 0 ? "#EB6611" : "#FFFFFF" },
+            {
+              backgroundColor:
+                selectedTab === 0 ? Colors.PRIMARY : Colors.WHITE,
+            },
           ]}
           onPress={() => setSelectedTab(0)}
         >
           <Text
             style={[
               styles.btnTextStyle,
-              { color: selectedTab !== 0 ? "#EB6611" : "#FFFFFF" },
+              { color: selectedTab !== 0 ? Colors.PRIMARY : Colors.WHITE },
             ]}
           >
             भोजन सेवा
@@ -46,7 +50,10 @@ const Home = () => {
         <Pressable
           style={[
             styles.btnStyle,
-            { backgroundColor: selectedTab === 1 ? "#EB6611" : "#FFFFFF" },
+            {
+              backgroundColor:
+                selectedTab === 1 ? Colors.PRIMARY : Colors.WHITE,
+            },
           ]}
           onPress={() => setSelectedTab(1)}
         >
@@ -54,7 +61,7 @@ const Home = () => {
             style={[
               styles.btnTextStyle,
               {
-                color: selectedTab === 0 ? "#EB6611" : "#FFFFFF",
+                color: selectedTab === 0 ? Colors.PRIMARY : Colors.WHITE,
               },
             ]}
           >

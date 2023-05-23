@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { Colors } from "../../utils/colors";
 
 const styles = StyleSheet.create({
-  outerContainer: { flex: 1, backgroundColor: "#FFF" },
+  outerContainer: { flex: 1, backgroundColor: Colors.WHITE },
   labelViewStyle: { marginTop: 13 },
   nameLabel: { marginTop: 35 },
   submitButtonContainer: {
-    backgroundColor: "#EB6611",
+    backgroundColor: Colors.PRIMARY,
     marginHorizontal: getWidth(110),
     marginVertical: getHeight(40),
     height: getHeight(40),
@@ -19,14 +20,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "700",
-    color: "#FFFFFF",
+    color: Colors.WHITE,
   },
   errMsgContainer: {
     marginHorizontal: getWidth(35),
     marginTop: getHeight(10),
   },
   errMsgText: {
-    color: "red",
+    color: Colors.RED,
   },
   modalStyles: {
     flex: 1,

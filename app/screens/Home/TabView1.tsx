@@ -13,6 +13,7 @@ import { Calendar } from "react-native-calendars";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
+import { Colors } from "../../utils/colors";
 
 const TabView1 = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
@@ -68,10 +69,10 @@ const TabView1 = () => {
               res.state === "disabled" ||
               moment(res.date.timestamp).startOf("day").valueOf() ===
                 moment().startOf("day").valueOf()
-                ? "white"
+                ? Colors.WHITE
                 : selectedDate.dateString === res.date?.dateString
-                ? "#EB6611"
-                : "#FFF7E7",
+                ? Colors.PRIMARY
+                : Colors.SECONDARY,
           },
         ]}
       >
@@ -81,10 +82,10 @@ const TabView1 = () => {
               res?.state === "disabled" ||
               moment(res.date.timestamp).startOf("day").valueOf() ===
                 moment().startOf("day").valueOf()
-                ? "black"
+                ? "Colors.BLACK"
                 : selectedDate.dateString === res.date?.dateString
-                ? "white"
-                : "#EB6611",
+                ? Colors.WHITE
+                : Colors.PRIMARY,
           }}
         >
           {res.date.day}
@@ -156,8 +157,8 @@ const TabView1 = () => {
                       styles.timeSlotView,
                       {
                         borderColor: selectedDateData?.firstSlot
-                          ? "gray"
-                          : "#EB6611",
+                          ? Colors.GRAY
+                          : Colors.PRIMARY,
                       },
                     ]}
                   >
@@ -166,8 +167,8 @@ const TabView1 = () => {
                         styles.timeText,
                         {
                           color: selectedDateData?.firstSlot
-                            ? "grey"
-                            : "#EB6611",
+                            ? Colors.GRAY
+                            : Colors.PRIMARY,
                         },
                       ]}
                     >
@@ -195,8 +196,8 @@ const TabView1 = () => {
                       styles.timeSlotView,
                       {
                         borderColor: selectedDateData?.secondSlot
-                          ? "gray"
-                          : "#EB6611",
+                          ? Colors.GRAY
+                          : Colors.PRIMARY,
                       },
                     ]}
                   >
@@ -205,8 +206,8 @@ const TabView1 = () => {
                         styles.timeText,
                         {
                           color: selectedDateData?.secondSlot
-                            ? "gray"
-                            : "#EB6611",
+                            ? Colors.GRAY
+                            : Colors.PRIMARY,
                         },
                       ]}
                     >

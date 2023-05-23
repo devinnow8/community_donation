@@ -1,11 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { Colors } from "../../utils/colors";
 
 const styles = StyleSheet.create({
-  mainContainer: { flex: 1, backgroundColor: "#FFF" },
-  mainImage: { alignItems: "center", marginTop: 10 },
-  imageStyle: { height: getHeight(138), aspectRatio: 1, marginTop: 10 },
-  headingText: { fontSize: getHeight(26), fontWeight: "700", color: "#1E1E1E" },
+  mainContainer: { flex: 1, backgroundColor: Colors.WHITE },
+  mainImage: { alignItems: "center", marginTop: getHeight(10) },
+  imageStyle: {
+    height: getHeight(138),
+    aspectRatio: 1,
+    marginTop: getHeight(10),
+  },
+  headingText: {
+    fontSize: getHeight(26),
+    fontWeight: "700",
+    color: Colors.BLACK,
+  },
   trustInfoText: {
     fontSize: getHeight(18),
     marginTop: getHeight(14),
@@ -21,12 +30,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "600",
     fontSize: getHeight(22),
+    color: Colors.BLACK,
   },
   adminContactTextNumber: {
     textAlign: "center",
     fontWeight: "600",
     fontSize: getHeight(18),
-    color: "blue",
+    color: Colors.BLUE,
   },
 });
 export default styles;
