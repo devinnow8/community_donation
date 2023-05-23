@@ -119,7 +119,7 @@ const AdminBookingDetail = () => {
       });
   };
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFF" }}>
+    <View style={styles.container}>
       {/* header */}
       <HeaderBar
         hasBackButton={true}
@@ -131,10 +131,8 @@ const AdminBookingDetail = () => {
       {JSON.stringify(yatraDetails) !== "{}" ? (
         <>
           <View style={styles.bookingDetailContainer}>
-            <View style={{ justifyContent: "center" }}>
-              <Text
-                style={{ fontSize: 16, fontWeight: "600", alignSelf: "center" }}
-              >
+            <View style={styles.dateView}>
+              <Text style={styles.dateFormatStyle}>
                 {moment(yatraDetails?.date)?.format("DD MMM YYYY")}
               </Text>
               <TouchableOpacity onPress={adminEditYatraBooking}>
@@ -196,45 +194,35 @@ const AdminBookingDetail = () => {
 
             <FlatList
               data={listData ?? []}
-              renderItem={({ item, index }) => {
+              renderItem={({ item, index }: any) => {
                 return (
                   <View key={item.id} style={styles.chartContainer}>
                     <View style={styles.chartItems}>
                       <Text>{item.name}</Text>
-                      <Text style={{ fontSize: 12 }}>{item.phoneNumber}</Text>
+                      <Text style={styles.phoneNumberTextStyle}>
+                        {item.phoneNumber}
+                      </Text>
                     </View>
                     <View style={styles.chartItems}>
                       <Text>{item.numberOfSeats}</Text>
                     </View>
                     <View style={styles.chartIconOuter}>
                       <TouchableOpacity
-                        style={{
-                          justifyContent: "center",
-                        }}
+                        style={styles.editTouchableStyle}
                         onPress={() => editItem(item.name, item.seats, index)}
                       >
                         <Image
-                          style={{
-                            width: 20,
-                            height: 20,
-                          }}
+                          style={styles.editTouchableImageStyle}
                           resizeMode="contain"
                           source={require("../../assets/images/iconEdit.png")}
                         />
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => deleteEntry(item)}
-                        style={{
-                          marginHorizontal: getWidth(5),
-
-                          justifyContent: "center",
-                        }}
+                        style={styles.deleteTouchableStyle}
                       >
                         <Image
-                          style={{
-                            width: 20,
-                            height: 20,
-                          }}
+                          style={styles.deleteTouchableImageStyle}
                           resizeMode="contain"
                           source={require("../../assets/images/emptyIcon.png")}
                         />

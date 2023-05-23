@@ -10,66 +10,18 @@ const AdminDonationCollection = () => {
   const RenderDonationList = ({ item }) => {
     return (
       <View>
-        <View
-          style={{
-            flexDirection: "row",
-            borderColor: "grey",
-            paddingVertical: 5,
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ flex: 2, color: "#EB6611", fontSize: 12 }}>
-            {item?.selectedDate}
-          </Text>
-          <Text
-            style={{
-              flex: 3,
-              fontSize: 12,
-              textAlign: "center",
-            }}
-          >
+        <View style={styles.mainContainer}>
+          <Text style={styles.selectedDate}>{item?.selectedDate}</Text>
+          <Text style={styles.itemNamePhoneNumber}>
             {item?.name}
             {"\n"} {item?.phoneNumber}
           </Text>
-          <Text
-            style={{
-              flex: 2,
-              textAlign: "center",
-              paddingRight: 5,
-              fontSize: 12,
-            }}
-          >
-            ₹{item?.amount}
-          </Text>
-          <View
-            style={{
-              flex: 1.3,
-              backgroundColor: "#EB6611",
-              padding: 5,
-              borderRadius: 5,
-              marginLeft: 5,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 12,
-                color: "white",
-                fontWeight: "bold",
-              }}
-            >
-              {item?.mode}
-            </Text>
+          <Text style={styles.itemAmount}>₹{item?.amount}</Text>
+          <View style={styles.itemModeContainer}>
+            <Text style={styles.itemModeText}>{item?.mode}</Text>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            borderBottomWidth: 1,
-            borderColor: "grey",
-          }}
-        >
+        <View style={styles.fieldBottomBar}>
           {/* <Text style={{ width: "32%", textAlign: "center" }}>
             {item?.phoneNumber}
           </Text> */}
@@ -79,40 +31,17 @@ const AdminDonationCollection = () => {
   };
   const RenderDonationFields = () => {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          borderBottomWidth: 1,
-          borderColor: "grey",
-          paddingBottom: 5,
-          backgroundColor: "#fff",
-          justifyContent: "space-between",
-        }}
-      >
-        <View style={{ flex: 2 }}>
+      <View style={styles.renderDonationFieldsView}>
+        <View style={styles.dateText}>
           <Text style={styles.commonStyle}>Date </Text>
         </View>
-        <View style={{ flex: 3 }}>
+        <View style={styles.donarDetailText}>
           <Text style={styles.commonStyle}>Donar Details </Text>
         </View>
-        {/* <View
-          style={{
-            width: "32%",
-
-            alignItems: "center",
-          }}
-        >
-         
-        </View> */}
-        <View style={{ flex: 2, alignItems: "center" }}>
+        <View style={styles.amountText}>
           <Text style={styles.commonStyle}>Amount</Text>
         </View>
-        <View
-          style={{
-            flex: 2,
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.modeText}>
           <Text style={styles.commonStyle}>Mode</Text>
         </View>
       </View>
@@ -138,20 +67,21 @@ const AdminDonationCollection = () => {
     getDonationPaisa();
   }, []);
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <View style={styles.daanSewaOuterContainer}>
       <HeaderBar hasBackButton={true} headingText="दान सेवा" />
       <View style={styles.donationTotalCollectionHeading}>
         <Text style={styles.donationTextHeading}>
           Total amount : ₹{totalAmount}
         </Text>
       </View>
-      <View style={{ marginHorizontal: 20 }}>
+      <View style={styles.flatlistOuterContainer}>
         <FlatList
           data={listData}
           renderItem={RenderDonationList}
           ListHeaderComponent={RenderDonationFields}
-          bounces={false}
           stickyHeaderIndices={[0]}
+          bounces={false}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>

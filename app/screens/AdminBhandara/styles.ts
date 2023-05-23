@@ -84,5 +84,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 16,
   },
+  flatListMainContainer: {
+    paddingBottom: 50,
+    paddingRight: getWidth(20),
+    alignItems: "center",
+  },
+  listEmptyComponentView: {
+    justifyContent: "center",
+    marginTop: getHeight(100),
+  },
+  slotView: {
+    alignSelf: "center",
+  },
+  calenderOuterView: { backgroundColor: "white" },
 });
 export default styles;

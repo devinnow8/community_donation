@@ -13,6 +13,7 @@ import TextInputs from "../../ReusableComponents/TextInputs";
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
+import messaging from "@react-native-firebase/messaging";
 
 const AdminLogin = () => {
   const navigation: any = useNavigation();
@@ -25,10 +26,7 @@ const AdminLogin = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const [adminFBdetail, setAdminFBdetail] = useState({
-    adminName: "",
-    adminPassword: "",
-  });
+  const [adminFBdetail, setAdminFBdetail] = useState<any>({});
   useEffect(() => {
     getAdminDetail();
   }, []);
@@ -39,28 +37,45 @@ const AdminLogin = () => {
       .doc("Admin")
       .get()
       .then(({ _data }: any) => {
-        setAdminFBdetail(() => {
-          return {
-            adminName: _data.userName,
-            adminPassword: _data.password,
-          };
-        });
+        setAdminFBdetail(_data);
       })
       .catch(() => {
         Alert.alert("Error fetching collections");
       });
   };
 
-  const adminLogin = () => {
+  const adminLogin = async () => {
     if (
-      adminInfo.adminName === adminFBdetail.adminName &&
-      adminInfo.adminPassword === adminFBdetail.adminPassword
+      adminInfo.adminName === adminFBdetail.userName &&
+      adminInfo.adminPassword === adminFBdetail.password
     ) {
       setShowButtons(true);
       setAdminInfo({
         ...adminInfo,
         errMsg: "",
       });
+      const token = await messaging().getToken();
+      let newTokenArray = [];
+      if (adminFBdetail?.adminTokens?.length) {
+        newTokenArray = adminFBdetail?.adminTokens?.filter(
+          (item: any) => item !== token
+        );
+      }
+
+      let newAdminTokens = adminFBdetail?.adminTokens
+        ? [...newTokenArray, token]
+        : [token];
+      let newAdminData = {
+        ...adminFBdetail,
+        adminTokens: newAdminTokens,
+      };
+      firestore()
+        .collection("adminLogin")
+        .doc("Admin")
+        .set(newAdminData)
+        .then((res) => {
+          console.log("res res ===>", newAdminData);
+        });
     } else {
       setAdminInfo({
         ...adminInfo,

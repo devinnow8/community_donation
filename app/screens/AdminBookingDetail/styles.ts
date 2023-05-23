@@ -98,5 +98,35 @@ const styles = StyleSheet.create({
     fontSize: getHeight(20),
     fontWeight: "600",
   },
+  container: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
+  dateView: {
+    justifyContent: "center",
+  },
+  dateFormatStyle: {
+    fontSize: 16,
+    fontWeight: "600",
+    alignSelf: "center",
+  },
+  phoneNumberTextStyle: {
+    fontSize: 12,
+  },
+  editTouchableStyle: {
+    justifyContent: "center",
+  },
+  editTouchableImageStyle: {
+    width: 20,
+    height: 20,
+  },
+  deleteTouchableStyle: {
+    marginHorizontal: getWidth(5),
+    justifyContent: "center",
+  },
+  deleteTouchableImageStyle: {
+    width: 20,
+    height: 20,
+  },
 });
 export default styles;

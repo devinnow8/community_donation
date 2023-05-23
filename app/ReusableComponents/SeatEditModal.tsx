@@ -46,7 +46,7 @@ const SeatEditModal = ({
             <Text style={styles.updateBtn}>-</Text>
           </TouchableOpacity>
           <View style={styles.updateNumberContainer}>
-            <Text style={{ textAlign: "center" }}>{counter}</Text>
+            <Text style={styles.counterView}>{counter}</Text>
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -123,5 +123,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: getHeight(15),
+  },
+  counterView: {
+    textAlign: "center",
   },
 });

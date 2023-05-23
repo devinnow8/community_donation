@@ -49,7 +49,7 @@ const AdminBhandara = () => {
     <>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
       <View style={styles.scrollViewContainer}>
-        <View style={{ backgroundColor: "white" }}>
+        <View style={styles.calenderOuterView}>
           <Calendar
             minDate={new Date().toString()}
             style={{}}
@@ -112,32 +112,21 @@ const AdminBhandara = () => {
           <ActivityIndicator />
         ) : (
           selectedDate?.dateString !== "" && (
-            <View
-              style={{
-                paddingBottom: 50,
-                paddingRight: getWidth(20),
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.flatListMainContainer}>
               <FlatList
                 data={Object.values(selectedDateData)}
                 horizontal
                 bounces={false}
                 showsHorizontalScrollIndicator={false}
                 ListEmptyComponent={() => (
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      marginTop: getHeight(100),
-                    }}
-                  >
+                  <View style={styles.listEmptyComponentView}>
                     <Text>No booking yet</Text>
                   </View>
                 )}
                 renderItem={({ item }) => {
                   return (
                     <View style={styles.belowCalenderOuterContainer}>
-                      <View style={{ alignSelf: "center" }}>
+                      <View style={styles.slotView}>
                         <Text style={styles.selectedDateOuterContainer}>
                           {moment(selectedDate?.dateString).format(
                             "dddd, DD MMM yyyy"
