@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   View,
   TouchableOpacity,
@@ -40,7 +39,7 @@ const BhandaraBookingPayment = () => {
     } else if (mode === "ONLINE") {
       var options = {
         description: "Credits towards consultation",
-        image: Paymenticon,
+        image: 'https://firebasestorage.googleapis.com/v0/b/community-donation.appspot.com/o/Group%20434%20(1).png?alt=media&token=29d44072-a6ae-4fe5-9d3c-11b91c773b8c',
         currency: "INR",
         key: "rzp_test_CKghbIZojq126Q", // Your api key
         amount: (Number(selectedAmount) * 100).toString(),
@@ -55,8 +54,6 @@ const BhandaraBookingPayment = () => {
 
       RazorpayCheckout.open(options)
         .then((data) => {
-          // handle success
-
           saveData("ONLINE");
           setShowModal(true);
           // alert(`Success: ${data.razorpay_payment_id}`);

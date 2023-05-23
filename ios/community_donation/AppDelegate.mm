@@ -10,7 +10,8 @@
   self.moduleName = @"community_donation";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
-      BOOL ret = [super application:application didFinishLaunchingWithOptions:launchOptions];
+  [FIRApp configure];
+  BOOL ret = [super application:application didFinishLaunchingWithOptions:launchOptions];
   if (ret == YES) {
     [RNSplashScreen show]; 
   }
