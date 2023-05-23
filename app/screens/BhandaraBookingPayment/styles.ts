@@ -10,8 +10,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "400",
     color: "#EB6611",
-    paddingVertical: getHeight(10),
-    paddingHorizontal: getWidth(20),
   },
   btnStyle: {
     marginHorizontal: getWidth(110),
@@ -34,7 +32,7 @@ const styles = StyleSheet.create({
   payBtnStyle: {
     marginHorizontal: getWidth(110),
     marginVertical: getHeight(40),
-    height: getHeight(45),
+    height: getHeight(50),
     width: getWidth(146),
     justifyContent: "center",
     alignItems: "center",

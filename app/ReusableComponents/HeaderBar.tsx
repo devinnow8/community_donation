@@ -12,6 +12,7 @@ interface IHeaderBarText {
   onRightButtonPress?: any;
   hasAddUser?: boolean;
   onPress?: any;
+  onRightTextPress?: any;
 }
 
 const HeaderBar = ({
@@ -24,6 +25,7 @@ const HeaderBar = ({
   onRightButtonPress,
   hasAddUser,
   onPress,
+  onRightTextPress,
 }: IHeaderBarText) => {
   const navigation: any = useNavigation();
 
@@ -34,15 +36,18 @@ const HeaderBar = ({
           <Text style={[styles.headerBarText, { marginLeft: 20 }]}>
             {headingLeftText}
           </Text>
-          <Text style={[styles.headerBarText, styles.headerBarRightText]}>
-            {HeadingRightText}
-          </Text>
+          <TouchableOpacity onPress={onRightTextPress} hitSlop={15}>
+            <Text style={[styles.headerBarText, styles.headerBarRightText]}>
+              {HeadingRightText}
+            </Text>
+          </TouchableOpacity>
         </View>
       ) : hasAddUser ? (
         <View style={[styles.headerBarContainer]}>
           {hasBackButton && (
             <TouchableOpacity
               style={rightText && { width: 40 }}
+              hitSlop={10}
               onPress={() => {
                 navigation.goBack();
               }}
@@ -60,6 +65,7 @@ const HeaderBar = ({
           {hasBackButton && (
             <TouchableOpacity
               style={rightText && { width: 40 }}
+              hitSlop={10}
               onPress={() => {
                 navigation.goBack();
               }}
@@ -68,14 +74,14 @@ const HeaderBar = ({
             </TouchableOpacity>
           )}
           <Text style={styles.headerBarText}>{headingText}</Text>
-          <Text
-            style={styles.rightText}
+          <TouchableOpacity
             onPress={() => {
               onRightButtonPress && onRightButtonPress();
             }}
+            hitSlop={15}
           >
-            {rightText}
-          </Text>
+            <Text style={styles.rightText}>{rightText}</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>

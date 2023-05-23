@@ -31,5 +31,35 @@ const styles = StyleSheet.create({
     fontSize: getHeight(20),
     fontWeight: "400",
   },
+  textInputContainer: {
+    borderWidth: 1,
+    height: getHeight(40),
+    width: getWidth(307),
+    marginHorizontal: getWidth(34),
+    borderColor: "#BCBCBC",
+    marginTop: getHeight(4),
+    padding: getWidth(8),
+    borderRadius: getWidth(5),
+    justifyContent: "center",
+  },
+  upDownArrow: {
+    position: "absolute",
+    height: getHeight(12),
+    width: getWidth(12),
+    alignSelf: "flex-end",
+    right: 20,
+  },
+  dropDownItemsContainer: {
+    padding: 10,
+    // borderBottomWidth: 1,
+    borderColor: "#BCBCBC",
+  },
+  dropDownOuterContainer: {
+    marginHorizontal: getWidth(34),
+    borderWidth: 1,
+    borderColor: "#BCBCBC",
+    borderBottomLeftRadius: getWidth(5),
+    borderBottomRightRadius: getWidth(5),
+  },
 });
 export default styles;

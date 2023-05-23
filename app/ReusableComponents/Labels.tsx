@@ -3,11 +3,14 @@ import React from "react";
 import { getWidth, getHeight } from "../utils/pixelConversion";
 interface ILabelName {
   labelName: string;
+  labelColor?: any;
 }
-const Labels = ({ labelName }: ILabelName) => {
+const Labels = ({ labelName, labelColor }: ILabelName) => {
   return (
-    <View style={styles.labelContainer}>
-      <Text style={styles.labelText}>{labelName}</Text>
+    <View style={[styles.labelContainer]}>
+      <Text style={[styles.labelText, labelColor && { color: labelColor }]}>
+        {labelName}
+      </Text>
     </View>
   );
 };

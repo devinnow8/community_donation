@@ -4,13 +4,16 @@ import {
   View,
   Pressable,
   Keyboard,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import firestore from "@react-native-firebase/firestore";
+
 const AdminLogin = () => {
   const navigation: any = useNavigation();
   const [adminInfo, setAdminInfo] = useState({
@@ -18,14 +21,40 @@ const AdminLogin = () => {
     adminPassword: "",
     errMsg: "",
   });
+
   const [showButtons, setShowButtons] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+
+  const [adminFBdetail, setAdminFBdetail] = useState({
+    adminName: "",
+    adminPassword: "",
+  });
+  useEffect(() => {
+    getAdminDetail();
+  }, []);
+
+  const getAdminDetail = () => {
+    firestore()
+      .collection("adminLogin")
+      .doc("Admin")
+      .get()
+      .then(({ _data }: any) => {
+        setAdminFBdetail(() => {
+          return {
+            adminName: _data.userName,
+            adminPassword: _data.password,
+          };
+        });
+      })
+      .catch(() => {
+        Alert.alert("Error fetching collections");
+      });
+  };
+
   const adminLogin = () => {
-    const adminName = "Admin";
-    const password = "Admin@123";
     if (
-      adminInfo.adminName === adminName &&
-      adminInfo.adminPassword === password
+      adminInfo.adminName === adminFBdetail.adminName &&
+      adminInfo.adminPassword === adminFBdetail.adminPassword
     ) {
       setShowButtons(true);
       setAdminInfo({
@@ -39,6 +68,7 @@ const AdminLogin = () => {
       });
     }
   };
+
   return (
     <View style={styles.adminLoginContainer}>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
@@ -113,53 +143,83 @@ const AdminLogin = () => {
       </TouchableOpacity>
 
       {showButtons && (
-        <View style={styles.adminLoginButtonView}>
-          <Pressable
-            style={[
-              styles.adminButtonView,
-              {
-                backgroundColor: selectedTab === 0 ? "#EB6611" : "transparent",
-              },
-            ]}
-            onPress={() => [
-              navigation.navigate("AdminBhandara"),
-              setSelectedTab(0),
-            ]}
-          >
-            <Text
+        <View>
+          <View style={styles.adminLoginButtonView}>
+            <Pressable
               style={[
-                styles.btnTextStyle,
+                styles.adminButtonView,
                 {
-                  color: selectedTab === 0 ? "#FFF" : "#EB6611",
+                  backgroundColor:
+                    selectedTab === 0 ? "#EB6611" : "transparent",
                 },
               ]}
-            >
-              भोजन सेवा
-            </Text>
-          </Pressable>
-          <Pressable
-            style={[
-              styles.adminButtonView,
-              {
-                backgroundColor: selectedTab === 1 ? "#EB6611" : "transparent",
-              },
-            ]}
-            onPress={() => [
-              navigation.navigate("AdminBookingDetail"),
-              setSelectedTab(1),
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnTextStyle,
-                {
-                  color: selectedTab === 1 ? "#FFF" : "#EB6611",
-                },
+              onPress={() => [
+                navigation.navigate("AdminBhandara"),
+                setSelectedTab(0),
               ]}
             >
-              धर्म यात्रा
-            </Text>
-          </Pressable>
+              <Text
+                style={[
+                  styles.btnTextStyle,
+                  {
+                    color: selectedTab === 0 ? "#FFF" : "#EB6611",
+                  },
+                ]}
+              >
+                भोजन सेवा
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                styles.adminButtonView,
+                {
+                  backgroundColor:
+                    selectedTab === 1 ? "#EB6611" : "transparent",
+                },
+              ]}
+              onPress={() => [
+                navigation.navigate("AdminBookingDetail"),
+                setSelectedTab(1),
+              ]}
+            >
+              <Text
+                style={[
+                  styles.btnTextStyle,
+                  {
+                    color: selectedTab === 1 ? "#FFF" : "#EB6611",
+                  },
+                ]}
+              >
+                धर्म यात्रा
+              </Text>
+            </Pressable>
+          </View>
+          <View style={styles.adminDonationBtnOuterContainer}>
+            <Pressable
+              style={[
+                styles.adminDonationButtonView,
+                {
+                  backgroundColor:
+                    selectedTab === 2 ? "#EB6611" : "transparent",
+                },
+              ]}
+              onPress={() => [
+                navigation.navigate("AdminDonationCollection"),
+                setSelectedTab(2),
+              ]}
+            >
+              <Text
+                style={[
+                  styles.btnTextStyle,
+                  {
+                    color: selectedTab === 2 ? "#FFF" : "#EB6611",
+                  },
+                ]}
+              >
+                दान सेवा
+              </Text>
+            </Pressable>
+          </View>
         </View>
       )}
     </View>

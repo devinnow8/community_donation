@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import Modal from "react-native-modal";
 import { getHeight, getWidth } from "../utils/pixelConversion";
@@ -9,15 +16,17 @@ const SeatEditModal = ({
   index,
   setListData,
   listData,
-  onSavePress
+  onSavePress,
 }: any) => {
-  const [counter, setCounter] = useState(listData[index].numberOfSeats)
+  const [counter, setCounter] = useState(listData[index]?.numberOfSeats ?? 0);
   return (
     <Modal isVisible={isVisible}>
       <View style={styles.seatModalOuterContainer}>
-        <TouchableOpacity onPress={() =>{
-           setIsVisible(false)
-           }}>
+        <TouchableOpacity
+          onPress={() => {
+            setIsVisible(false);
+          }}
+        >
           <Image
             source={require("../assets/images/crossIcon.png")}
             style={styles.crossIconStyle}
@@ -31,20 +40,17 @@ const SeatEditModal = ({
         <View style={styles.seatsCountContainer}>
           <TouchableOpacity
             onPress={() => {
-              setCounter(counter-1)
+              counter > 0 && setCounter(counter - 1);
             }}
           >
             <Text style={styles.updateBtn}>-</Text>
           </TouchableOpacity>
           <View style={styles.updateNumberContainer}>
-            <Text style={{ textAlign: "center" }}>
-              {counter}
-            </Text>
+            <Text style={{ textAlign: "center" }}>{counter}</Text>
           </View>
           <TouchableOpacity
             onPress={() => {
-              setCounter(counter+1)
-
+              setCounter(counter + 1);
             }}
           >
             <Text style={styles.updateBtn}>+</Text>
@@ -52,13 +58,16 @@ const SeatEditModal = ({
         </View>
 
         {/* SaveButton */}
-        <TouchableOpacity onPress={()=>{
-          let newData = listData;
-          newData[index].numberOfSeats = counter;
-          setListData([...newData]);
-          onSavePress()
-          setIsVisible(false)
-        }} style={styles.saveBtn}>
+        <TouchableOpacity
+          onPress={() => {
+            let newData = listData;
+            newData[index].numberOfSeats = counter;
+            setListData([...newData]);
+            onSavePress();
+            setIsVisible(false);
+          }}
+          style={styles.saveBtn}
+        >
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
       </View>

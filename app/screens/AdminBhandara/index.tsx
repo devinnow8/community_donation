@@ -16,7 +16,7 @@ import { Calendar } from "react-native-calendars";
 import moment from "moment";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
-import { getWidth } from "../../utils/pixelConversion";
+import { getHeight, getWidth } from "../../utils/pixelConversion";
 const AdminBhandara = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
@@ -25,13 +25,12 @@ const AdminBhandara = () => {
   const getCurrentDateData = async (timestamp: number) => {
     setLoader(true);
     firestore()
-      .collection("Test5")
+      .collection("Bandhara Booking")
       .doc(timestamp.toString())
       .get()
       .then((data) => {
         setLoader(false);
         if (data._exists) {
-          console.log("Data for current Date", data);
           setSelectedDateData(data?._data);
         } else {
           setSelectedDateData({});
@@ -113,13 +112,28 @@ const AdminBhandara = () => {
           <ActivityIndicator />
         ) : (
           selectedDate?.dateString !== "" && (
-            <View style={{ paddingBottom: 50, paddingRight: getWidth(20) }}>
+            <View
+              style={{
+                paddingBottom: 50,
+                paddingRight: getWidth(20),
+                alignItems: "center",
+              }}
+            >
               <FlatList
                 data={Object.values(selectedDateData)}
                 horizontal
                 bounces={false}
                 showsHorizontalScrollIndicator={false}
-                ListEmptyComponent={()=><View style={{}} ><Text>No booking yet</Text></View>}
+                ListEmptyComponent={() => (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      marginTop: getHeight(100),
+                    }}
+                  >
+                    <Text>No booking yet</Text>
+                  </View>
+                )}
                 renderItem={({ item }) => {
                   return (
                     <View style={styles.belowCalenderOuterContainer}>
@@ -170,22 +184,18 @@ const AdminBhandara = () => {
                                 status: "Completed",
                               };
                               firestore()
-                                .collection("Test5")
+                                .collection("Bandhara Booking")
                                 .doc(item?.timeStamp.toString())
                                 .set(
                                   { [item?.selectedTime]: currentData },
                                   { merge: true }
                                 )
                                 .then((res) => {
-                                  console.log(
-                                    "Response after adding new data",
-                                    res
-                                  );
                                   // setShowModal(true);
                                   getCurrentDateData(item?.timeStamp);
                                 })
                                 .catch((err) => {
-                                  console.log("Error", err);
+                                  // console.log("Error", err);
                                 });
                             }}
                             style={styles.confirmButtonContainer}
@@ -198,31 +208,27 @@ const AdminBhandara = () => {
                                 ...item,
                               };
                               firestore()
-                                .collection("Test5")
+                                .collection("Bandhara Booking")
                                 .doc(item?.timeStamp.toString())
                                 .get()
                                 .then((data: any) => {
                                   let currentData = data._data;
                                   delete currentData[item?.selectedTime];
                                   firestore()
-                                    .collection("Test5")
+                                    .collection("Bandhara Booking")
                                     .doc(item?.timeStamp.toString())
                                     .set(currentData)
                                     .then((res) => {
-                                      console.log(
-                                        "Response after adding new data",
-                                        res
-                                      );
-                                  getCurrentDateData(item?.timeStamp);
+                                      getCurrentDateData(item?.timeStamp);
 
                                       // setShowModal(true);
                                     })
                                     .catch((err) => {
-                                      console.log("Error", err);
+                                      // console.log("Error", err);
                                     });
                                 })
                                 .catch((err) => {
-                                  console.log("Error", err);
+                                  // console.log("Error", err);
                                 });
                             }}
                             style={styles.rejectButtonContainer}

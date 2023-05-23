@@ -1,4 +1,12 @@
-import { Text, View, TouchableOpacity, Keyboard } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Keyboard,
+  Image,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
@@ -8,22 +16,32 @@ import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import moment from "moment";
 import styles from "./styles";
+import { getHeight } from "../../utils/pixelConversion";
+import upHeadIcon from "../../assets/images/upHeadIcon.png";
+import downHeadIcon from "../../assets/images/downHeadIcon.png";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const BhandaraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
+  const [showDropDown, setShowUpDown] = useState(false);
+  const [isLoaderVisible, setLoaderVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: "",
     phoneNumber: "",
     place: "",
+    address: "",
     otp: "",
     nameErrMsg: "",
     phoneErrMsg: "",
     placeErrMsg: "",
+    addressErrMsg: "",
     otpErrMsg: "",
   });
   const route = useRoute();
   const navigation: any = useNavigation();
-  const { time, date }: any = route.params;
+  const date: any = route.params?.date;
+  const time: any = route.params?.time;
+  const screenType: any = route.params?.screenType;
   const SendOTP = () => {
     // Name Validation
     let error = false;
@@ -73,7 +91,7 @@ const BhandaraBooking = () => {
       error = true;
     }
     // placeValidation
-    if (userInfo.place.length === 0) {
+    if (screenType !== "DaanSewa" && userInfo.place?.length === 0) {
       setUserInfo((prevState) => {
         return {
           ...prevState,
@@ -82,7 +100,18 @@ const BhandaraBooking = () => {
       });
       error = true;
     }
+    // Address Validation
+    if (screenType !== "DaanSewa" && userInfo.address?.length === 0) {
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          addressErrMsg: "*Please Fill The Missing Field*",
+        };
+      });
+      error = true;
+    }
     if (!error) {
+      setLoaderVisible(true);
       sendOTP();
     }
 
@@ -115,186 +144,305 @@ const BhandaraBooking = () => {
       "+91" + userInfo.phoneNumber
     );
     if (confirmation) {
+      setLoaderVisible(false);
       setShowOtpField(true);
       setConfirm(confirmation);
     }
   };
   const Confirm = async () => {
+    setLoaderVisible(true);
     try {
       const response = await confirm?.confirm(userInfo.otp);
-      console.log("Response", response);
+
       if (response) {
-        navigation.navigate("BhandaraBookingPayment", {
+        let params;
+        params = {
           name: userInfo.name,
           phoneNumber: userInfo.phoneNumber,
-          place: userInfo.place,
-          selectedDate: date,
-          selectedTime: time,
-        });
+        };
+        if (screenType !== "DaanSewa") {
+          params = {
+            ...params,
+            place: userInfo?.address + " " + userInfo?.place,
+            selectedDate: date,
+            selectedTime: time,
+          };
+        } else {
+          params = {
+            ...params,
+            screenType: "DaanSewa",
+          };
+        }
+        setLoaderVisible(false);
+        navigation.navigate("BhandaraBookingPayment", params);
       }
     } catch (error) {
-      console.log("Error", error);
+      setLoaderVisible(false);
+      // console.log("Error", error);
     }
   };
+  const dropDownItems = [
+    {
+      id: 1,
+      itemName: "Chandigarh",
+    },
+    {
+      id: 2,
+      itemName: "Panchkula",
+    },
+    {
+      id: 3,
+      itemName: "Mohali",
+    },
+    {
+      id: 4,
+      itemName: "Zirakpur",
+    },
+  ];
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* headerBar */}
       <View>
-        <HeaderBar hasBackButton={true} headingText="भंडारा बुकिंग" />
+        <HeaderBar
+          hasBackButton={true}
+          headingText={screenType !== "DaanSewa" ? "भंडारा बुकिंग" : "दान सेवा"}
+        />
       </View>
 
       {/* Date Field */}
-      <View style={styles.bookingDateContainer}>
-        <Text style={styles.bookingDateText}>{`${moment(date.dateString).format(
-          "dddd, DD MMM yyyy"
-        )} (${time === 0 ? "11:00  AM" : "02:00 PM"})`}</Text>
-      </View>
-
-      {/* formFields */}
-      <View>
-        <Labels labelName="नाम" />
-      </View>
-
-      <View>
-        <TextInputs
-          onChangeText={(val: string) =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                name: val,
-              };
-            })
-          }
-          onFocus={() =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                nameErrMsg: "",
-              };
-            })
-          }
-        />
-      </View>
-      {userInfo.nameErrMsg ? (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{userInfo.nameErrMsg}</Text>
+      {screenType !== "DaanSewa" && (
+        <View style={styles.bookingDateContainer}>
+          <Text style={styles.bookingDateText}>{`${moment(
+            date.dateString
+          ).format("dddd, DD MMM yyyy")} (${
+            time === 0 ? "11:00  AM" : "02:00 PM"
+          })`}</Text>
         </View>
-      ) : (
-        <Text></Text>
       )}
-      <View>
-        <Labels labelName="फ़ोन नंबर" />
-      </View>
-
-      <View>
-        <TextInputs
-          onChangeText={(val: string) =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                phoneNumber: val,
-              };
-            })
-          }
-          onFocus={() =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                phoneErrMsg: "",
-              };
-            })
-          }
-          maxLength={10}
-        />
-      </View>
-      {userInfo.phoneErrMsg ? (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{userInfo.phoneErrMsg}</Text>
-        </View>
-      ) : (
-        <Text></Text>
-      )}
-      <View>
-        <Labels labelName="स्थान" />
-      </View>
-
-      <View>
-        <TextInputs
-          onChangeText={(val: string) =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                place: val,
-              };
-            })
-          }
-          onFocus={() =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                placeErrMsg: "",
-              };
-            })
-          }
-        />
-      </View>
-      {userInfo.placeErrMsg ? (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
-        </View>
-      ) : (
-        <Text></Text>
-      )}
-      {showOtpField && (
-        <>
-          <View>
-            <Labels labelName="OTP" />
-          </View>
-
-          <View>
-            <TextInputs
-              onChangeText={(val: string) =>
-                setUserInfo((prevState) => {
-                  return {
-                    ...prevState,
-                    otp: val,
-                  };
-                })
-              }
-              onFocus={() =>
-                setUserInfo((prevState) => {
-                  return {
-                    ...prevState,
-                    otpErrMsg: "",
-                  };
-                })
-              }
-            />
-          </View>
-          {userInfo.otpErrMsg && (
-            <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{userInfo.otpErrMsg}</Text>
-            </View>
-          )}
-        </>
-      )}
-
-      {/* confirmButton */}
-      <TouchableOpacity
-        style={styles.btnStyle}
-        onPress={() => {
-          Keyboard.dismiss();
-          if (!showOtpField) {
-            SendOTP();
-          } else {
-            Confirm();
-          }
-        }}
+      <KeyboardAwareScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.btnTextStyle}>
-          {!showOtpField ? "Send OTP" : "Confirm"}
-        </Text>
-      </TouchableOpacity>
+        {/* formFields */}
+        <View>
+          <Labels labelName="नाम" />
+        </View>
+
+        <View>
+          <TextInputs
+            onChangeText={(val: string) =>
+              setUserInfo((prevState) => {
+                return {
+                  ...prevState,
+                  name: val,
+                };
+              })
+            }
+            onFocus={() =>
+              setUserInfo((prevState) => {
+                return {
+                  ...prevState,
+                  nameErrMsg: "",
+                };
+              })
+            }
+          />
+        </View>
+        {userInfo.nameErrMsg ? (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{userInfo.nameErrMsg}</Text>
+          </View>
+        ) : (
+          <Text></Text>
+        )}
+        <View>
+          <Labels labelName="फ़ोन नंबर" />
+        </View>
+
+        <View>
+          <TextInputs
+            onChangeText={(val: string) =>
+              setUserInfo((prevState) => {
+                return {
+                  ...prevState,
+                  phoneNumber: val,
+                };
+              })
+            }
+            onFocus={() =>
+              setUserInfo((prevState) => {
+                return {
+                  ...prevState,
+                  phoneErrMsg: "",
+                };
+              })
+            }
+            maxLength={10}
+            keyboardType="number-pad"
+          />
+        </View>
+        {userInfo.phoneErrMsg ? (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{userInfo.phoneErrMsg}</Text>
+          </View>
+        ) : (
+          <Text></Text>
+        )}
+        {screenType !== "DaanSewa" && (
+          <>
+            <View>
+              <Labels labelName="शहर" />
+            </View>
+
+            <TouchableOpacity
+              onPress={() => setShowUpDown(!showDropDown)}
+              style={[
+                styles.textInputContainer,
+                showDropDown && {
+                  borderBottomLeftRadius: 0,
+                  borderBottomRightRadius: 0,
+                },
+              ]}
+            >
+              <Text>{userInfo.place}</Text>
+              <Image
+                source={showDropDown ? upHeadIcon : downHeadIcon}
+                style={styles.upDownArrow}
+              />
+            </TouchableOpacity>
+            {showDropDown && (
+              <View style={styles.dropDownOuterContainer}>
+                <FlatList
+                  data={dropDownItems}
+                  renderItem={({ item }) => (
+                    <View
+                      style={{ borderBottomWidth: 1, borderColor: "#BCBCBC" }}
+                      key={item.id}
+                    >
+                      <TouchableOpacity
+                        style={styles.dropDownItemsContainer}
+                        onPress={() => {
+                          setShowUpDown(false);
+                          setUserInfo((prevState) => {
+                            return {
+                              ...prevState,
+                              place: item.itemName,
+                            };
+                          });
+                        }}
+                      >
+                        <Text>{item.itemName}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                />
+              </View>
+            )}
+            {userInfo.place?.length === 0 && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
+              </View>
+            )}
+
+            <View style={{ marginTop: getHeight(20) }}>
+              <Labels
+                labelColor={
+                  userInfo.place?.length !== 0 ? "#EB6611" : "#BCBCBC"
+                }
+                labelName="स्थान"
+              />
+            </View>
+
+            <View>
+              <TextInputs
+                editable={userInfo.place?.length !== 0 ? true : false}
+                multiline
+                textInputStyles={{
+                  height: getHeight(80),
+                  textAlignVertical: "top",
+                }}
+                onChangeText={(val: string) =>
+                  setUserInfo((prevState) => {
+                    return {
+                      ...prevState,
+                      address: val,
+                    };
+                  })
+                }
+                onFocus={() =>
+                  setUserInfo((prevState) => {
+                    return {
+                      ...prevState,
+                      addressErrMsg: "",
+                    };
+                  })
+                }
+              />
+            </View>
+            {userInfo.addressErrMsg?.length > 0 && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorText}>{userInfo.placeErrMsg}</Text>
+              </View>
+            )}
+          </>
+        )}
+        {showOtpField && (
+          <>
+            <View style={{ marginTop: getHeight(20) }}>
+              <Labels labelName="OTP" />
+            </View>
+
+            <View>
+              <TextInputs
+                onChangeText={(val: string) =>
+                  setUserInfo((prevState) => {
+                    return {
+                      ...prevState,
+                      otp: val,
+                    };
+                  })
+                }
+                onFocus={() =>
+                  setUserInfo((prevState) => {
+                    return {
+                      ...prevState,
+                      otpErrMsg: "",
+                    };
+                  })
+                }
+                keyboardType="number-pad"
+              />
+            </View>
+            {userInfo.otpErrMsg && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorText}>{userInfo.otpErrMsg}</Text>
+              </View>
+            )}
+          </>
+        )}
+
+        {/* confirmButton */}
+        <TouchableOpacity
+          style={styles.btnStyle}
+          onPress={() => {
+            Keyboard.dismiss();
+            if (!showOtpField) {
+              SendOTP();
+            } else {
+              Confirm();
+            }
+          }}
+        >
+          {isLoaderVisible ? (
+            <ActivityIndicator size={"small"} color={"#ffffff"} />
+          ) : (
+            <Text style={styles.btnTextStyle}>
+              {!showOtpField ? "Send OTP" : "Confirm"}
+            </Text>
+          )}
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
     </View>
   );
 };

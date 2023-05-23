@@ -39,7 +39,9 @@ const styles = StyleSheet.create({
   chartContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     borderBottomWidth: getWidth(1),
+    borderColor: "grey",
     paddingVertical: getHeight(5),
   },
   chatOuterContainer: {
@@ -59,9 +61,10 @@ const styles = StyleSheet.create({
   },
   bookingContainerHeadingText: {
     color: "#EB6611",
-    fontSize: getHeight(18),
+    fontSize: getHeight(22),
     alignSelf: "center",
     marginTop: getHeight(5),
+    fontWeight: "600",
   },
   belowHeadingTextOuterContainer: {
     alignSelf: "center",
@@ -84,6 +87,15 @@ const styles = StyleSheet.create({
     marginRight: getWidth(15),
     color: "#EB6611",
     fontSize: getHeight(16),
+    fontWeight: "600",
+  },
+  dataNotFound: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  dataNotFounfText: {
+    fontSize: getHeight(20),
     fontWeight: "600",
   },
 });

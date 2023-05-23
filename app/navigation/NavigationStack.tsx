@@ -12,7 +12,7 @@ import AdminLogin from "../screens/AdminLogin";
 import AdminBhandara from "../screens/AdminBhandara";
 import AdminYatra from "../screens/AdminYatra";
 import AdminBookingDetail from "../screens/AdminBookingDetail";
-import TabView1 from "../screens/Home/TabView1";
+import AdminDonationCollection from "../screens/AdminDonation/AdminDonationCollection";
 const Stack = createNativeStackNavigator();
 
 const NavigationStack = () => {
@@ -32,6 +32,11 @@ const NavigationStack = () => {
         <Stack.Screen name="AdminLogin" component={AdminLogin} />
         <Stack.Screen name="AdminBhandara" component={AdminBhandara} />
         <Stack.Screen name="AdminYatra" component={AdminYatra} />
+        <Stack.Screen
+          name="AdminDonationCollection"
+          component={AdminDonationCollection}
+        />
+
         <Stack.Screen
           name="AdminBookingDetail"
           component={AdminBookingDetail}

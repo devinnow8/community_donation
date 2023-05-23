@@ -12,7 +12,14 @@ interface ITextInputFields {
 }
 
 const TextInputs = (props: TextInputProps) => {
-  return <TextInput style={[styles.textInputContainers]} {...props} />;
+  return (
+    <TextInput
+      autoCorrect={false}
+      autoCapitalize="none"
+      style={[styles.textInputContainers, props?.textInputStyles || {}]}
+      {...props}
+    />
+  );
 };
 
 export default TextInputs;
@@ -27,5 +34,6 @@ const styles = StyleSheet.create({
     marginTop: getHeight(4),
     padding: getWidth(8),
     borderRadius: getWidth(5),
+    color: "black",
   },
 });

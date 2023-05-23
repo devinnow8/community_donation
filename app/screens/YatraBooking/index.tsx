@@ -1,4 +1,11 @@
-import { Text, View, TouchableOpacity, Keyboard, Alert } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Keyboard,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
@@ -27,20 +34,24 @@ const YatraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
   const [showThanksModal, setShowThanksModal] = useState(false);
+  const [isLoaderVisible, setLoaderVisible] = useState(false);
   const sendOTP = async () => {
+    setLoaderVisible(true);
     const confirmation = await auth().signInWithPhoneNumber(
       "+91" + userInfo.phoneNumber
     );
     if (confirmation) {
+      setLoaderVisible(false);
       setShowOtpField(true);
       setConfirm(confirmation);
     }
   };
 
   const Confirm = async () => {
+    setLoaderVisible(true);
     try {
       const response = await confirm?.confirm(userInfo.otp);
-      console.log("Response", response);
+
       if (response) {
         const timeStamp = moment(yatraDetails?.date).valueOf();
         firestore()
@@ -60,6 +71,7 @@ const YatraBooking = () => {
                 name: userInfo.name,
                 phoneNumber: userInfo.phoneNumber,
                 numberOfSeats,
+                id: new Date().valueOf(),
               },
             ];
             newData.seatData = seatData;
@@ -68,20 +80,23 @@ const YatraBooking = () => {
               .doc(timeStamp.toString())
               .set(newData, { merge: true })
               .then((res) => {
-                console.log("Response after adding new data", res);
+                setLoaderVisible(false);
                 // setShowModal(true);
                 setShowThanksModal(true);
               })
               .catch((err) => {
-                console.log("Error", err);
+                setLoaderVisible(false);
+                // console.log("Error", err);
               });
           })
           .catch(() => {
+            setLoaderVisible(false);
             Alert.alert("Error fetching collections");
           });
       }
     } catch (error) {
-      console.log("Error", error);
+      setLoaderVisible(false);
+      // console.log("Error", error);
     }
   };
   return (
@@ -121,7 +136,7 @@ const YatraBooking = () => {
           <Text style={styles.errorText}>{userInfo.nameErrMsg}</Text>
         </View>
       )}
-      <View>
+      <View style={{ marginTop: getHeight(20) }}>
         <Labels labelName="फ़ोन नंबर" />
       </View>
 
@@ -153,7 +168,7 @@ const YatraBooking = () => {
       )}
       {showOtpField && (
         <>
-          <View>
+          <View style={{ marginTop: getHeight(20) }}>
             <Labels labelName="OTP" />
           </View>
 
@@ -194,9 +209,13 @@ const YatraBooking = () => {
           showOtpField ? Confirm() : sendOTP();
         }}
       >
-        <Text style={styles.btnTextStyle}>
-          {showOtpField ? "Confirm" : "Send OTP"}
-        </Text>
+        {isLoaderVisible ? (
+          <ActivityIndicator size={"small"} color={"#ffffff"} />
+        ) : (
+          <Text style={styles.btnTextStyle}>
+            {showOtpField ? "Confirm" : "Send OTP"}
+          </Text>
+        )}
       </TouchableOpacity>
       <CustomModal
         setIsVisible={setShowThanksModal}
