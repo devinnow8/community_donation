@@ -39,10 +39,8 @@ const TabView1 = () => {
       .collection("Bandhara Booking")
       .get()
       .then((data: any) => {
-        console.log("datadata==>", data?._docs);
         let newData = data?._docs?.map(({ _data }) => _data);
         setData(newData);
-        console.log("NewDataNewDta", newData);
       });
   };
 
@@ -69,7 +67,7 @@ const TabView1 = () => {
       });
   };
   const renderCalendarDate = (res: any) => {
-    const currentDateData = data?.filter(
+    const currentDateData: any = data?.filter(
       (item: any) => item?.timeStamp === res.date?.timestamp
     );
     return (
@@ -144,6 +142,7 @@ const TabView1 = () => {
       </View>
       <View style={styles.calendarView}>
         <Calendar
+          arrowsHitSlop={2}
           minDate={new Date().toISOString()}
           style={{}}
           theme={{}}

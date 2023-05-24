@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderRadius: 37 / 2,
   },
   belowCalenderOuterContainer: {
-    marginLeft: getWidth(20),
+    marginHorizontal: getWidth(10),
     // marginHorizontal: getWidth(20),
     // width: "100%",
     width: getWidth(300),
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     shadowOffset: { height: getHeight(10), width: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.2,
-    marginTop: getHeight(50),
+    marginTop: getHeight(30),
   },
   selectedDateOuterContainer: {
     fontSize: getHeight(16),
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
     paddingRight: getWidth(20),
     alignItems: "center",
+    marginLeft: 10,
   },
   listEmptyComponentView: {
     justifyContent: "center",
@@ -102,5 +103,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   calenderOuterView: { backgroundColor: Colors.WHITE },
+  monthStyles: { color: Colors.BLACK, fontSize: 16 },
+  emptyText: { color: Colors.BLACK, fontWeight: "600", fontSize: 18 },
 });
 export default styles;
