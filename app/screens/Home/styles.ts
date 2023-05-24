@@ -197,5 +197,12 @@ const styles = StyleSheet.create({
     marginVertical: getHeight(10),
   },
   negativeBtn: { fontSize: getHeight(25), color: Colors.BLACK },
+  ColorCodingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: getHeight(20),
+    marginTop: getHeight(5),
+    backgroundColor: "white",
+  },
 });
 export default styles;

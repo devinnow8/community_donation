@@ -19,6 +19,7 @@ import SeatEditModal from "../../ReusableComponents/SeatEditModal";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
 import { Colors } from "../../utils/colors";
+import Modal from "react-native-modal";
 const AdminBookingDetail = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
@@ -26,6 +27,8 @@ const AdminBookingDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [listData, setListData] = useState([]);
   const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
+  const [showDeleteModal, setShowDeleteModal] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const editItem = (name: string, seats: number, index: number) => {
     setShowModal(true);
     setSelectedItemIndex(index);
@@ -73,6 +76,7 @@ const AdminBookingDetail = () => {
       getYatraDetails();
     }
   }, [isFocused]);
+
   const deleteEntry = (item: any) => {
     let newSeatData = yatraDetails?.seatData?.filter(
       (data) => data?.id !== item?.id
@@ -91,11 +95,13 @@ const AdminBookingDetail = () => {
       .then((res) => {
         // setShowModal(true);
         getYatraDetails();
+        setShowDeleteModal("");
       })
       .catch((err) => {
         // console.log("Error", err);
       });
   };
+
   const editEntry = () => {
     let seatCount = 0;
     listData?.forEach((item: any) => {
@@ -219,7 +225,10 @@ const AdminBookingDetail = () => {
                         />
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => deleteEntry(item)}
+                        onPress={() => {
+                          // deleteEntry(item)
+                          setShowDeleteModal(item);
+                        }}
                         style={styles.deleteTouchableStyle}
                       >
                         <Image
@@ -246,6 +255,39 @@ const AdminBookingDetail = () => {
               onSavePress={editEntry}
             />
           )}
+
+          <Modal isVisible={showDeleteModal !== ""}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalViewText}>
+                  Are you Sure you want to delete this entry ?
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  width: "80%",
+                }}
+              >
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={() => setShowDeleteModal("")}
+                >
+                  <Text style={styles.btnText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.okButton}
+                  onPress={() => {
+                    deleteEntry(showDeleteModal);
+                  }}
+                >
+                  <Text style={styles.btnText}>Confirm</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </>
       ) : (
         <View style={styles.dataNotFound}>

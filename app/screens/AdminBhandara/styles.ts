@@ -105,5 +105,12 @@ const styles = StyleSheet.create({
   calenderOuterView: { backgroundColor: Colors.WHITE },
   monthStyles: { color: Colors.BLACK, fontSize: 16 },
   emptyText: { color: Colors.BLACK, fontWeight: "600", fontSize: 18 },
+  ColorCodingView: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: getHeight(20),
+    marginTop: getHeight(5),
+    backgroundColor: "white",
+  },
 });
 export default styles;

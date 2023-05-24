@@ -17,6 +17,8 @@ import styles from "./styles";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
 import { Colors } from "../../utils/colors";
 import CalendarHeader from "react-native-calendars/src/calendar/header";
+import ColorCoding from "../../ReusableComponents/ColorCoding";
+import { useIsFocused } from "@react-navigation/native";
 const AdminBhandara = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
@@ -25,21 +27,9 @@ const AdminBhandara = () => {
   const [listView, setListView] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState(moment());
   const [data, setData] = useState([]);
+  const [selectedCalendarData, setSelectedCalendarData] = useState([]);
   const [selectedMonthData, setSelectedMonthData] = useState([]);
-  useEffect(() => {
-    firestoreData();
-  }, []);
-  useEffect(() => {
-    let newData = data.filter((item: any) => {
-      if (
-        item.timeStamp > moment(selectedMonth).startOf("month").valueOf() &&
-        item?.timeStamp < moment(selectedMonth).endOf("month").valueOf()
-      ) {
-        return item;
-      }
-    });
-    setSelectedMonthData(newData);
-  }, [data]);
+  const isFocused = useIsFocused();
   const getCurrentDateData = async (timestamp: number) => {
     setLoader(true);
     firestore()
@@ -72,6 +62,23 @@ const AdminBhandara = () => {
         // dispatch(setLoader(false));
       });
   };
+  useEffect(() => {
+    if (isFocused) {
+      firestoreData();
+    }
+  }, [isFocused]);
+  useEffect(() => {
+    let newData = data.filter((item: any) => {
+      if (
+        item.timeStamp > moment(selectedMonth).startOf("month").valueOf() &&
+        item?.timeStamp < moment(selectedMonth).endOf("month").valueOf()
+      ) {
+        return item;
+      }
+    });
+    setSelectedMonthData(newData);
+  }, [data]);
+
   const firestoreData = async () => {
     firestore()
       .collection("Bandhara Booking")
@@ -79,6 +86,7 @@ const AdminBhandara = () => {
       .then((data: any) => {
         let newData = data?._docs?.map(({ _data }) => _data);
         let cardData: any = [];
+        let newData1 = data?._docs?.map(({ _data }) => _data);
         newData.map((item: any) => {
           if (item?.firstSlot) {
             cardData.push(item?.firstSlot);
@@ -87,8 +95,8 @@ const AdminBhandara = () => {
             cardData.push(item?.secondSlot);
           }
         });
-        console.log("cardDatacardDatacardData", cardData);
         setData(cardData);
+        setSelectedCalendarData(newData1);
       });
   };
   const renderCardList = (data: any, isHorizontal: boolean) => {
@@ -253,6 +261,9 @@ const AdminBhandara = () => {
                   setSelectedDate(res.dateString);
                 }}
                 dayComponent={(res: any) => {
+                  const currentDateData: any = selectedCalendarData?.filter(
+                    (item: any) => item?.timeStamp === res.date?.timestamp
+                  );
                   return (
                     <TouchableOpacity
                       onPress={() => {
@@ -269,6 +280,12 @@ const AdminBhandara = () => {
                               : selectedDate?.dateString ===
                                 res.date?.dateString
                               ? Colors.PRIMARY
+                              : currentDateData[0]?.firstSlot &&
+                                currentDateData[0]?.secondSlot
+                              ? Colors.BLACK
+                              : currentDateData[0]?.firstSlot ||
+                                currentDateData[0]?.secondSlot
+                              ? Colors.GRAY
                               : Colors.SECONDARY,
                         },
                       ]}
@@ -281,6 +298,12 @@ const AdminBhandara = () => {
                               : selectedDate?.dateString ===
                                 res.date?.dateString
                               ? Colors.WHITE
+                              : currentDateData[0]?.firstSlot &&
+                                currentDateData[0]?.secondSlot
+                              ? Colors.WHITE
+                              : currentDateData[0]?.firstSlot ||
+                                currentDateData[0]?.secondSlot
+                              ? Colors.WHITE
                               : Colors.PRIMARY,
                         }}
                       >
@@ -290,6 +313,12 @@ const AdminBhandara = () => {
                   );
                 }}
               />
+
+              <View style={styles.ColorCodingView}>
+                <ColorCoding labelText="Booked" />
+                <ColorCoding labelText="Partially Booked" />
+                <ColorCoding labelText="Available" />
+              </View>
             </View>
             {loader ? (
               <ActivityIndicator />

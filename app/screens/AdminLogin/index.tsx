@@ -75,7 +75,7 @@ const AdminLogin = () => {
         .doc("Admin")
         .set(newAdminData)
         .then((res) => {
-          console.log("res res ===>", newAdminData);
+          // console.log("res res ===>", newAdminData);
         });
     } else {
       setAdminInfo({

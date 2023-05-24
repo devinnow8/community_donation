@@ -142,5 +142,48 @@ const styles = StyleSheet.create({
   textColor: {
     color: Colors.BLACK,
   },
+  centeredView: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.SECONDARY,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    borderRadius: 10,
+    padding: 10,
+  },
+  modalView: {
+    marginVertical: getHeight(20),
+  },
+  modalViewText: {
+    color: Colors.BLACK,
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  cancelButton: {
+    padding: getHeight(15),
+    backgroundColor: Colors.RED,
+    marginBottom: getHeight(20),
+    borderRadius: 5,
+    width: getWidth(100),
+  },
+  okButton: {
+    padding: getHeight(15),
+    backgroundColor: Colors.CONFIRM_BUTTON,
+    marginBottom: getHeight(20),
+    borderRadius: 5,
+    width: getWidth(100),
+  },
+  btnText: {
+    textAlign: "center",
+    color: Colors.WHITE,
+    fontSize: 16,
+    fontWeight: "600",
+  },
 });
 export default styles;

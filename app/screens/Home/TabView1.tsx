@@ -13,6 +13,8 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
 import { Colors } from "../../utils/colors";
+import { getHeight, getWidth } from "../../utils/pixelConversion";
+import ColorCoding from "../../ReusableComponents/ColorCoding";
 
 const TabView1 = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
@@ -89,11 +91,27 @@ const TabView1 = () => {
                 ? Colors.PRIMARY
                 : currentDateData[0]?.firstSlot &&
                   currentDateData[0]?.secondSlot
-                ? Colors.LIGHT_GRAY
+                ? Colors.BLACK
                 : currentDateData[0]?.firstSlot ||
                   currentDateData[0]?.secondSlot
-                ? Colors.YELLOW
+                ? Colors.GRAY
                 : Colors.SECONDARY,
+
+            borderColor:
+              res.state === "disabled" ||
+              moment(res.date.timestamp).startOf("day").valueOf() ===
+                moment().startOf("day").valueOf()
+                ? Colors.WHITE
+                : selectedDate.dateString === res.date?.dateString
+                ? Colors.PRIMARY
+                : currentDateData[0]?.firstSlot &&
+                  currentDateData[0]?.secondSlot
+                ? Colors.BLACK
+                : currentDateData[0]?.firstSlot ||
+                  currentDateData[0]?.secondSlot
+                ? Colors.GRAY
+                : Colors.SECONDARY,
+            borderWidth: 1,
           },
         ]}
       >
@@ -106,7 +124,28 @@ const TabView1 = () => {
                 ? Colors.BLACK
                 : selectedDate.dateString === res.date?.dateString
                 ? Colors.WHITE
+                : currentDateData[0]?.firstSlot &&
+                  currentDateData[0]?.secondSlot
+                ? Colors.WHITE
+                : currentDateData[0]?.firstSlot ||
+                  currentDateData[0]?.secondSlot
+                ? Colors.WHITE
                 : Colors.PRIMARY,
+
+            // color:
+            //   res.state === "disabled" ||
+            //   moment(res.date.timestamp).startOf("day").valueOf() ===
+            //     moment().startOf("day").valueOf()
+            //     ? Colors.WHITE
+            //     : selectedDate.dateString === res.date?.dateString
+            //     ? Colors.PRIMARY
+            //     : currentDateData[0]?.firstSlot &&
+            //       currentDateData[0]?.secondSlot
+            //     ? Colors.GRAY
+            //     : currentDateData[0]?.firstSlot ||
+            //       currentDateData[0]?.secondSlot
+            //     ? Colors.YELLOW
+            //     : Colors.SECONDARY,
           }}
         >
           {res.date.day}
@@ -162,6 +201,12 @@ const TabView1 = () => {
           date={selectedDate.dateString}
           dayComponent={renderCalendarDate}
         />
+        <View style={styles.ColorCodingContainer}>
+          <ColorCoding labelText="Booked" />
+          <ColorCoding labelText="Partially Booked" />
+          <ColorCoding labelText="Available" />
+        </View>
+
         {selectedDate.dateString !== "" && (
           <View style={styles.timeSlotWrapper}>
             <Text style={{ color: Colors.BLACK }}>
