@@ -4,7 +4,7 @@ import { getHeight, getWidth } from "../utils/pixelConversion";
 import { Colors } from "../utils/colors";
 const ColorCoding = (props: any) => {
   return (
-    <>
+    <View style={styles.mainContainer}>
       <View
         style={[
           styles.container,
@@ -21,7 +21,7 @@ const ColorCoding = (props: any) => {
         ]}
       ></View>
       <Text style={styles.textStyle}>{props.labelText}</Text>
-    </>
+    </View>
   );
 };
 
@@ -32,7 +32,11 @@ const styles = StyleSheet.create({
     height: getHeight(20),
     width: getWidth(20),
     borderRadius: 8,
-    marginLeft: getWidth(20),
   },
   textStyle: { marginLeft: getWidth(5), color: Colors.BLACK },
+  mainContainer: {
+    marginRight: getWidth(10),
+    flexDirection: "row",
+    alignItems: "center",
+  },
 });

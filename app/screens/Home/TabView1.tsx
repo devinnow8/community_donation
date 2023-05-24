@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -13,7 +14,6 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
 import { Colors } from "../../utils/colors";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
 import ColorCoding from "../../ReusableComponents/ColorCoding";
 
 const TabView1 = () => {
@@ -154,7 +154,11 @@ const TabView1 = () => {
     );
   };
   return (
-    <>
+    <ScrollView
+      bounces={false}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 20 }}
+    >
       <View style={styles.mainImage}>
         <Image
           resizeMode="contain"
@@ -242,9 +246,7 @@ const TabView1 = () => {
                       11:00 AM
                     </Text>
                   </TouchableOpacity>
-                  <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
-                  >
+                  <View style={styles.detailView}>
                     <Text style={{ color: Colors.PRIMARY }}>Delivery Only</Text>
                   </View>
                   {selectedDateData?.firstSlot && (
@@ -284,9 +286,7 @@ const TabView1 = () => {
                       12:30 PM
                     </Text>
                   </TouchableOpacity>
-                  <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
-                  >
+                  <View style={styles.detailView}>
                     <Text style={{ color: Colors.PRIMARY }}>
                       Delivery & Distribution
                     </Text>
@@ -307,7 +307,7 @@ const TabView1 = () => {
           </View>
         )}
       </View>
-    </>
+    </ScrollView>
   );
 };
 

@@ -200,9 +200,15 @@ const styles = StyleSheet.create({
   ColorCodingContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     height: getHeight(20),
-    marginTop: getHeight(5),
+    marginTop: getHeight(10),
     backgroundColor: "white",
+  },
+  detailView: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 5,
   },
 });
 export default styles;
