@@ -46,7 +46,7 @@ const InfoScreen = () => {
       <HeaderBar
         headingText="भंडारा बुकिंग"
         hasBackButton={true}
-        rightText={"Login"}
+        rightText={"Admin Login"}
         onRightButtonPress={() => {
           navigation.navigate("AdminLogin");
         }}

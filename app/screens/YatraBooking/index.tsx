@@ -36,20 +36,52 @@ const YatraBooking = () => {
   const [showOtpField, setShowOtpField] = useState(false);
   const [showThanksModal, setShowThanksModal] = useState(false);
   const [isLoaderVisible, setLoaderVisible] = useState(false);
+
   const sendOTP = async () => {
-    setLoaderVisible(true);
-    const confirmation = await auth().signInWithPhoneNumber(
-      "+91" + userInfo.phoneNumber
-    );
-    if (confirmation) {
-      setLoaderVisible(false);
-      setShowOtpField(true);
-      setConfirm(confirmation);
+    let validate = true;
+    if (userInfo.name?.length === 0) {
+      validate = false;
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          nameErrMsg: "Please Fill The Missing Field",
+        };
+      });
+    }
+    if (userInfo.phoneNumber?.length === 0) {
+      validate = false;
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          phoneErrMsg: "Please Fill The Missing Field",
+        };
+      });
+    } else if (userInfo.phoneNumber?.length < 10) {
+      validate = false;
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          phoneErrMsg: "Phone Number should be 10 digits",
+        };
+      });
+    }
+
+    if (validate) {
+      setLoaderVisible(true);
+      const confirmation = await auth().signInWithPhoneNumber(
+        "+91" + userInfo.phoneNumber
+      );
+      if (confirmation) {
+        setLoaderVisible(false);
+        setShowOtpField(true);
+        setConfirm(confirmation);
+      }
     }
   };
 
   const Confirm = async () => {
     setLoaderVisible(true);
+
     try {
       const response = await confirm?.confirm(userInfo.otp);
 
@@ -143,6 +175,7 @@ const YatraBooking = () => {
 
       <View>
         <TextInputs
+          keyboardType="phone-pad"
           onChangeText={(val: string) =>
             setUserInfo((prevState) => {
               return {
@@ -151,14 +184,14 @@ const YatraBooking = () => {
               };
             })
           }
-          onFocus={() =>
+          onFocus={() => {
             setUserInfo((prevState) => {
               return {
                 ...prevState,
                 phoneErrMsg: "",
               };
-            })
-          }
+            });
+          }}
           maxLength={10}
         />
       </View>

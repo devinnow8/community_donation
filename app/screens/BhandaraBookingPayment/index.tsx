@@ -98,7 +98,13 @@ const BhandaraBookingPayment = () => {
           firestore()
             .collection("Bandhara Booking")
             .doc(selectedDate.timestamp.toString())
-            .set({ [selectedTimeSlot]: currentData }, { merge: true })
+            .set(
+              {
+                timeStamp: selectedDate.timestamp,
+                [selectedTimeSlot]: currentData,
+              },
+              { merge: true }
+            )
             .then((res) => {
               setShowModal(true);
             })
@@ -130,18 +136,19 @@ const BhandaraBookingPayment = () => {
           value={selectedAmount}
           onChangeText={(text: any) => setSelectedAmount(text)}
           onFocus={() => setMoneyErr("")}
+          editable={screenType === "DaanSewa"}
         />
       </View>
 
       {/* moneyButtons */}
       <View style={styles.moneyButtonsContainer}>
         <TouchableOpacity
-          onPress={() => [setSelectedAmount("21000"), setMoneyErr("")]}
+          onPress={() => [setSelectedAmount("11000"), setMoneyErr("")]}
           style={[
             styles.btnStyle,
             {
               backgroundColor:
-                selectedAmount === "21000" ? Colors.PRIMARY : Colors.WHITE,
+                selectedAmount === "11000" ? Colors.PRIMARY : Colors.WHITE,
             },
           ]}
         >
@@ -150,11 +157,11 @@ const BhandaraBookingPayment = () => {
               styles.btnTextStyle,
               {
                 color:
-                  selectedAmount === "21000" ? Colors.WHITE : Colors.PRIMARY,
+                  selectedAmount === "11000" ? Colors.WHITE : Colors.PRIMARY,
               },
             ]}
           >
-            21,000
+            11,000
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -162,24 +169,25 @@ const BhandaraBookingPayment = () => {
             styles.btnStyle,
             {
               backgroundColor:
-                selectedAmount === "31000" ? Colors.PRIMARY : Colors.WHITE,
+                selectedAmount === "13000" ? Colors.PRIMARY : Colors.WHITE,
             },
           ]}
-          onPress={() => [setSelectedAmount("31000"), setMoneyErr("")]}
+          onPress={() => [setSelectedAmount("13000"), setMoneyErr("")]}
         >
           <Text
             style={[
               styles.btnTextStyle,
               {
                 color:
-                  selectedAmount === "31000" ? Colors.WHITE : Colors.PRIMARY,
+                  selectedAmount === "13000" ? Colors.WHITE : Colors.PRIMARY,
               },
             ]}
           >
-            31,000
+            13,000
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
+
+        {/* <TouchableOpacity
           onPress={() => [setSelectedAmount("51000"), setMoneyErr("")]}
           style={[
             styles.btnStyle,
@@ -200,8 +208,13 @@ const BhandaraBookingPayment = () => {
           >
             51,000
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
+      {screenType !== "DaanSewa" && (
+        <View style={styles.halwa_Container}>
+          <Text style={styles.halwa_TextStyle}>साथ में हलवे का प्रसाद</Text>
+        </View>
+      )}
 
       {/* error Msg */}
 

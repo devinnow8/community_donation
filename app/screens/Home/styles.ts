@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   selectedSlotContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10,
+    marginTop: 5,
   },
   headingTextContainer: { flexDirection: "row", alignItems: "center" },
   bookNowContainer: {

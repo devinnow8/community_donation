@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   errorContainer: {
     marginHorizontal: getWidth(34),
-    marginBottom: getHeight(30),
+    marginBottom: getHeight(10),
   },
   errorText: { color: Colors.RED },
   bookingDateContainer: {

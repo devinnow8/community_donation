@@ -18,6 +18,7 @@ const TabView1 = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
   const [selectedDateData, setSelectedDateData] = useState<any>({});
+  const [data, setData] = useState([]);
   const navigation: any = useNavigation();
   const handleNavigation = (val: number) => {
     navigation.navigate("BhandaraBooking", {
@@ -29,8 +30,22 @@ const TabView1 = () => {
   useEffect(() => {
     if (isFocused) {
       setSelectedDate({ dateString: "" });
+      firestoreData();
     }
   }, [isFocused]);
+
+  const firestoreData = async () => {
+    firestore()
+      .collection("Bandhara Booking")
+      .get()
+      .then((data: any) => {
+        console.log("datadata==>", data?._docs);
+        let newData = data?._docs?.map(({ _data }) => _data);
+        setData(newData);
+        console.log("NewDataNewDta", newData);
+      });
+  };
+
   const getCurrentDateData = async (timestamp: number) => {
     setLoader(true);
     firestore()
@@ -54,6 +69,9 @@ const TabView1 = () => {
       });
   };
   const renderCalendarDate = (res: any) => {
+    const currentDateData = data?.filter(
+      (item: any) => item?.timeStamp === res.date?.timestamp
+    );
     return (
       <TouchableOpacity
         disabled={res.date?.timestamp < moment(new Date()).valueOf() ?? false}
@@ -71,6 +89,12 @@ const TabView1 = () => {
                 ? Colors.WHITE
                 : selectedDate.dateString === res.date?.dateString
                 ? Colors.PRIMARY
+                : currentDateData[0]?.firstSlot &&
+                  currentDateData[0]?.secondSlot
+                ? Colors.LIGHT_GRAY
+                : currentDateData[0]?.firstSlot ||
+                  currentDateData[0]?.secondSlot
+                ? Colors.YELLOW
                 : Colors.SECONDARY,
           },
         ]}
@@ -174,6 +198,11 @@ const TabView1 = () => {
                       11:00 AM
                     </Text>
                   </TouchableOpacity>
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <Text style={{ color: Colors.PRIMARY }}>Delivery Only</Text>
+                  </View>
                   {selectedDateData?.firstSlot && (
                     <View style={styles.selectedSlotContainer}>
                       <Text style={styles.textColor}>
@@ -208,15 +237,22 @@ const TabView1 = () => {
                         },
                       ]}
                     >
-                      02:00 PM
+                      12:30 PM
                     </Text>
                   </TouchableOpacity>
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <Text style={{ color: Colors.PRIMARY }}>
+                      Delivery & Distribution
+                    </Text>
+                  </View>
                   {selectedDateData?.secondSlot && (
                     <View style={styles.selectedSlotContainer}>
                       <Text style={styles.textColor}>
                         {selectedDateData?.secondSlot?.name}
                       </Text>
-                      <Text style={styles.textColor}>
+                      <Text style={[styles.textColor, { marginLeft: 5 }]}>
                         {selectedDateData?.secondSlot?.amount}
                       </Text>
                     </View>

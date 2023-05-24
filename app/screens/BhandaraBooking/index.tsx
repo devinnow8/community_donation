@@ -246,7 +246,7 @@ const BhandaraBooking = () => {
           <Text style={styles.bookingDateText}>{`${moment(
             date.dateString
           ).format("dddd, DD MMM yyyy")} (${
-            time === 0 ? "11:00  AM" : "02:00 PM"
+            time === 0 ? "11:00  AM" : "12:30 PM"
           })`}</Text>
         </View>
       )}

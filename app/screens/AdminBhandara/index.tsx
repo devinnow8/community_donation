@@ -20,19 +20,28 @@ const AdminBhandara = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
   const [selectedDateData, setSelectedDateData] = useState<any>({});
-
+  const [cardData, setCardData] = useState([]);
   const getCurrentDateData = async (timestamp: number) => {
     setLoader(true);
     firestore()
       .collection("Bandhara Booking")
       .doc(timestamp.toString())
       .get()
-      .then((data) => {
+      .then((data: any) => {
         setLoader(false);
         if (data._exists) {
           setSelectedDateData(data?._data);
+          let newData: any = [];
+          if (data?._data?.firstSlot) {
+            newData.push(data?._data?.firstSlot);
+          }
+          if (data?._data?.secondSlot) {
+            newData.push(data?._data?.secondSlot);
+          }
+          setCardData(newData);
         } else {
           setSelectedDateData({});
+          setCardData([]);
         }
       })
       .catch(() => {
@@ -113,7 +122,7 @@ const AdminBhandara = () => {
           selectedDate?.dateString !== "" && (
             <View style={styles.flatListMainContainer}>
               <FlatList
-                data={Object.values(selectedDateData)}
+                data={cardData}
                 horizontal
                 bounces={false}
                 showsHorizontalScrollIndicator={false}
@@ -134,7 +143,7 @@ const AdminBhandara = () => {
                             (
                             {item?.selectedTime === "firstSlot"
                               ? "11:00 AM"
-                              : "02:00 PM"}
+                              : "12:30 PM"}
                             )
                           </Text>
                         </Text>

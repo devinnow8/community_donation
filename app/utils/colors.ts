@@ -9,4 +9,6 @@ export const Colors = {
   CONFIRM_BUTTON: "#5CA300",
   RED: "#C21701",
   BLUE: "blue",
+  LIGHT_GRAY: "#D3D3D3",
+  YELLOW: "yellow",
 };

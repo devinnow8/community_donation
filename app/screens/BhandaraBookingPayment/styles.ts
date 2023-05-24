@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginHorizontal: getWidth(30),
-
     marginTop: getHeight(40),
   },
   payBtnStyle: {
@@ -48,6 +47,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginHorizontal: getWidth(30),
+  },
+  halwa_Container: {
+    alignItems: "flex-end",
+    marginRight: getWidth(55),
+    marginTop: getHeight(5),
+  },
+  halwa_TextStyle: {
+    color: Colors.BLACK,
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
 export default styles;
