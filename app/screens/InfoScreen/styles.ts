@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "600",
     fontSize: getHeight(18),
-    color: Colors.BLUE,
+    color: Colors.PRIMARY,
   },
 });
 export default styles;

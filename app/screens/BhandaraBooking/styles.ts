@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   },
   dropDownItemsContainer: {
     padding: 10,
-    // borderBottomWidth: 1,
     borderColor: Colors.TEXT_INPUT_BORDER_COLOR,
   },
   dropDownOuterContainer: {
@@ -62,6 +61,18 @@ const styles = StyleSheet.create({
     borderColor: Colors.TEXT_INPUT_BORDER_COLOR,
     borderBottomLeftRadius: getWidth(5),
     borderBottomRightRadius: getWidth(5),
+  },
+  adminContactText: {
+    textAlign: "center",
+    fontWeight: "600",
+    fontSize: getHeight(21),
+    color: Colors.BLACK,
+  },
+  adminContactTextNumber: {
+    textAlign: "center",
+    fontWeight: "600",
+    fontSize: getHeight(20),
+    color: Colors.PRIMARY,
   },
 });
 export default styles;

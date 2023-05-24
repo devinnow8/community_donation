@@ -221,6 +221,7 @@ const YatraBooking = () => {
       <CustomModal
         setIsVisible={setShowThanksModal}
         isVisible={showThanksModal}
+        title={"जय माता बालासुंदरी"}
         message={"आपकी यात्रा मंगलमय रहे"}
         navigationScreen="Home"
       />

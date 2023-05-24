@@ -8,6 +8,7 @@ import { Colors } from "../utils/colors";
 const CustomModal = ({
   isVisible,
   setIsVisible,
+  title,
   message,
   navigationScreen,
 }: any) => {
@@ -15,7 +16,11 @@ const CustomModal = ({
   return (
     <Modal isVisible={isVisible}>
       <View style={styles.modalOuterContainer}>
-        <Image source={require("../assets/images/ThanksIcon.png")} />
+        <Image
+          source={require("../assets/images/ThanksIcon.png")}
+          style={{ marginBottom: getHeight(13) }}
+        />
+        {title && <Text style={styles.modalHeadingText1}>{title}</Text>}
         <Text style={styles.modalHeadingText}>
           {message ?? "आपकी यात्रा मंगलमय रहे"}
         </Text>
@@ -48,7 +53,6 @@ const styles = StyleSheet.create({
     fontSize: getHeight(17),
     fontWeight: "600",
     color: Colors.CUSTOM_MODAL_TEXT_COLOR,
-    marginTop: getHeight(13),
   },
   modalGreetingButton: {
     paddingVertical: getHeight(9),
@@ -61,5 +65,10 @@ const styles = StyleSheet.create({
     fontSize: getHeight(22),
     fontWeight: "700",
     color: Colors.WHITE,
+  },
+  modalHeadingText1: {
+    fontWeight: "700",
+    fontSize: 18,
+    color: Colors.PRIMARY,
   },
 });

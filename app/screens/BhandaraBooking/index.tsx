@@ -6,8 +6,11 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
+  Platform,
+  Linking,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
@@ -21,11 +24,13 @@ import upHeadIcon from "../../assets/images/upHeadIcon.png";
 import downHeadIcon from "../../assets/images/downHeadIcon.png";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Colors } from "../../utils/colors";
+import firestore from "@react-native-firebase/firestore";
 const BhandaraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
   const [showDropDown, setShowUpDown] = useState(false);
   const [isLoaderVisible, setLoaderVisible] = useState(false);
+  const [adminPhoneNumber, setAdminPhoneNumber] = useState("");
   const [userInfo, setUserInfo] = useState({
     name: "",
     phoneNumber: "",
@@ -43,6 +48,31 @@ const BhandaraBooking = () => {
   const date: any = route.params?.date;
   const time: any = route.params?.time;
   const screenType: any = route.params?.screenType;
+
+  const getAdminPhoneNumber = () => {
+    firestore()
+      .collection("adminLogin")
+      .doc("Admin")
+      .get()
+      .then(({ _data }: any) => setAdminPhoneNumber(_data.phoneNumber))
+      .catch(() => {
+        Alert.alert("Error fetching collections");
+      });
+  };
+  useEffect(() => {
+    getAdminPhoneNumber();
+  }, []);
+  const openDialScreen = () => {
+    let number = "";
+    if (Platform.OS === "ios") {
+      number = `telprompt:${adminPhoneNumber}`;
+    } else {
+      number = `tel:${adminPhoneNumber}`;
+    }
+
+    Linking.openURL(number);
+  };
+
   const SendOTP = () => {
     // Name Validation
     let error = false;
@@ -220,6 +250,7 @@ const BhandaraBooking = () => {
           })`}</Text>
         </View>
       )}
+
       <KeyboardAwareScrollView
         bounces={false}
         showsVerticalScrollIndicator={false}
@@ -450,6 +481,16 @@ const BhandaraBooking = () => {
             </Text>
           )}
         </TouchableOpacity>
+        {screenType === "DaanSewa" && (
+          <TouchableOpacity onPress={() => openDialScreen()}>
+            <Text style={styles.adminContactText}>
+              अधिक जानकारी के लिए संपर्क करें
+            </Text>
+            <Text style={styles.adminContactTextNumber}>
+              {adminPhoneNumber}
+            </Text>
+          </TouchableOpacity>
+        )}
       </KeyboardAwareScrollView>
     </View>
   );
