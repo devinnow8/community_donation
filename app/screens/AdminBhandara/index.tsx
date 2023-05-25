@@ -14,7 +14,6 @@ import { Calendar } from "react-native-calendars";
 import moment from "moment";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
 import { Colors } from "../../utils/colors";
 import CalendarHeader from "react-native-calendars/src/calendar/header";
 import ColorCoding from "../../ReusableComponents/ColorCoding";

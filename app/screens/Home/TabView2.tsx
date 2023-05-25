@@ -11,7 +11,7 @@ import moment from "moment";
 import styles from "./styles";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { getHeight } from "../../utils/pixelConversion";
 import { openNavigation } from "../../utils/openDirection";
 import { Colors } from "../../utils/colors";
 
@@ -19,16 +19,13 @@ const TabView2 = () => {
   const [numberOfSeats, setNumberOfSeats] = useState(0);
   const navigation: any = useNavigation();
   const isFocused = useIsFocused();
-  const [loader, setLoader] = useState(false);
   const [yatraDetails, setYatraDetails] = useState<any>({});
   const getYatraDetails = async () => {
-    setLoader(true);
     firestore()
       .collection("Yatra")
       .orderBy("date", "asc")
       .get()
       .then((data: any) => {
-        setLoader(false);
         if (data.docs) {
           let requiredData = data.docs?.filter(
             (item) => item?._data?.timestamp > moment().valueOf()
@@ -38,7 +35,6 @@ const TabView2 = () => {
         }
       })
       .catch(() => {
-        setLoader(false);
         // Alert.alert("Error fetching collections");
       });
   };

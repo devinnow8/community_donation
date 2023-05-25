@@ -6,20 +6,25 @@ const styles = StyleSheet.create({
   outerContainer: { flex: 1, backgroundColor: Colors.WHITE },
   labelViewStyle: { marginTop: 13 },
   nameLabel: { marginTop: 35 },
+  btnContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginHorizontal: 12,
+  },
   submitButtonContainer: {
     backgroundColor: Colors.PRIMARY,
-    marginHorizontal: getWidth(110),
     marginVertical: getHeight(40),
     height: getHeight(40),
-    width: getWidth(154),
+    width: getWidth(140),
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
   },
   submitButtonText: {
     textAlign: "center",
-    fontSize: 18,
-    fontWeight: "700",
+    fontSize: 16,
+    fontWeight: "600",
     color: Colors.WHITE,
   },
   errMsgContainer: {
@@ -91,6 +96,11 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontSize: 16,
     fontWeight: "600",
+  },
+  modalBtnContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "80%",
   },
 });
 export default styles;

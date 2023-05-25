@@ -18,6 +18,8 @@ import moment from "moment";
 import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Colors } from "../../utils/colors";
+
 const AdminYatra = () => {
   const navigation: any = useNavigation();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -259,22 +261,26 @@ const AdminYatra = () => {
             }}
           />
         </View>
-        <TouchableOpacity
-          style={styles.submitButtonContainer}
-          onPress={() => [BookingDetail(), Keyboard.dismiss()]}
-        >
-          {isLoaderVisible ? (
-            <ActivityIndicator size={"small"} color={"#ffffff"} />
-          ) : (
-            <Text style={styles.submitButtonText}>Submit</Text>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.submitButtonContainer}
+            onPress={() => [BookingDetail(), Keyboard.dismiss()]}
+          >
+            {isLoaderVisible ? (
+              <ActivityIndicator size={"small"} color={Colors.WHITE} />
+            ) : (
+              <Text style={styles.submitButtonText}>Submit</Text>
+            )}
+          </TouchableOpacity>
+          {params?.yatraName && (
+            <TouchableOpacity
+              style={styles.submitButtonContainer}
+              onPress={() => [setShowDeleteModal(true), Keyboard.dismiss()]}
+            >
+              <Text style={styles.submitButtonText}>Delete</Text>
+            </TouchableOpacity>
           )}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.submitButtonContainer}
-          onPress={() => [setShowDeleteModal(true), Keyboard.dismiss()]}
-        >
-          <Text style={styles.submitButtonText}>Delete</Text>
-        </TouchableOpacity>
+        </View>
       </KeyboardAwareScrollView>
       <Modal
         hasBackdrop={true}
@@ -326,13 +332,7 @@ const AdminYatra = () => {
             </Text>
           </View>
 
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-around",
-              width: "80%",
-            }}
-          >
+          <View style={styles.modalBtnContainer}>
             <TouchableOpacity
               style={styles.cancelButton}
               onPress={() => setShowDeleteModal(false)}

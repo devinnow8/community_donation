@@ -185,5 +185,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+  modalBtnContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "80%",
+  },
 });
 export default styles;

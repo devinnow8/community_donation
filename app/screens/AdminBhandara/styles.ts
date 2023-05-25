@@ -107,9 +107,10 @@ const styles = StyleSheet.create({
   emptyText: { color: Colors.BLACK, fontWeight: "600", fontSize: 18 },
   ColorCodingView: {
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
     height: getHeight(20),
-    marginTop: getHeight(5),
+    marginTop: getHeight(10),
     backgroundColor: "white",
   },
 });

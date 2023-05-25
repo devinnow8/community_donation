@@ -1,20 +1,9 @@
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-  FlatList,
-  Alert,
-} from "react-native";
+import { Image, Text, TouchableOpacity, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import styles from "./styles";
-import {
-  useIsFocused,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
-import { getHeight, getWidth } from "../../utils/pixelConversion";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+
 import SeatEditModal from "../../ReusableComponents/SeatEditModal";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
@@ -22,13 +11,11 @@ import { Colors } from "../../utils/colors";
 import Modal from "react-native-modal";
 const AdminBookingDetail = () => {
   const navigation = useNavigation();
-  const { params } = useRoute();
   const [yatraDetails, setYatraDetails] = useState<any>({});
   const [showModal, setShowModal] = useState(false);
   const [listData, setListData] = useState([]);
   const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
   const [showDeleteModal, setShowDeleteModal] = useState("");
-  const [confirmDelete, setConfirmDelete] = useState(false);
   const editItem = (name: string, seats: number, index: number) => {
     setShowModal(true);
     setSelectedItemIndex(index);
@@ -57,13 +44,19 @@ const AdminBookingDetail = () => {
       .get()
       .then((data: any) => {
         // setLoader(false);
-        if (data.docs) {
+        console.log("DataData", data._docs);
+        if (data._docs.length > 0) {
           let requiredData = data.docs?.filter(
             (item) => item?._data?.timestamp > moment().valueOf()
           );
-          const currentData = requiredData[0]._data;
-          setYatraDetails(currentData);
-          setListData(currentData?.seatData);
+          if (requiredData.length > 0) {
+            const currentData = requiredData[0]._data;
+            setYatraDetails(currentData);
+            setListData(currentData?.seatData);
+          } else {
+            setYatraDetails({});
+            setListData([]);
+          }
         }
       })
       .catch(() => {
@@ -264,13 +257,7 @@ const AdminBookingDetail = () => {
                 </Text>
               </View>
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  width: "80%",
-                }}
-              >
+              <View style={styles.modalBtnContainer}>
                 <TouchableOpacity
                   style={styles.cancelButton}
                   onPress={() => setShowDeleteModal("")}
