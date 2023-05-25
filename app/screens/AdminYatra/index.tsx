@@ -20,6 +20,7 @@ import Modal from "react-native-modal";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const AdminYatra = () => {
   const navigation: any = useNavigation();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { params }: any = useRoute();
   const [isCalenderVisible, setCalenderVisible] = useState(false);
   const [isLoaderVisible, setLoaderVisible] = useState(false);
@@ -78,7 +79,19 @@ const AdminYatra = () => {
       sendFormData();
     }
   };
-
+  const deleteYatra = () => {
+    firestore()
+      .collection("Yatra")
+      .doc(moment(params.yatraDate)?.valueOf().toString())
+      .delete()
+      .then((res) => {
+        setShowDeleteModal(false);
+        navigation.navigate("AdminBookingDetail");
+      })
+      .catch((err) => {
+        // console.log("Error", err);
+      });
+  };
   const sendFormData = () => {
     setLoaderVisible(true);
     const timestamp = moment(yatraDetails.date).valueOf();
@@ -256,6 +269,12 @@ const AdminYatra = () => {
             <Text style={styles.submitButtonText}>Submit</Text>
           )}
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.submitButtonContainer}
+          onPress={() => [setShowDeleteModal(true), Keyboard.dismiss()]}
+        >
+          <Text style={styles.submitButtonText}>Delete</Text>
+        </TouchableOpacity>
       </KeyboardAwareScrollView>
       <Modal
         hasBackdrop={true}
@@ -297,6 +316,38 @@ const AdminYatra = () => {
               });
             }}
           />
+        </View>
+      </Modal>
+      <Modal isVisible={showDeleteModal}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalViewText}>
+              Are you Sure you want to delete this Yatra ?
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              width: "80%",
+            }}
+          >
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={() => setShowDeleteModal(false)}
+            >
+              <Text style={styles.btnText}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.okButton}
+              onPress={() => {
+                deleteYatra();
+              }}
+            >
+              <Text style={styles.btnText}>Confirm</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>
