@@ -209,7 +209,7 @@ const BhandaraBooking = () => {
       }
     } catch (error) {
       setLoaderVisible(false);
-      // console.log("Error", error);
+      Alert.alert("OTP is invalid ", "Please Enter Valid OTP !!");
     }
   };
   const dropDownItems = [

@@ -12,7 +12,7 @@ import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import firestore from "@react-native-firebase/firestore";
+import firestore, { firebase } from "@react-native-firebase/firestore";
 import messaging from "@react-native-firebase/messaging";
 import { Colors } from "../../utils/colors";
 
@@ -55,28 +55,35 @@ const AdminLogin = () => {
         ...adminInfo,
         errMsg: "",
       });
-      const token = await messaging().getToken();
-      let newTokenArray = [];
-      if (adminFBdetail?.adminTokens?.length) {
-        newTokenArray = adminFBdetail?.adminTokens?.filter(
-          (item: any) => item !== token
-        );
-      }
 
-      let newAdminTokens = adminFBdetail?.adminTokens
-        ? [...newTokenArray, token]
-        : [token];
-      let newAdminData = {
-        ...adminFBdetail,
-        adminTokens: newAdminTokens,
-      };
       firestore()
         .collection("adminLogin")
         .doc("Admin")
-        .set(newAdminData)
-        .then((res) => {
-          // console.log("res res ===>", newAdminData);
-        });
+        .get()
+        .then((res) => subscribeTopic(res?._data?.subscribeID));
+
+      // const token = await messaging().getToken();
+      // let newTokenArray = [];
+      // if (adminFBdetail?.adminTokens?.length) {
+      //   newTokenArray = adminFBdetail?.adminTokens?.filter(
+      //     (item: any) => item !== token
+      //   );
+      // }
+
+      // let newAdminTokens = adminFBdetail?.adminTokens
+      //   ? [...newTokenArray, token]
+      //   : [token];
+      // let newAdminData = {
+      //   ...adminFBdetail,
+      //   adminTokens: newAdminTokens,
+      // };
+      // firestore()
+      //   .collection("adminLogin")
+      //   .doc("Admin")
+      //   .set(newAdminData)
+      //   .then((res) => {
+
+      //   });
     } else {
       setAdminInfo({
         ...adminInfo,
@@ -85,6 +92,13 @@ const AdminLogin = () => {
     }
   };
 
+  const subscribeTopic = async (subscribeId: any) => {
+    console.log("subscribeId===>", subscribeId);
+    messaging()
+      .subscribeToTopic("77777")
+      .then((res) => console.log("Subscribed to topic!", res))
+      .catch((Error) => console.log("ErrorError", Error));
+  };
   return (
     <View style={styles.adminLoginContainer}>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />

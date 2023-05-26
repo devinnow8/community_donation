@@ -19,6 +19,7 @@ import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
 import { Colors } from "../../utils/colors";
+import axios from "axios";
 
 const YatraBooking = () => {
   const [userInfo, setUserInfo] = useState({
@@ -116,6 +117,16 @@ const YatraBooking = () => {
                 setLoaderVisible(false);
                 // setShowModal(true);
                 setShowThanksModal(true);
+                axios
+                  .post("http://13.233.123.182:4000/api/v1/alert/notify", {
+                    groupId: "77777",
+                    messageToShow: "anything",
+                    title: "anything",
+                  })
+                  .then((res) => {
+                    console.log("Response", res);
+                  })
+                  .catch((err) => console.log("Err", err));
               })
               .catch((err) => {
                 setLoaderVisible(false);
