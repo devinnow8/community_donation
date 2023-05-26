@@ -118,7 +118,7 @@ const YatraBooking = () => {
                 // setShowModal(true);
                 setShowThanksModal(true);
                 axios
-                  .post("http://13.233.123.182:4000/api/v1/alert/notify", {
+                  .post("http://13.233.123.182:4000/api/v1/seva/notify", {
                     groupId: "77777",
                     messageToShow: "anything",
                     title: "anything",

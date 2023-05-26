@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>806493932138-90tdj2scuqpjl77vd8pvuqqmuicn1ffu.apps.googleusercontent.com</string>
+	<string>81142145231-gcbg8gafcamp2l0a1n9pue82nldongp7.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.806493932138-90tdj2scuqpjl77vd8pvuqqmuicn1ffu</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>806493932138-aijud6tmbvtombmmgrh9risnqm7clb5a.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.81142145231-gcbg8gafcamp2l0a1n9pue82nldongp7</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDMeld5PlJHahQrVIKJJc1pS9KBo7VMgBw</string>
+	<string>AIzaSyCC248uWXLfmzCqkVjTI6fLvZmVY1nN0kM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>806493932138</string>
+	<string>81142145231</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.community.donation</string>
 	<key>PROJECT_ID</key>
-	<string>community-donation</string>
+	<string>sabki-sewa-rabki-sewa-6fa5f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>community-donation.appspot.com</string>
+	<string>sabki-sewa-rabki-sewa-6fa5f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:806493932138:ios:ed8578ddaa427e9e73d813</string>
+	<string>1:81142145231:ios:465c900115584af9cc17ba</string>
 </dict>
 </plist>

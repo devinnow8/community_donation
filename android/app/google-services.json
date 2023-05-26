@@ -1,48 +1,31 @@
 {
   "project_info": {
-    "project_number": "806493932138",
-    "project_id": "community-donation",
-    "storage_bucket": "community-donation.appspot.com"
+    "project_number": "81142145231",
+    "project_id": "sabki-sewa-rabki-sewa-6fa5f",
+    "storage_bucket": "sabki-sewa-rabki-sewa-6fa5f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:806493932138:android:c3bdbcf7949386ae73d813",
+        "mobilesdk_app_id": "1:81142145231:android:5716e3d05227ad58cc17ba",
         "android_client_info": {
           "package_name": "com.community_donation"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "806493932138-aijud6tmbvtombmmgrh9risnqm7clb5a.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.community_donation",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "806493932138-cgf97bg656drmnpmkk05vruup5kp4635.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCEwxye49Guqz4LcTgpq2p74OtA5qVZ6N8"
+          "current_key": "AIzaSyDTdGzPUpoudrYPdDH1HeIxfPV6PuHyBHM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "806493932138-cgf97bg656drmnpmkk05vruup5kp4635.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "806493932138-sj8plst6lf3kd8n54e6detsl1fad63rq.apps.googleusercontent.com",
+              "client_id": "81142145231-gcbg8gafcamp2l0a1n9pue82nldongp7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.reactjs.native.example.community-donation"
+                "bundle_id": "com.community.donation"
               }
             }
           ]

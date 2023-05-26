@@ -35,7 +35,7 @@ const BhandaraBookingPayment = () => {
       var options = {
         description: "Credits towards consultation",
         image:
-          "https://firebasestorage.googleapis.com/v0/b/community-donation.appspot.com/o/Group%20434%20(1).png?alt=media&token=29d44072-a6ae-4fe5-9d3c-11b91c773b8c",
+          "https://firebasestorage.googleapis.com/v0/b/sabki-sewa-rabki-sewa.appspot.com/o/AppIcon.png?alt=media&token=1aed2f64-0cc7-4e91-b35d-fafe33d211d0",
         currency: "INR",
         key: "rzp_test_CKghbIZojq126Q", // Your api key
         amount: (Number(selectedAmount) * 100).toString(),
