@@ -4,9 +4,11 @@ import { SafeAreaView } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import NavigationStack from "./app/navigation/NavigationStack";
 import { Colors } from "./app/utils/colors";
+import { requestUserPermission } from "./app/helper/notificationServices";
 function App(): JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
+    requestUserPermission();
   }, []);
 
   return (
