@@ -120,8 +120,8 @@ const YatraBooking = () => {
                 axios
                   .post("http://13.233.123.182:4000/api/v1/seva/notify", {
                     groupId: "77777",
-                    messageToShow: "anything",
-                    title: "anything",
+                    messageToShow: `${userInfo.name} booked ${numberOfSeats} seats for upcoming Yatra`,
+                    title: "Booking completed",
                   })
                   .then((res) => {
                     console.log("Response", res);

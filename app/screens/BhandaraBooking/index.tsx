@@ -294,14 +294,17 @@ const BhandaraBooking = () => {
 
         <View>
           <TextInputs
-            onChangeText={(val: string) =>
-              setUserInfo((prevState) => {
-                return {
-                  ...prevState,
-                  phoneNumber: val,
-                };
-              })
-            }
+            onChangeText={(val: string) => {
+              let regex = /^[0-9]+$/;
+              if (regex.test(val) || val === "") {
+                setUserInfo((prevState) => {
+                  return {
+                    ...prevState,
+                    phoneNumber: val,
+                  };
+                });
+              }
+            }}
             onFocus={() =>
               setUserInfo((prevState) => {
                 return {

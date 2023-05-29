@@ -41,6 +41,7 @@
 		3B4392A12AC88292D35C810B /* Pods-community_donation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-community_donation.debug.xcconfig"; path = "Target Support Files/Pods-community_donation/Pods-community_donation.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-community_donation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-community_donation.release.xcconfig"; path = "Target Support Files/Pods-community_donation/Pods-community_donation.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-community_donation-community_donationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-community_donation-community_donationTests.debug.xcconfig"; path = "Target Support Files/Pods-community_donation-community_donationTests/Pods-community_donation-community_donationTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8136060D2A20CE5700C2DCF7 /* community_donation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = community_donation.entitlements; path = community_donation/community_donation.entitlements; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = community_donation/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-community_donation-community_donationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-community_donation-community_donationTests.release.xcconfig"; path = "Target Support Files/Pods-community_donation-community_donationTests/Pods-community_donation-community_donationTests.release.xcconfig"; sourceTree = "<group>"; };
 		ADADD7402E9C17D9FE7F1D5B /* Pods_community_donation_community_donationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_community_donation_community_donationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +89,7 @@
 		13B07FAE1A68108700A75B9A /* community_donation */ = {
 			isa = PBXGroup;
 			children = (
+				8136060D2A20CE5700C2DCF7 /* community_donation.entitlements */,
 				C1B29FF62A2097DA00BAB856 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -503,6 +505,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = community_donation/community_donation.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KU8657JE49;
 				ENABLE_BITCODE = NO;
@@ -531,6 +534,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = community_donation/community_donation.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KU8657JE49;
 				INFOPLIST_FILE = community_donation/Info.plist;

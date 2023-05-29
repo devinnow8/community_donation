@@ -44,10 +44,12 @@ const TabView2 = () => {
     }
   }, [isFocused]);
   const bookSeats = () => {
-    if (numberOfSeats > 0) {
+    if (numberOfSeats > 0 && yatraDetails?.availableSeats > numberOfSeats) {
       navigation.navigate("YatraBooking", { yatraDetails, numberOfSeats });
-    } else {
+    } else if (numberOfSeats === 0) {
       Alert.alert("Please select AtLeast one seat");
+    } else if (yatraDetails?.availableSeats < numberOfSeats) {
+      Alert.alert("Not Enough Seats Available");
     }
   };
   return (

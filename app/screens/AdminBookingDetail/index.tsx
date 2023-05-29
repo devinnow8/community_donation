@@ -57,6 +57,9 @@ const AdminBookingDetail = () => {
             setYatraDetails({});
             setListData([]);
           }
+        } else {
+          setYatraDetails({});
+          setListData([]);
         }
       })
       .catch(() => {

@@ -11,6 +11,7 @@ import RazorpayCheckout from "react-native-razorpay";
 import { Paymenticon } from "../../assets/images/PaymentIcon";
 import moment from "moment";
 import { Colors } from "../../utils/colors";
+import axios from "axios";
 const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
   const [moneyErr, setMoneyErr] = useState("");
@@ -107,6 +108,20 @@ const BhandaraBookingPayment = () => {
             )
             .then((res) => {
               setShowModal(true);
+              axios
+                .post("http://13.233.123.182:4000/api/v1/seva/notify", {
+                  groupId: "77777",
+                  messageToShow: `${name} booked Bhandara on ${moment(
+                    selectedDate.timestamp
+                  ).format("DD-MM-YYYY")} at ${
+                    selectedTimeSlot === "firstSlot" ? "11:00 AM" : "12:30 PM"
+                  }`,
+                  title: "Bhandara Booked",
+                })
+                .then((res) => {
+                  console.log("Response", res);
+                })
+                .catch((err) => console.log("Err", err));
             })
             .catch((err) => {
               // console.log("Error", err);

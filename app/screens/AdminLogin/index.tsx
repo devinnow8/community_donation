@@ -55,12 +55,12 @@ const AdminLogin = () => {
         ...adminInfo,
         errMsg: "",
       });
-
-      firestore()
-        .collection("adminLogin")
-        .doc("Admin")
-        .get()
-        .then((res) => subscribeTopic(res?._data?.subscribeID));
+      subscribeTopic();
+      // firestore()
+      //   .collection("adminLogin")
+      //   .doc("Admin")
+      //   .get()
+      //   .then((res) => subscribeTopic(res?._data?.subscribeID));
 
       // const token = await messaging().getToken();
       // let newTokenArray = [];
@@ -92,13 +92,13 @@ const AdminLogin = () => {
     }
   };
 
-  const subscribeTopic = async (subscribeId: any) => {
-    console.log("subscribeId===>", subscribeId);
+  const subscribeTopic = async () => {
     messaging()
       .subscribeToTopic("77777")
       .then((res) => console.log("Subscribed to topic!", res))
       .catch((Error) => console.log("ErrorError", Error));
   };
+
   return (
     <View style={styles.adminLoginContainer}>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
