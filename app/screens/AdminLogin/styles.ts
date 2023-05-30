@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   adminLoginContainer: { flex: 1, backgroundColor: Colors.WHITE },
   idLabelContainer: { marginTop: getHeight(35) },
   passwordContainer: { marginTop: getHeight(20) },
+  loggedInView: { marginTop: 20 },
   adminLoginButtonView: {
     flexDirection: "row",
     justifyContent: "space-evenly",

@@ -90,7 +90,19 @@ const AdminLogin = () => {
 
   return (
     <View style={styles.adminLoginContainer}>
-      <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
+      <HeaderBar
+        onRightButtonPress={() => {
+          if (isLoggedIn) {
+            storeData(false);
+            messaging()
+              .unsubscribeFromTopic(adminFBdetail.topicId)
+              .then(() => console.log("Unsubscribed fom the topic!"));
+          }
+        }}
+        headingText="भंडारा बुकिंग"
+        hasBackButton={true}
+        rightText={isLoggedIn ? "Logout" : ""}
+      />
       {!isLoggedIn ? (
         <>
           <View style={styles.idLabelContainer}>
@@ -161,18 +173,7 @@ const AdminLogin = () => {
           </TouchableOpacity>
         </>
       ) : (
-        <View>
-          <TouchableOpacity
-            style={[styles.btnStyle]}
-            onPress={() => {
-              storeData(false);
-              messaging()
-                .unsubscribeFromTopic(adminFBdetail.topicId)
-                .then(() => console.log("Unsubscribed fom the topic!"));
-            }}
-          >
-            <Text style={styles.btnTextStyle}>Logout</Text>
-          </TouchableOpacity>
+        <View style={styles.loggedInView}>
           <View style={styles.adminLoginButtonView}>
             <Pressable
               style={[
