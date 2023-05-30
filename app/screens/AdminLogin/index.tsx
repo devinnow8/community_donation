@@ -15,23 +15,38 @@ import { useNavigation } from "@react-navigation/native";
 import firestore, { firebase } from "@react-native-firebase/firestore";
 import messaging from "@react-native-firebase/messaging";
 import { Colors } from "../../utils/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AdminLogin = () => {
   const navigation: any = useNavigation();
+
   const [adminInfo, setAdminInfo] = useState({
     adminName: "",
     adminPassword: "",
     errMsg: "",
   });
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
-
   const [adminFBdetail, setAdminFBdetail] = useState<any>({});
+  const getAsyncData = async () => {
+    const value = await AsyncStorage.getItem("isLoggedIn");
+    console.log("Value Value", value);
+    if (value === "true") {
+      setIsLoggedIn(true);
+    }
+  };
   useEffect(() => {
     getAdminDetail();
+    getAsyncData();
   }, []);
-
+  const storeData = (value: any) => {
+    AsyncStorage.setItem("isLoggedIn", value.toString())
+      .then((res) => {
+        setIsLoggedIn(value);
+      })
+      .catch((err) => console.log("Error", err));
+  };
   const getAdminDetail = () => {
     firestore()
       .collection("adminLogin")
@@ -56,34 +71,8 @@ const AdminLogin = () => {
         errMsg: "",
       });
       subscribeTopic();
-      // firestore()
-      //   .collection("adminLogin")
-      //   .doc("Admin")
-      //   .get()
-      //   .then((res) => subscribeTopic(res?._data?.subscribeID));
-
-      // const token = await messaging().getToken();
-      // let newTokenArray = [];
-      // if (adminFBdetail?.adminTokens?.length) {
-      //   newTokenArray = adminFBdetail?.adminTokens?.filter(
-      //     (item: any) => item !== token
-      //   );
-      // }
-
-      // let newAdminTokens = adminFBdetail?.adminTokens
-      //   ? [...newTokenArray, token]
-      //   : [token];
-      // let newAdminData = {
-      //   ...adminFBdetail,
-      //   adminTokens: newAdminTokens,
-      // };
-      // firestore()
-      //   .collection("adminLogin")
-      //   .doc("Admin")
-      //   .set(newAdminData)
-      //   .then((res) => {
-
-      //   });
+      setIsLoggedIn(true);
+      storeData(true);
     } else {
       setAdminInfo({
         ...adminInfo,
@@ -102,78 +91,102 @@ const AdminLogin = () => {
   return (
     <View style={styles.adminLoginContainer}>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
-      <View style={styles.idLabelContainer}>
-        <Labels labelName="ID नंबर " />
-      </View>
-      <View>
-        <TextInputs
-          onChangeText={(val) => setAdminInfo({ ...adminInfo, adminName: val })}
-        />
-      </View>
-      <View style={styles.passwordContainer}>
-        <Labels labelName="पासवर्ड" />
-      </View>
-      <View>
-        <TextInputs
-          secureTextEntry={true}
-          onFocus={() =>
-            setAdminInfo((prevState): any => {
-              return {
-                ...prevState,
-                errMsg: "",
-              };
-            })
-          }
-          onChangeText={(val) =>
-            setAdminInfo({ ...adminInfo, adminPassword: val })
-          }
-        />
-      </View>
+      {!isLoggedIn && (
+        <>
+          <View style={styles.idLabelContainer}>
+            <Labels labelName="ID नंबर " />
+          </View>
+          <View>
+            <TextInputs
+              onChangeText={(val) =>
+                setAdminInfo({ ...adminInfo, adminName: val })
+              }
+            />
+          </View>
+          <View style={styles.passwordContainer}>
+            <Labels labelName="पासवर्ड" />
+          </View>
+          <View>
+            <TextInputs
+              secureTextEntry={true}
+              onFocus={() =>
+                setAdminInfo((prevState): any => {
+                  return {
+                    ...prevState,
+                    errMsg: "",
+                  };
+                })
+              }
+              onChangeText={(val) =>
+                setAdminInfo({ ...adminInfo, adminPassword: val })
+              }
+            />
+          </View>
 
-      {/* errorMessage */}
-      {adminInfo.errMsg?.length > 0 ? (
-        <View style={styles.errMsgContainer}>
-          <Text style={styles.errMsgText}>{adminInfo.errMsg}</Text>
-        </View>
-      ) : (
-        ""
+          {/* errorMessage */}
+          {adminInfo.errMsg?.length > 0 && (
+            <View style={styles.errMsgContainer}>
+              <Text style={styles.errMsgText}>{adminInfo.errMsg}</Text>
+            </View>
+          )}
+
+          {/* {selectedTab === 0 ? <TabView1 /> : <TabView2 />} */}
+          <TouchableOpacity
+            style={[
+              styles.btnStyle,
+              {
+                backgroundColor:
+                  adminInfo.adminName?.length != 0 &&
+                  adminInfo.adminPassword?.length != 0
+                    ? Colors.PRIMARY
+                    : "transparent",
+              },
+            ]}
+            // onLongPress={() => {
+            //   navigation.navigate("AdminYatra");
+            // }}
+            onPress={() => [adminLogin(), Keyboard.dismiss()]}
+          >
+            <Text
+              style={[
+                styles.btnTextStyle,
+                {
+                  color:
+                    adminInfo.adminName?.length != 0 &&
+                    adminInfo.adminPassword?.length != 0
+                      ? Colors.WHITE
+                      : Colors.PRIMARY,
+                },
+              ]}
+            >
+              Login
+            </Text>
+          </TouchableOpacity>
+        </>
       )}
-
-      {/* {selectedTab === 0 ? <TabView1 /> : <TabView2 />} */}
-      <TouchableOpacity
-        style={[
-          styles.btnStyle,
-          {
-            backgroundColor:
-              adminInfo.adminName?.length != 0 &&
-              adminInfo.adminPassword?.length != 0
-                ? Colors.PRIMARY
-                : "transparent",
-          },
-        ]}
-        // onLongPress={() => {
-        //   navigation.navigate("AdminYatra");
-        // }}
-        onPress={() => [adminLogin(), Keyboard.dismiss()]}
-      >
-        <Text
-          style={[
-            styles.btnTextStyle,
-            {
-              color:
-                adminInfo.adminName?.length != 0 &&
-                adminInfo.adminPassword?.length != 0
-                  ? Colors.WHITE
-                  : Colors.PRIMARY,
-            },
-          ]}
-        >
-          Login
-        </Text>
-      </TouchableOpacity>
-
-      {showButtons && (
+      {isLoggedIn && (
         <View>
+          <TouchableOpacity
+            style={[styles.btnStyle]}
+            onPress={() => {
+              storeData(false);
+            }}
+          >
+            <Text
+              style={[
+                styles.btnTextStyle,
+                {
+                  color: Colors.PRIMARY,
+                  // adminInfo.adminName?.length != 0 &&
+                  // adminInfo.adminPassword?.length != 0
+                  //   ? Colors.WHITE
+                  //   : Colors.PRIMARY,
+                },
+              ]}
+            >
+              Logout
+            </Text>
+          </TouchableOpacity>
           <View style={styles.adminLoginButtonView}>
             <Pressable
               style={[

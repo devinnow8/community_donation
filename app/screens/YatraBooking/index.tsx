@@ -186,15 +186,18 @@ const YatraBooking = () => {
 
       <View>
         <TextInputs
-          keyboardType="phone-pad"
-          onChangeText={(val: string) =>
-            setUserInfo((prevState) => {
-              return {
-                ...prevState,
-                phoneNumber: val,
-              };
-            })
-          }
+          keyboardType="number-pad"
+          onChangeText={(val: string) => {
+            let regex = /^[0-9]+$/;
+            if (regex.test(val) || val === "") {
+              setUserInfo((prevState) => {
+                return {
+                  ...prevState,
+                  phoneNumber: val,
+                };
+              });
+            }
+          }}
           onFocus={() => {
             setUserInfo((prevState) => {
               return {
@@ -219,6 +222,7 @@ const YatraBooking = () => {
 
           <View>
             <TextInputs
+              keyboardType="number-pad"
               onChangeText={(val: string) =>
                 setUserInfo((prevState) => {
                   return {
