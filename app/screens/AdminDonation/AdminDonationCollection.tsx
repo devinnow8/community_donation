@@ -48,7 +48,7 @@ const AdminDonationCollection = () => {
     );
   };
 
-  const getDonationPaisa = async () => {
+  const getDonationList = async () => {
     firestore()
       .collection("DaanSewa")
       .get()
@@ -59,12 +59,13 @@ const AdminDonationCollection = () => {
           amt += parseInt(item?._data?.amount);
           return item?._data;
         });
+        newData = newData.sort((a: any, b: any) => b.timeStamp - a.timeStamp);
         setListData(newData);
         setTotalAmount(amt);
       });
   };
   useEffect(() => {
-    getDonationPaisa();
+    getDonationList();
   }, []);
   return (
     <View style={styles.daanSewaOuterContainer}>

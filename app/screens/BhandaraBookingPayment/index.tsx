@@ -76,6 +76,7 @@ const BhandaraBookingPayment = () => {
         amount: selectedAmount,
         mode,
         selectedDate: moment(new Date()).format("DD-MM-YYYY"),
+        timeStamp: new Date().valueOf(),
       };
 
       firestore()
