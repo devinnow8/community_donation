@@ -6,7 +6,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
@@ -37,7 +37,22 @@ const YatraBooking = () => {
   const [showOtpField, setShowOtpField] = useState(false);
   const [showThanksModal, setShowThanksModal] = useState(false);
   const [isLoaderVisible, setLoaderVisible] = useState(false);
-
+  const [adminFBdetail, setAdminFBdetail] = useState<any>({});
+  useEffect(() => {
+    getAdminDetail();
+  }, []);
+  const getAdminDetail = () => {
+    firestore()
+      .collection("adminLogin")
+      .doc("Admin")
+      .get()
+      .then(({ _data }: any) => {
+        setAdminFBdetail(_data);
+      })
+      .catch(() => {
+        Alert.alert("Error fetching collections");
+      });
+  };
   const sendOTP = async () => {
     let validate = true;
     if (userInfo.name?.length === 0) {
@@ -119,7 +134,7 @@ const YatraBooking = () => {
                 setShowThanksModal(true);
                 axios
                   .post("http://13.233.123.182:4000/api/v1/seva/notify", {
-                    groupId: "77777",
+                    groupId: adminFBdetail.topicId,
                     messageToShow: `${userInfo.name} booked ${numberOfSeats} seats for upcoming Yatra`,
                     title: "Booking completed",
                   })

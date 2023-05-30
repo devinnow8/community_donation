@@ -1,5 +1,5 @@
 import { Text, View, TouchableOpacity, Alert, Keyboard } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
@@ -16,6 +16,8 @@ const BhandaraBookingPayment = () => {
   const [selectedAmount, setSelectedAmount] = useState("11000");
   const [moneyErr, setMoneyErr] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [adminFBdetail, setAdminFBdetail] = useState<any>({});
+
   const { params } = useRoute();
   const {
     name,
@@ -25,7 +27,9 @@ const BhandaraBookingPayment = () => {
     selectedTime,
     screenType,
   }: any = params;
-
+  useEffect(() => {
+    getAdminDetail();
+  }, []);
   const PayMoney = (mode: string) => {
     if (screenType !== "DaanSewa" && Number(selectedAmount) < 11000) {
       setMoneyErr("* Amount should be above 11000rs *");
@@ -110,7 +114,7 @@ const BhandaraBookingPayment = () => {
               setShowModal(true);
               axios
                 .post("http://13.233.123.182:4000/api/v1/seva/notify", {
-                  groupId: "77777",
+                  groupId: adminFBdetail.topicId,
                   messageToShow: `${name} booked Bhandara on ${moment(
                     selectedDate.timestamp
                   ).format("DD-MM-YYYY")} at ${
@@ -131,6 +135,18 @@ const BhandaraBookingPayment = () => {
           Alert.alert("Error fetching collections");
         });
     }
+  };
+  const getAdminDetail = () => {
+    firestore()
+      .collection("adminLogin")
+      .doc("Admin")
+      .get()
+      .then(({ _data }: any) => {
+        setAdminFBdetail(_data);
+      })
+      .catch(() => {
+        Alert.alert("Error fetching collections");
+      });
   };
   return (
     <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>

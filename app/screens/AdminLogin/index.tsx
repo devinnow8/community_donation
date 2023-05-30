@@ -83,7 +83,7 @@ const AdminLogin = () => {
 
   const subscribeTopic = async () => {
     messaging()
-      .subscribeToTopic("77777")
+      .subscribeToTopic(adminFBdetail.topicId)
       .then((res) => console.log("Subscribed to topic!", res))
       .catch((Error) => console.log("ErrorError", Error));
   };
@@ -91,7 +91,7 @@ const AdminLogin = () => {
   return (
     <View style={styles.adminLoginContainer}>
       <HeaderBar headingText="भंडारा बुकिंग" hasBackButton={true} />
-      {!isLoggedIn && (
+      {!isLoggedIn ? (
         <>
           <View style={styles.idLabelContainer}>
             <Labels labelName="ID नंबर " />
@@ -142,9 +142,6 @@ const AdminLogin = () => {
                     : "transparent",
               },
             ]}
-            // onLongPress={() => {
-            //   navigation.navigate("AdminYatra");
-            // }}
             onPress={() => [adminLogin(), Keyboard.dismiss()]}
           >
             <Text
@@ -163,29 +160,18 @@ const AdminLogin = () => {
             </Text>
           </TouchableOpacity>
         </>
-      )}
-      {isLoggedIn && (
+      ) : (
         <View>
           <TouchableOpacity
             style={[styles.btnStyle]}
             onPress={() => {
               storeData(false);
+              messaging()
+                .unsubscribeFromTopic(adminFBdetail.topicId)
+                .then(() => console.log("Unsubscribed fom the topic!"));
             }}
           >
-            <Text
-              style={[
-                styles.btnTextStyle,
-                {
-                  color: Colors.PRIMARY,
-                  // adminInfo.adminName?.length != 0 &&
-                  // adminInfo.adminPassword?.length != 0
-                  //   ? Colors.WHITE
-                  //   : Colors.PRIMARY,
-                },
-              ]}
-            >
-              Logout
-            </Text>
+            <Text style={styles.btnTextStyle}>Logout</Text>
           </TouchableOpacity>
           <View style={styles.adminLoginButtonView}>
             <Pressable

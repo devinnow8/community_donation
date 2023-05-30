@@ -44,7 +44,7 @@ const TabView2 = () => {
     }
   }, [isFocused]);
   const bookSeats = () => {
-    if (numberOfSeats > 0 && yatraDetails?.availableSeats > numberOfSeats) {
+    if (numberOfSeats > 0 && yatraDetails?.availableSeats >= numberOfSeats) {
       navigation.navigate("YatraBooking", { yatraDetails, numberOfSeats });
     } else if (numberOfSeats === 0) {
       Alert.alert("Please select AtLeast one seat");
