@@ -166,7 +166,13 @@ const BhandaraBookingPayment = () => {
           placeholder={selectedAmount}
           placeholderTextColor={Colors.GRAY}
           value={selectedAmount}
-          onChangeText={(text: any) => setSelectedAmount(text)}
+          onChangeText={(text: any) => {
+            let regex = /^[0-9]+$/;
+            if (regex.test(text) || text === "") {
+              setSelectedAmount(text);
+            }
+          }}
+          keyboardType="numeric"
           onFocus={() => setMoneyErr("")}
           editable={screenType === "DaanSewa"}
         />
