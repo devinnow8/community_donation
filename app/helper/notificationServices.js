@@ -1,4 +1,5 @@
 import messaging from "@react-native-firebase/messaging";
+import { PermissionsAndroid } from "react-native";
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -10,3 +11,12 @@ export async function requestUserPermission() {
     console.log("Authorization status:", authStatus);
   }
 }
+export const requestNotificationPermission = async () => {
+  try {
+    await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATION,
+    );
+  } catch (err) {
+    if (_DEV_) console.warn('requestNotificationPermission error: ', err);
+  }
+};
