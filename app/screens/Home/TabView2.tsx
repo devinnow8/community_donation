@@ -9,15 +9,14 @@ import {
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import styles from "./styles";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import { getHeight } from "../../utils/pixelConversion";
 import { openNavigation } from "../../utils/openDirection";
 import { Colors } from "../../utils/colors";
-
+import navigationService from "../../helper/navigationService";
 const TabView2 = () => {
   const [numberOfSeats, setNumberOfSeats] = useState(0);
-  const navigation: any = useNavigation();
   const isFocused = useIsFocused();
   const [yatraDetails, setYatraDetails] = useState<any>({});
   const getYatraDetails = async () => {
@@ -45,7 +44,10 @@ const TabView2 = () => {
   }, [isFocused]);
   const bookSeats = () => {
     if (numberOfSeats > 0 && yatraDetails?.availableSeats >= numberOfSeats) {
-      navigation.navigate("YatraBooking", { yatraDetails, numberOfSeats });
+      navigationService.navigate("YatraBooking", {
+        yatraDetails,
+        numberOfSeats,
+      });
     } else if (numberOfSeats === 0) {
       Alert.alert("Please select AtLeast one seat");
     } else if (yatraDetails?.availableSeats < numberOfSeats) {
@@ -123,7 +125,7 @@ const TabView2 = () => {
                     {yatraDetails?.availableSeats} Seats
                     <Text
                       onPress={() => {
-                        navigation.navigate("YatraInfo", yatraDetails);
+                        navigationService.navigate("YatraInfo", yatraDetails);
                       }}
                       style={{ color: Colors.PRIMARY }}
                     >

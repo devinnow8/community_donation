@@ -2,15 +2,15 @@ import { Image, Text, TouchableOpacity, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import styles from "./styles";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 
 import SeatEditModal from "../../ReusableComponents/SeatEditModal";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
 import { Colors } from "../../utils/colors";
 import Modal from "react-native-modal";
+import navigationService from "../../helper/navigationService";
 const AdminBookingDetail = () => {
-  const navigation = useNavigation();
   const [yatraDetails, setYatraDetails] = useState<any>({});
   const [showModal, setShowModal] = useState(false);
   const [listData, setListData] = useState([]);
@@ -21,7 +21,7 @@ const AdminBookingDetail = () => {
     setSelectedItemIndex(index);
   };
   const AdminAddYatra = () => {
-    navigation.navigate("AdminYatra");
+    navigationService.navigate("AdminYatra");
   };
   const adminEditYatraBooking = () => {
     const editableData = {
@@ -33,7 +33,7 @@ const AdminBookingDetail = () => {
       availableSeats: yatraDetails?.availableSeats,
       seatData: listData,
     };
-    navigation.navigate("AdminYatra", editableData);
+    navigationService.navigate("AdminYatra", editableData);
   };
   const isFocused = useIsFocused();
   const getYatraDetails = async () => {

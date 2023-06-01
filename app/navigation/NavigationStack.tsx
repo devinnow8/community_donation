@@ -13,11 +13,12 @@ import AdminBhandara from "../screens/AdminBhandara";
 import AdminYatra from "../screens/AdminYatra";
 import AdminBookingDetail from "../screens/AdminBookingDetail";
 import AdminDonationCollection from "../screens/AdminDonation/AdminDonationCollection";
+import { navigationRef } from "../helper/navigationService";
 const Stack = createNativeStackNavigator();
 
 const NavigationStack = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="BhandaraBooking" component={BhandaraBooking} />

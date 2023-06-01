@@ -11,15 +11,12 @@ import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
 import firestore, { firebase } from "@react-native-firebase/firestore";
 import messaging from "@react-native-firebase/messaging";
 import { Colors } from "../../utils/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import navigationService from "../../helper/navigationService";
 const AdminLogin = () => {
-  const navigation: any = useNavigation();
-
   const [adminInfo, setAdminInfo] = useState({
     adminName: "",
     adminPassword: "",
@@ -184,7 +181,7 @@ const AdminLogin = () => {
                 },
               ]}
               onPress={() => [
-                navigation.navigate("AdminBhandara"),
+                navigationService.navigate("AdminBhandara"),
                 setSelectedTab(0),
               ]}
             >
@@ -208,7 +205,7 @@ const AdminLogin = () => {
                 },
               ]}
               onPress={() => [
-                navigation.navigate("AdminBookingDetail"),
+                navigationService.navigate("AdminBookingDetail"),
                 setSelectedTab(1),
               ]}
             >
@@ -234,7 +231,7 @@ const AdminLogin = () => {
                 },
               ]}
               onPress={() => [
-                navigation.navigate("AdminDonationCollection"),
+                navigationService.navigate("AdminDonationCollection"),
                 setSelectedTab(2),
               ]}
             >

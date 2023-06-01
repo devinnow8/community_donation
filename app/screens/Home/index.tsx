@@ -4,12 +4,11 @@ import styles from "./styles";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import TabView1 from "./TabView1";
 import TabView2 from "./TabView2";
-import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../utils/colors";
-
+import navigationService from "../../helper/navigationService";
 const Home = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const navigation: any = useNavigation();
+
   return (
     <>
       <SafeAreaView style={styles.homeUpperContainer}>
@@ -19,7 +18,7 @@ const Home = () => {
           }
           HeadingRightText="दान सेवा"
           onRightTextPress={() => {
-            navigation.navigate("BhandaraBooking", {
+            navigationService.navigate("BhandaraBooking", {
               screenType: "DaanSewa",
             });
           }}

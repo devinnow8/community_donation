@@ -10,20 +10,19 @@ import {
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { Calendar } from "react-native-calendars";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import styles from "./styles";
 import { Colors } from "../../utils/colors";
 import ColorCoding from "../../ReusableComponents/ColorCoding";
-
+import navigationService from "../../helper/navigationService";
 const TabView1 = () => {
   const [selectedDate, setSelectedDate] = useState<any>({ dateString: "" });
   const [loader, setLoader] = useState(false);
   const [selectedDateData, setSelectedDateData] = useState<any>({});
   const [data, setData] = useState([]);
-  const navigation: any = useNavigation();
   const handleNavigation = (val: number) => {
-    navigation.navigate("BhandaraBooking", {
+    navigationService.navigate("BhandaraBooking", {
       time: val,
       date: selectedDate,
     });
@@ -172,7 +171,7 @@ const TabView1 = () => {
           <TouchableOpacity
             hitSlop={10}
             onPress={() => {
-              navigation.navigate("InfoScreen");
+              navigationService.navigate("InfoScreen");
             }}
           >
             <Image

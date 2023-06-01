@@ -256,12 +256,10 @@ const BhandaraBookingPayment = () => {
 
       {/* error Msg */}
 
-      {moneyErr ? (
+      {moneyErr && (
         <View style={styles.errorContainer}>
           <Text style={{ color: Colors.RED }}>{moneyErr}</Text>
         </View>
-      ) : (
-        <Text></Text>
       )}
 
       {/* paying Options */}

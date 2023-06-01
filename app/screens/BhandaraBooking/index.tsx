@@ -15,7 +15,6 @@ import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
 import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import moment from "moment";
 import styles from "./styles";
@@ -25,6 +24,7 @@ import downHeadIcon from "../../assets/images/downHeadIcon.png";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Colors } from "../../utils/colors";
 import firestore from "@react-native-firebase/firestore";
+import navigationService from "../../helper/navigationService";
 const BhandaraBooking = () => {
   const [confirm, setConfirm] = useState<any>(null);
   const [showOtpField, setShowOtpField] = useState(false);
@@ -44,7 +44,7 @@ const BhandaraBooking = () => {
     otpErrMsg: "",
   });
   const route = useRoute();
-  const navigation: any = useNavigation();
+
   const date: any = route.params?.date;
   const time: any = route.params?.time;
   const screenType: any = route.params?.screenType;
@@ -205,7 +205,7 @@ const BhandaraBooking = () => {
           };
         }
         setLoaderVisible(false);
-        navigation.navigate("BhandaraBookingPayment", params);
+        navigationService.navigate("BhandaraBookingPayment", params);
       }
     } catch (error) {
       setLoaderVisible(false);
@@ -281,12 +281,10 @@ const BhandaraBooking = () => {
             }
           />
         </View>
-        {userInfo.nameErrMsg ? (
+        {userInfo.nameErrMsg && (
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{userInfo.nameErrMsg}</Text>
           </View>
-        ) : (
-          <Text></Text>
         )}
         <View>
           <Labels labelName="फ़ोन नंबर" />
@@ -317,12 +315,10 @@ const BhandaraBooking = () => {
             keyboardType="number-pad"
           />
         </View>
-        {userInfo.phoneErrMsg ? (
+        {userInfo.phoneErrMsg && (
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{userInfo.phoneErrMsg}</Text>
           </View>
-        ) : (
-          <Text></Text>
         )}
         {screenType !== "DaanSewa" && (
           <>

@@ -12,11 +12,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import firestore from "@react-native-firebase/firestore";
-import { useNavigation } from "@react-navigation/native";
 import { getHeight, getWidth } from "../../utils/pixelConversion";
-
+import navigationService from "../../helper/navigationService";
 const InfoScreen = () => {
-  const navigation: any = useNavigation();
   const [adminPhoneNumber, setAdminPhoneNumber] = useState("");
   const getAdminPhoneNumber = () => {
     firestore()
@@ -48,7 +46,7 @@ const InfoScreen = () => {
         hasBackButton={true}
         rightText={"Admin Login"}
         onRightButtonPress={() => {
-          navigation.navigate("AdminLogin");
+          navigationService.navigate("AdminLogin");
         }}
       />
       <ScrollView

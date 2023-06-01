@@ -14,7 +14,7 @@ import { getHeight } from "../../utils/pixelConversion";
 
 import CustomModal from "../../ReusableComponents/Modal";
 import styles from "./styles";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
@@ -30,7 +30,6 @@ const YatraBooking = () => {
     phoneErrMsg: "",
     placeErrMsg: "",
   });
-  const navigation: any = useNavigation();
   const { params }: any = useRoute();
   const { yatraDetails, numberOfSeats } = params;
   const [confirm, setConfirm] = useState<any>(null);

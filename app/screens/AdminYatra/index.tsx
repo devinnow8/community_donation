@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import HeaderBar from "../../ReusableComponents/HeaderBar";
 import Labels from "../../ReusableComponents/Labels";
 import TextInputs from "../../ReusableComponents/TextInputs";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import styles from "./styles";
 import firestore from "@react-native-firebase/firestore";
 import moment from "moment";
@@ -19,9 +19,8 @@ import { Calendar } from "react-native-calendars";
 import Modal from "react-native-modal";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Colors } from "../../utils/colors";
-
+import navigationService from "../../helper/navigationService";
 const AdminYatra = () => {
-  const navigation: any = useNavigation();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { params }: any = useRoute();
   const [isCalenderVisible, setCalenderVisible] = useState(false);
@@ -88,7 +87,7 @@ const AdminYatra = () => {
       .delete()
       .then((res) => {
         setShowDeleteModal(false);
-        navigation.navigate("AdminBookingDetail");
+        navigationService.navigate("AdminBookingDetail");
       })
       .catch((err) => {
         // console.log("Error", err);
@@ -122,7 +121,7 @@ const AdminYatra = () => {
           .set(newData, { merge: true })
           .then((res) => {
             setLoaderVisible(false);
-            navigation.navigate("AdminBookingDetail", { yatraDetails });
+            navigationService.navigate("AdminBookingDetail", { yatraDetails });
             // setShowModal(true);
           })
           .catch((err) => {
@@ -141,7 +140,9 @@ const AdminYatra = () => {
               .set(newData, { merge: true })
               .then((res) => {
                 setLoaderVisible(false);
-                navigation.navigate("AdminBookingDetail", { yatraDetails });
+                navigationService.navigate("AdminBookingDetail", {
+                  yatraDetails,
+                });
                 // setShowModal(true);
               })
               .catch((err) => {
@@ -182,12 +183,10 @@ const AdminYatra = () => {
             }}
           />
         </View>
-        {yatraDetails.nameErrMsg.length > 0 ? (
+        {yatraDetails.nameErrMsg.length > 0 && (
           <View style={styles.errMsgContainer}>
             <Text style={styles.errMsgText}>{yatraDetails.nameErrMsg}</Text>
           </View>
-        ) : (
-          ""
         )}
         <View style={styles.labelViewStyle}>
           <Labels labelName="Date(DD-MM-YYYY)" />
@@ -218,12 +217,10 @@ const AdminYatra = () => {
             }}
           />
         </View>
-        {yatraDetails.onboardErrMsg?.length > 0 ? (
+        {yatraDetails.onboardErrMsg?.length > 0 && (
           <View style={styles.errMsgContainer}>
             <Text style={styles.errMsgText}>{yatraDetails.onboardErrMsg}</Text>
           </View>
-        ) : (
-          ""
         )}
         <View style={styles.labelViewStyle}>
           <Labels labelName="Time of Departure" />
@@ -238,12 +235,10 @@ const AdminYatra = () => {
             }}
           />
         </View>
-        {yatraDetails.timeErrMsg?.length > 0 ? (
+        {yatraDetails.timeErrMsg?.length > 0 && (
           <View style={styles.errMsgContainer}>
             <Text style={styles.errMsgText}>{yatraDetails.timeErrMsg}</Text>
           </View>
-        ) : (
-          ""
         )}
         <View style={styles.labelViewStyle}>
           <Labels labelName="Seats" />

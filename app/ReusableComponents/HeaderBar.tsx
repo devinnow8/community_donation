@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { getHeight, getWidth } from "../utils/pixelConversion";
 import { Colors } from "../utils/colors";
+import navigationService from "../helper/navigationService";
 interface IHeaderBarText {
   headingText?: string;
   headingLeftText?: string;
@@ -28,8 +28,6 @@ const HeaderBar = ({
   onPress,
   onRightTextPress,
 }: IHeaderBarText) => {
-  const navigation: any = useNavigation();
-
   return (
     <View>
       {twoHeadings ? (
@@ -47,10 +45,10 @@ const HeaderBar = ({
         <View style={[styles.headerBarContainer]}>
           {hasBackButton && (
             <TouchableOpacity
-              style={rightText && { width: 40 }}
+              style={rightText && styles.backBtnImgStyle}
               hitSlop={10}
               onPress={() => {
-                navigation.goBack();
+                navigationService.goBack();
               }}
             >
               <Image source={require("../assets/images/LeftIcon.png")} />
@@ -65,10 +63,10 @@ const HeaderBar = ({
         <View style={[styles.headerBarContainer]}>
           {hasBackButton && (
             <TouchableOpacity
-              style={rightText && { width: 40 }}
+              style={rightText && styles.backBtnImgStyle}
               hitSlop={10}
               onPress={() => {
-                navigation.goBack();
+                navigationService.goBack();
               }}
             >
               <Image source={require("../assets/images/LeftIcon.png")} />
@@ -104,7 +102,6 @@ const styles = StyleSheet.create({
     fontSize: getHeight(17),
     fontWeight: "600",
     lineHeight: getHeight(22),
-    letterSpacing: -0.4,
     color: Colors.BLACK,
   },
   headerBarContainerWithTwoFields: {
@@ -120,6 +117,7 @@ const styles = StyleSheet.create({
   },
   headerBarRightText: {
     color: Colors.PRIMARY,
-    marginRight: 20,
+    marginRight: getWidth(20),
   },
+  backBtnImgStyle: { width: getWidth(40) },
 });

@@ -2,9 +2,8 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
 import { getHeight, getWidth } from "../utils/pixelConversion";
-import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../utils/colors";
-
+import navigationService from "../helper/navigationService";
 const CustomModal = ({
   isVisible,
   setIsVisible,
@@ -12,7 +11,6 @@ const CustomModal = ({
   message,
   navigationScreen,
 }: any) => {
-  const navigation = useNavigation();
   return (
     <Modal isVisible={isVisible}>
       <View style={styles.modalOuterContainer}>
@@ -29,7 +27,7 @@ const CustomModal = ({
           onPress={() => {
             [
               setIsVisible(false),
-              navigationScreen && navigation.navigate(navigationScreen),
+              navigationScreen && navigationService.navigate(navigationScreen),
             ];
           }}
         >
