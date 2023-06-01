@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-calendars/src/calendar/index.js b/node_modules/react-native-calendars/src/calendar/index.js
+index 6f46e8a..e076f4f 100644
+--- a/node_modules/react-native-calendars/src/calendar/index.js
++++ b/node_modules/react-native-calendars/src/calendar/index.js
+@@ -142,7 +142,7 @@ const Calendar = (props) => {
+         const ref = customHeader ? undefined : header;
+         const CustomHeader = customHeader;
+         const HeaderComponent = customHeader ? CustomHeader : CalendarHeader;
+-        return (<HeaderComponent {...headerProps} testID={`${testID}.header`} style={headerStyle} ref={ref} month={currentMonth} addMonth={addMonth} displayLoadingIndicator={shouldDisplayIndicator}/>);
++        return (<HeaderComponent {...headerProps} testID={`${testID}.header`} arrowsHitSlop={props.arrowsHitSlop} style={headerStyle} ref={ref} month={currentMonth} addMonth={addMonth} displayLoadingIndicator={shouldDisplayIndicator}/>);
+     };
+     const GestureComponent = enableSwipeMonths ? GestureRecognizer : View;
+     const swipeProps = {
