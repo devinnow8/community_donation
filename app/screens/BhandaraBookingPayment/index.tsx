@@ -153,7 +153,10 @@ const BhandaraBookingPayment = () => {
     <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       {/* headerBar */}
       <View>
-        <HeaderBar hasBackButton={true} headingText="भंडारा बुकिंग" />
+        <HeaderBar
+          hasBackButton={true}
+          headingText={screenType === "DaanSewa" ? "दान सेवा" : "भंडारा बुकिंग"}
+        />
       </View>
 
       {/* paymentField */}

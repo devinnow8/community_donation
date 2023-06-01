@@ -29,9 +29,42 @@ const HeaderBar = ({
   onRightTextPress,
 }: IHeaderBarText) => {
   return (
-    <View>
-      {twoHeadings ? (
-        <View style={[styles.headerBarContainerWithTwoFields]}>
+    <View
+      style={[
+        twoHeadings && styles.headerBarContainerWithTwoFields,
+        hasBackButton && styles.headerBarContainer,
+      ]}
+    >
+      {hasBackButton && (
+        <>
+          <TouchableOpacity
+            style={rightText && styles.backBtnImgStyle}
+            hitSlop={10}
+            onPress={() => {
+              navigationService.goBack();
+            }}
+          >
+            <Image source={require("../assets/images/LeftIcon.png")} />
+          </TouchableOpacity>
+          <Text style={styles.headerBarText}>{headingText}</Text>
+          {hasAddUser ? (
+            <Text style={styles.rightText} onPress={onPress}>
+              Add
+            </Text>
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                onRightButtonPress && onRightButtonPress();
+              }}
+              hitSlop={15}
+            >
+              <Text style={styles.rightText}>{rightText}</Text>
+            </TouchableOpacity>
+          )}
+        </>
+      )}
+      {twoHeadings && (
+        <>
           <Text style={[styles.headerBarText, { marginLeft: 20 }]}>
             {headingLeftText}
           </Text>
@@ -40,48 +73,7 @@ const HeaderBar = ({
               {HeadingRightText}
             </Text>
           </TouchableOpacity>
-        </View>
-      ) : hasAddUser ? (
-        <View style={[styles.headerBarContainer]}>
-          {hasBackButton && (
-            <TouchableOpacity
-              style={rightText && styles.backBtnImgStyle}
-              hitSlop={10}
-              onPress={() => {
-                navigationService.goBack();
-              }}
-            >
-              <Image source={require("../assets/images/LeftIcon.png")} />
-            </TouchableOpacity>
-          )}
-          <Text style={styles.headerBarText}>{headingText}</Text>
-          <Text style={styles.rightText} onPress={onPress}>
-            Add
-          </Text>
-        </View>
-      ) : (
-        <View style={[styles.headerBarContainer]}>
-          {hasBackButton && (
-            <TouchableOpacity
-              style={rightText && styles.backBtnImgStyle}
-              hitSlop={10}
-              onPress={() => {
-                navigationService.goBack();
-              }}
-            >
-              <Image source={require("../assets/images/LeftIcon.png")} />
-            </TouchableOpacity>
-          )}
-          <Text style={styles.headerBarText}>{headingText}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              onRightButtonPress && onRightButtonPress();
-            }}
-            hitSlop={15}
-          >
-            <Text style={styles.rightText}>{rightText}</Text>
-          </TouchableOpacity>
-        </View>
+        </>
       )}
     </View>
   );
