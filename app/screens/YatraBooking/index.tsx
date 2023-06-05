@@ -135,7 +135,7 @@ const YatraBooking = () => {
                   .post("http://13.233.123.182:4000/api/v1/seva/notify", {
                     groupId: adminFBdetail.topicId,
                     messageToShow: `${userInfo.name} booked ${numberOfSeats} seats for upcoming Yatra`,
-                    title: "Booking completed",
+                    title: "Yatra Booked",
                   })
                   .then((res) => {
                     console.log("Response", res);
